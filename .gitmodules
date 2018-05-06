@@ -1,0 +1,6 @@
+[submodule "libft"]
+	path = libft
+	url = https://www.github.com/MisterPeModder44/libft
+[submodule "ft_json"]
+	path = ft_json
+	url = https://www.github.com/MisterPeModder44/ft_json
