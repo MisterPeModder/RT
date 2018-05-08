@@ -6,14 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 18:23:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/08 01:59:05 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
 
-# include <json.h>
 # include "objects.h"
 
 typedef struct		s_img
@@ -60,5 +59,10 @@ int					make_cam(t_cam *cam, const t_json_object *data);
 int					obj_make(t_object *object, const t_json_object *data);
 int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
+
+t_hitlst			*hitlstnew(t_object *obj, float dist, t_vec3f *pos,
+		t_vec3f *normal);
+void				hitlstdel(t_hitlst *lst);
+t_hitlst			*hitlstjoin(t_hitlst *big, t_hitlst *small);
 
 #endif

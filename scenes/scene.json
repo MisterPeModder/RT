@@ -1,20 +1,15 @@
 {
 	"background_color": [0, 0, 0],
 	"camera": {
-		"pos": [0, 0, 0]
+		"pos": [0, 0, 0],
+		"fov": 90
 	},
 	"objects": [
 		{
 			"type": "sphere",
-			"pos": [1, 25, 0],
-			"color": [0, 255, 0],
-			"radius": -42e2
-		}/*,
-		{
-			"type": "cube",
-			"pos": [0, 25, 0],
-			"color": [0, 255, 0],
+			"pos": [-5, 0, 0],
+			"color": [255, 0, 0],
 			"radius": 2
-		}*/
+		}
 	]
 }

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 18:06:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/08 04:24:18 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void				img_release(t_img **img)
 			free((*img)->data[x++]);
 		free((*img)->data);
 	}
+	free(*img);
 	*img = NULL;
 }
 
@@ -72,16 +73,16 @@ void				img_output(t_img *img)
 	ft_putendl((tmp = ft_itoa((int)img->h)));
 	free(tmp);
 	ft_putendl("255");
-	x = 0;
-	while (x < img->w)
+	y = 0;
+	while (y < img->h)
 	{
-		y = 0;
-		while (y < img->h)
+		x = 0;
+		while (x < img->w)
 		{
 			ft_putchar(img->data[x][y][0]);
 			ft_putchar(img->data[x][y][1]);
-			ft_putchar(img->data[x][y++][2]);
+			ft_putchar(img->data[x++][y][2]);
 		}
-		++x;
+		++y;
 	}
 }

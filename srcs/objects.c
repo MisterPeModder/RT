@@ -6,26 +6,18 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 18:49:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/07 23:17:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
 #include "rtv1.h"
 
-static int			obj_sphere(t_object *object, const t_json_object *data)
-{
-	object->release = NULL;
-	return (float_from_json(json_obj_get(data, "radius"),
-				&object->props.sphere.radius) &&
-			object->props.sphere.radius > 0);
-}
-
 static int			obj_props(t_object *object, char *str,
 		const t_json_object *data, t_obj_type *type)
 {
 	if (ft_strequ(str, "sphere") && (*type = OBJ_SPHERE))
-		return (obj_sphere(object, data));
+		return (sphere_init(object, data));
 	return (0);
 }
 
