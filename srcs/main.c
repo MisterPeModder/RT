@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 04:27:00 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/08 05:19:54 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ int					get_hitpos(t_scene *scene, t_vec3f *u, t_rt_result *r)
 	return (hits ? 1 : 0);
 }
 
+void				set_color(t_scene *scene, t_rt_result *r, t_color c)
+{
+	float			brightness;
+	t_vec3f			light;
+
+	vec3f_fill(&light, 0, 0, 5);
+	vec3f_neg(&light, &light);
+	brightness = vec3f_dot_product(&r->normal, &light);
+	dprintf(2, "hit: (%f, %f, %f)\n", r->pos.x, r->pos.y, r->pos.z);
+	color_fill(c,
+			(int8_t)(brightness * r->obj->color[0]),
+			(int8_t)(brightness * r->obj->color[1]),
+			(int8_t)(brightness * r->obj->color[2]));
+	(void)scene;
+}
+
 int					draw_frame(t_scene *scene, t_img *img)
 {
 	unsigned int	x;
@@ -70,8 +86,7 @@ int					draw_frame(t_scene *scene, t_img *img)
 			if (!get_hitpos(scene, &unit, &r))
 				color_fill(img->data[x][y++], scene->bg_color[0], scene->bg_color[1], scene->bg_color[2]);
 			else
-				color_fill(img->data[x][y++], r.obj->color[0], r.obj->color[1],
-						r.obj->color[2]);
+				set_color(scene, &r, img->data[x][y++]);
 		}
 		++x;
 	}
