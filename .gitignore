@@ -1,3 +1,4 @@
 *.o
 rtv1
 *.ppm
+*.dSYM

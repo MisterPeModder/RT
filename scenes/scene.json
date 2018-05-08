@@ -7,9 +7,15 @@
 	"objects": [
 		{
 			"type": "sphere",
-			"pos": [0, 0, -5],
-			"color": [244, 208, 63],
-			"radius": 2
+			"pos": [0, 2, -5],
+			"color": [255, 0, 0],
+			"radius": 1
+		},
+		{
+			"type": "sphere",
+			"pos": [1, 2, -5],
+			"color": [255, 255, 0],
+			"radius": 1
 		}
 	]
 }

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:34:01 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 02:14:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/08 11:15:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_hitlst			*hitlstnew(t_object *obj, float dist, t_vec3f *pos,
 	lst->r.obj = obj;
 	lst->r.pos = *pos;
 	lst->r.normal = *normal;
+	vec3f_normalize(&lst->r.normal, &lst->r.normal);
 	lst->r.dist = dist;
 	lst->next = NULL;
 	return (lst);

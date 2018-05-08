@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 01:59:05 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/08 12:29:54 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int					color_from_json(const t_json_value *arr, t_color color);
 int					angle_from_json(const t_json_value *arr, t_vec3f *vec);
 
 void				*ret_free(void *obj);
-void				color_fill(t_color color, int8_t r, int8_t g, int8_t b);
+
+void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
+void				color_brightness(t_color color, t_color src, float b);
 
 int					scene_parse(t_scene *scene, const char *path);
 
@@ -64,5 +66,7 @@ t_hitlst			*hitlstnew(t_object *obj, float dist, t_vec3f *pos,
 		t_vec3f *normal);
 void				hitlstdel(t_hitlst *lst);
 t_hitlst			*hitlstjoin(t_hitlst *big, t_hitlst *small);
+
+int					render_frame(t_scene *scene, t_img *img);
 
 #endif
