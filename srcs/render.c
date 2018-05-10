@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 17:20:13 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 18:05:31 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void			set_color(t_scene *scene, t_rt_result *r, t_color c)
 	brightness = vec3f_dot_product(&r->normal, &dir);
 	color_brightness(c, r->obj->color, brightness);
 	(void)scene;
+	dprintf(2, "hit at (%f, %f, %f)\n", r->pos.x, r->pos.y, r->pos.z);
 }
 
 //CONVERTED
