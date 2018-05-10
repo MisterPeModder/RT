@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 09:09:40 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 16:08:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_object
 	t_vec3f			pos;
 	t_vec3f			angle;
 	t_color			color;
+	float			brightness;
 	t_properties	props;
 	void			(*release)(struct s_object *);
 	t_hitlst		*(*intersect)(struct s_object *, t_vec3f *, t_vec3f *);

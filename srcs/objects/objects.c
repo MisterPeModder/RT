@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 09:09:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 16:18:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ static int			obj_props(t_object *object, char *str,
 	else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
 		return (plane_init(object, data));
 	return (0);
+}
+
+static int			obj_make2(t_object *object, const t_json_object *data)
+{
+	t_json_value	*tmp;
+
+	if ((tmp = json_obj_get(data, "brightness")))
+	{
+		if (!float_from_json(tmp, &object->brightness))
+			return (0);
+	}
+	else
+		object->brightness = 0.5f;
+	return (1);
 }
 
 int					obj_make(t_object *object, const t_json_object *data)
@@ -46,7 +60,7 @@ int					obj_make(t_object *object, const t_json_object *data)
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
-	return (1);
+	return (obj_make2(object, data));
 }
 
 int					obj_release(t_object *obj)
