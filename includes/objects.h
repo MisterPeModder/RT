@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 01:55:26 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 09:09:40 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef uint8_t		t_color[3];
 
 typedef enum		e_obj_type
 {
-	OBJ_SPHERE = 1
+	OBJ_SPHERE = 1,
+	OBJ_PLANE
 }					t_obj_type;
 
 typedef union		u_properties
@@ -29,6 +30,9 @@ typedef union		u_properties
 	struct {
 		float		radius;
 	}				sphere;
+	struct {
+		t_vec3f		normal;
+	}				plane;
 }					t_properties;
 
 struct s_object;
@@ -60,5 +64,8 @@ typedef struct		s_object
 
 int					sphere_init(t_object *object, const t_json_object *data);
 t_hitlst			*sphere_intersect(t_object *o, t_vec3f *cam, t_vec3f *u);
+
+int					plane_init(t_object *object, const t_json_object *data);
+t_hitlst			*plane_intersect(t_object *o, t_vec3f *cam, t_vec3f *u);
 
 #endif

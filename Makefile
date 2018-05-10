@@ -16,6 +16,8 @@ SRC_PATH := srcs
 OBJ_PATH := .bin
 INC_PATH := includes
 
+SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
+
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
 CFLAGS := -Wall -Wextra -Werror -std=c89 -pedantic -Wmissing-prototypes -Wsign-conversion -g
@@ -36,11 +38,14 @@ SRCS_NAMES :=	angle.c		\
 				hitlst.c	\
 				img.c		\
 				main.c		\
-				objects.c	\
+				rotate.c	\
 				render.c	\
 				scene.c		\
-				sphere.c	\
 				utils.c		\
+
+SRCS_NAMES +=	objects/objects.c	\
+				objects/plane.c		\
+				objects/sphere.c	\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
@@ -64,7 +69,7 @@ UNDERLINE := \033[4m
 
 all: $(LIBFT) $(LIBFT_JSON) $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJS)
+$(NAME): $(OBJ_PATH) $(OBJ_PATH) $(SUBDIRS) $(OBJS)
 ifeq ($(DETAILED), 1)
 	@tput dl; tput el1; tput cub 100; $(PRINT) "$(GREY)Creating object files: $(GREEN)done!$(RESET)"
 endif
@@ -78,7 +83,7 @@ $(LIBFT):
 $(LIBFT_JSON):
 	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)
 
-$(OBJ_PATH):
+$(OBJ_PATH) $(SUBDIRS):
 	@$(MKDIR) $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(addprefix $(INC_PATH)/,$(INCS))

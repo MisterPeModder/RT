@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 10:14:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 07:32:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stdlib.h>
 #include "rtv1.h"
 

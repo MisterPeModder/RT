@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 18:43:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 09:49:07 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_json_value	*scene_read(const char *path)
 
 	if ((fd = scene_open(path)) == -1)
 		return (NULL);
-	if (!(res = json_from_file(fd, JFLAG_ALLOW_COMMENTS)))
+	if (!(res = json_from_file(fd, JFLAG_ALLOW_COMMENTS | JFLAG_IGNORE_EXTRA)))
 	{
 		ft_putendl_fd("Couldn't read file", STDERR_FILENO);
 		return (NULL);

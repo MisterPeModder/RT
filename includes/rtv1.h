@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 12:29:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 08:44:07 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,9 @@ void				hitlstdel(t_hitlst *lst);
 t_hitlst			*hitlstjoin(t_hitlst *big, t_hitlst *small);
 
 int					render_frame(t_scene *scene, t_img *img);
+
+t_vec3f				*rotate_x(const t_vec3f *src, t_vec3f *dst, float rx);
+t_vec3f				*rotate_y(const t_vec3f *src, t_vec3f *dst, float ry);
+t_vec3f				*rotate_z(const t_vec3f *src, t_vec3f *dst, float rz);
 
 #endif

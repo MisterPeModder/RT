@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:16:17 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 10:12:06 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 09:55:48 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_hitlst			*sphere_intersect(t_object *o, t_vec3f *cam, t_vec3f *u)
 	else
 	{
 		i[1] = (float)sqrt(delta);
-		/*dprintf(2, "dist: %f\n", -i[0] + i[1]);
-		  dprintf(2, "unit: (%f, %f, %f)\n", u->x, u->y, u->z);*/
 		lst = hitlstnew(o, -i[0] + i[1], vec3f_mul(u, -i[0] + i[1], &v[1]),
 				vec3f_sub(&v[1], cam, &v[2]));
 		if (lst)

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 23:17:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 09:09:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int			obj_props(t_object *object, char *str,
 {
 	if (ft_strequ(str, "sphere") && (*type = OBJ_SPHERE))
 		return (sphere_init(object, data));
+	else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
+		return (plane_init(object, data));
 	return (0);
 }
 

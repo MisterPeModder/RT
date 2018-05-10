@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 12:36:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 15:38:43 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ static int			get_hitpos(t_scene *scene, t_vec3f *u, t_rt_result *r)
 	return (hits ? 1 : 0);
 }
 
+#include <stdio.h>
+
 static void			set_color(t_scene *scene, t_rt_result *r, t_color c)
 {
 	float			brightness;
 	t_vec3f			light;
 	t_vec3f			dir;
 
-	vec3f_fill(&light, 10, -5, -5);
+	vec3f_fill(&light, 1, 10, 0);
 	vec3f_normalize(vec3f_sub(&r->pos, &light, &dir), &dir);
 	brightness = vec3f_dot_product(&r->normal, &dir);
 	color_brightness(c, r->obj->color, brightness);
