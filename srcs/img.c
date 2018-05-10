@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 06:36:13 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:22:41 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void				img_release(t_img **img)
 	*img = NULL;
 }
 
-void				img_output(t_img *img)
+void				img_ppm_output(t_img *img)
 {
 	char			*tmp;
 	unsigned int	x;

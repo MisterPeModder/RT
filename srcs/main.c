@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 09:53:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:43:48 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "rtv1.h"
+
+int					exit_rtv1(t_img *img)
+{
+	img_release(&img);
+	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
+}
 
 int					main(int argc, char **argv)
 {
@@ -23,21 +30,18 @@ int					main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
-		return (-1);
+		return (EXIT_FAILURE);
 	}
 	if (!(img = img_make(1600, 900)) || !scene_parse(&scene, argv[1]))
 	{
 		img_release(&img);
-		return (-2);
+		return (EXIT_FAILURE);
 	}
-	if (!render_frame(&scene, img))
-	{
-		objs_release(scene.objs, scene.objs_num);
-		img_release(&img);
-		return (-3);
-	}
-	img_output(img);
+	render_frame(&scene, img);
 	objs_release(scene.objs, scene.objs_num);
-	img_release(&img);
-	return (0);
+	if (USE_MLX)
+		img_mlx_output(img);
+	else
+		img_ppm_output(img);
+	return (EXIT_SUCCESS);
 }

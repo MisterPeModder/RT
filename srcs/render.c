@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 15:38:43 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:20:13 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,36 @@
 #include <math.h>
 #include "rtv1.h"
 
+#include <stdio.h>
+
+static void			set_color(t_scene *scene, t_rt_result *r, t_color c)
+{
+	float			brightness;
+	t_vec3f			light;
+	t_vec3f			dir;
+
+	vec3f_fill(&light, 1, 10, 0);
+	vec3f_normalize(vec3f_sub(&r->pos, &light, &dir), &dir);
+	brightness = vec3f_dot_product(&r->normal, &dir);
+	color_brightness(c, r->obj->color, brightness);
+	(void)scene;
+}
+
+//CONVERTED
+static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img, unsigned int pix_x, unsigned int pix_y)
+{
+	t_vec3f			vec;
+	float			fov;
+
+	fov = tan(scene->cam.fov / 2);
+	vec.x = (2 * ((pix_x + 0.5) / img->w) - 1) * (img->w / img->h) * fov;
+	vec.y = (1 - 2 * ((pix_y + 0.5) / img->h)) * fov;
+	vec.z = -1;
+	vec3f_normalize(&vec, &vec);
+	return (vec);
+}
+
+//CONVERTED
 static int			get_hitpos(t_scene *scene, t_vec3f *u, t_rt_result *r)
 {
 	size_t			i;
@@ -41,48 +71,27 @@ static int			get_hitpos(t_scene *scene, t_vec3f *u, t_rt_result *r)
 	return (hits ? 1 : 0);
 }
 
-#include <stdio.h>
 
-static void			set_color(t_scene *scene, t_rt_result *r, t_color c)
+//CONVERTED
+void				render_frame(t_scene *scene, t_img *img)
 {
-	float			brightness;
-	t_vec3f			light;
-	t_vec3f			dir;
-
-	vec3f_fill(&light, 1, 10, 0);
-	vec3f_normalize(vec3f_sub(&r->pos, &light, &dir), &dir);
-	brightness = vec3f_dot_product(&r->normal, &dir);
-	color_brightness(c, r->obj->color, brightness);
-	(void)scene;
-}
-
-int					render_frame(t_scene *scene, t_img *img)
-{
-	unsigned int	x;
-	unsigned int	y;
+	unsigned int	i;
+	unsigned int	j;
 	t_vec3f			unit;
 	t_rt_result		r;
-	float			coefs[2];
 
-	x = 0;
-	coefs[0] = tan(scene->cam.fov * 0.5);
-	coefs[1] = (float)img->w / (float)img->h;
-	while (x < img->w)
+	i = 0;
+	while (i < img->h)
 	{
-		y = 0;
-		while (y < img->h)
+		j = 0;
+		while (j < img->w)
 		{
-			vec3f_fill(&unit,
-					(2.f * ((float)x + .5f) / (float)img->w - 1) * coefs[0] * coefs[1],
-					(1 - 2.f * ((float)y + .5f) / (float)img->h) * coefs[0],
-					-1.f);
-			vec3f_normalize(&unit, &unit);
-			if (!get_hitpos(scene, &unit, &r))
-				color_fill(img->data[x][y++], scene->bg_color[0], scene->bg_color[1], scene->bg_color[2]);
+			unit = compute_pixel_coor(scene, img, j, i);
+			if (get_hitpos(scene, &unit, &r))
+				color_fill(img->data[j++][i], scene->bg_color[0], scene->bg_color[1], scene->bg_color[2]);
 			else
-				set_color(scene, &r, img->data[x][y++]);
+				set_color(scene, &r, img->data[j++][i]);
 		}
-		++x;
+		++i;
 	}
-	return (1);
 }
