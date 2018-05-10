@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 17:45:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 18:42:50 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct		s_scene
 {
 	t_cam			cam;
 	t_object		*objs;
+	t_vec3f			*lights;
 	size_t			objs_num;
+	size_t			lights_num;
 	t_color			bg_color;
 }					t_scene;
 
@@ -56,6 +58,7 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 void				color_brightness(t_color color, t_color src, float b);
 
 int					scene_parse(t_scene *scene, const char *path);
+int					scene_lights(t_scene *scene, const t_json_array *data);
 
 int					make_cam(t_cam *cam, const t_json_object *data);
 

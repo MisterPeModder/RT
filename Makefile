@@ -44,6 +44,7 @@ SRCS_NAMES :=	angle.c		\
 				from_json.c	\
 				hitlst.c	\
 				img.c		\
+				lights.c	\
 				main.c		\
 				mlx.c		\
 				render.c	\
