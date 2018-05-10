@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 04:24:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/10 06:36:13 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_img				*img_make(unsigned int w, unsigned int h)
 
 	if (!(img = (t_img *)malloc(sizeof(t_img))))
 		return (NULL);
-	*img = (t_img){.w = w, .h = h, .data = NULL};
+	img->w = w;
+	img->h = h;
 	if (!(img->data = (t_color **)malloc(sizeof(t_color *) * w)))
 	{
 		free(img);
@@ -79,9 +80,9 @@ void				img_output(t_img *img)
 		x = 0;
 		while (x < img->w)
 		{
-			ft_putchar(img->data[x][y][0]);
-			ft_putchar(img->data[x][y][1]);
-			ft_putchar(img->data[x++][y][2]);
+			ft_putchar((char)img->data[x][y][0]);
+			ft_putchar((char)img->data[x][y][1]);
+			ft_putchar((char)img->data[x++][y][2]);
 		}
 		++y;
 	}
