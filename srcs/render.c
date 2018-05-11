@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 15:34:17 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/11 17:54:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u, t_rt_result *r)
 	r->dist = d;
 	vec3f_mul(u, d, &r->pos);
 	vec3f_add(o, &r->pos, &r->pos);
-	r->obj->normal(r->obj, &r->pos, &r->normal);
+	r->obj->normal(r->obj, r);
 	return (1);
 }
 

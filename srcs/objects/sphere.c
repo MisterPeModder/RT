@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:16:17 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 15:14:37 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/11 17:54:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ float				sphere_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	return (d);
 }
 
-void				sphere_normal(t_object *o, const t_vec3f *hit, t_vec3f *r)
-{
-	vec3f_normalize(vec3f_sub(hit, &o->pos, r), r);
-}
-
 int					sphere_init(t_object *object, const t_json_object *data)
 {
 	object->release = NULL;
@@ -59,4 +54,9 @@ int					sphere_init(t_object *object, const t_json_object *data)
 	return (float_from_json(json_obj_get(data, "radius"),
 				&object->props.sphere.radius) &&
 			object->props.sphere.radius > 0);
+}
+
+void				sphere_normal(t_object *o, t_rt_result *r)
+{
+	vec3f_normalize(vec3f_sub(&r->pos, &o->pos, &r->normal), &r->normal);
 }

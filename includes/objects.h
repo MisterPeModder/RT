@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 11:14:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 17:55:48 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ typedef struct		s_object
 	t_properties	props;
 	void			(*release)(struct s_object *);
 	float			(*intersect)(struct s_object *, t_vec3f *, t_vec3f *);
-	void			(*normal)(struct s_object *, const t_vec3f *hit, t_vec3f *result);
+	void			(*normal)(struct s_object *, t_rt_result *r);
 }					t_object;
 
 int					sphere_init(t_object *object, const t_json_object *data);
 float				sphere_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
-void				sphere_normal(t_object *o, const t_vec3f *hit, t_vec3f *result);
+void				sphere_normal(t_object *o, t_rt_result *r);
 
 int					plane_init(t_object *object, const t_json_object *data);
 float				plane_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
-void				plane_normal(t_object *o, const t_vec3f *hit, t_vec3f *result);
+void				plane_normal(t_object *o, t_rt_result *r);
 
 #endif
