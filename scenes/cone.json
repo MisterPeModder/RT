@@ -1,0 +1,20 @@
+{
+	"background_color": [0, 0, 0],
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 90
+	},
+	"objects": [
+		{
+			"type": "cone",
+			"pos": [0, 0, -2],
+			"angle": [0, 0, 0],//normal = (0, 1, 0)
+			"opening_angle": 45,//* M_PI / 180
+			"color": [255, 0, 0]
+		}
+	],
+	"lights": [
+		[0, 0, 0]
+//		[-4, 2, 0]
+	]
+}

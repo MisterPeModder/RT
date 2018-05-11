@@ -32,12 +32,16 @@
 	"pos": [0, 1.0, -1.0],
 	"angle": [0, 0, 0],
 	"brightness": 1,
-			"color": [18, 99, 229] //blue
-},*/
-/*{
-	"type": "cone",
-	"pos": [12, 17, -40]
-}*/
+	"color": [18, 99, 229] //blue
+		},*/
+/*		{
+			"type": "cone",
+			"pos": [0, 2, -3],
+			"angle": [0, 0, 0],//normal = (0, 1, 0)
+			"opening_angle": 45,//* M_PI / 180
+			"brightness": 0.5,
+			"color": [255, 0, 0]
+		}*/
 /*,{
 	"type": "sphere",
 	"pos": [0, 0, -30],
