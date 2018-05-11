@@ -10,24 +10,24 @@
 			"type": "sphere",
 			"pos": [0.8, 0, -7],
 			"radius": 2,
-			"brightness": 0.5,
+			"brightness": 0.2,
 			"color": [229, 129, 48] //orange
 		},
 		{
 			"type": "sphere",
 			"pos": [5, -1, -9],
 			"radius": 5,
-			"brightness": 0.5,
+			"brightness": 0.2,
 			"color": [180, 40, 226] //purple
 		},
 		{
 			"type": "sphere",
 			"pos": [-0.2, -2.2, -6.0],
 			"radius": 1,
-			"brightness": 0.5,
+			"brightness": 0.2,
 			"color": [153, 153, 153] //gray
-		},
-/*		{
+		}/*,
+		{
 	"type": "plane",
 	"pos": [0, 1.0, -1.0],
 	"angle": [0, 0, 0],
@@ -38,17 +38,17 @@
 	"type": "cone",
 	"pos": [12, 17, -40]
 }*/
-{
+/*,{
 	"type": "sphere",
 	"pos": [0, 0, -30],
 	"radius": 24,
 	"brightness": 1,
 			"color": [187, 187, 187] //light gray
-}
+}*/
 	],
 	"lights": [
 		[-4, 7, -9],
-		[-5, 6, 8],
+		[-5, 6, -8],
 		[-2, 4, -3],
 		[-1, 0, 0]
 	]

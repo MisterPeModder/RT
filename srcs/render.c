@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 14:26:00 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 15:34:17 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u, t_rt_result *r)
 	while (i < scene->objs_num)
 	{
 		tmp = scene->objs[i].intersect(&scene->objs[i], o, u);
-		if (tmp < d)
+		if (tmp > 0 && tmp < d)
 		{
 			r->obj = scene->objs + i;
 			d = tmp;
@@ -72,12 +72,13 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	color_fill(c, 0, 0, 0);
 	while (i < scene->lights_num)
 	{
-		vec3f_normalize(vec3f_sub(&r->pos, &scene->lights[i], &lvec), &lvec);
-		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.01, &start), &start);
-		if (get_hitpos(scene, &start, &lvec, &sink))
+		vec3f_normalize(vec3f_sub(&scene->lights[i], &r->pos, &lvec), &lvec);
+//		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.01, &start), &start);
+		start = r->pos;
+		if (!get_hitpos(scene, &start, &lvec, &sink))
 		{
-			power = r->obj->brightness * vec3f_dot_product(&lvec, &r->normal);
-/*			dprintf(2, "power: %.4f\n", power);*/
+			power = 0.5 * vec3f_dot_product(&lvec, &r->normal);
+/*			dprintf(2, "power: %.4f\n", r->obj->brightness);*/
 			color_brightness(c, r->obj->color, power);
 		}
 		++i;

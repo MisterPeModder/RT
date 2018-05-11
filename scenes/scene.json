@@ -11,7 +11,21 @@
 			"color": [255, 255, 0],
 			"radius": 1,
 			"brightness": 0.5
-		}/*,
+		},
+		{
+			"type": "sphere",
+			"pos": [-2, 1, -4],
+			"color": [184, 49, 211],
+			"radius": 1.2,
+			"brightness": 0.5
+		},
+		{
+			"type": "sphere",
+			"pos": [0, -5, -30],
+			"color": [200, 200, 200],
+			"radius": 24,
+			"brightness": 0.5
+		}/*
 		{
 			"type": "plane",
 			"pos": [0, 0, 0],
@@ -20,6 +34,7 @@
 		}*/
 	],
 	"lights": [
-		[5, 0, -5]
+		[2, 0, 0],
+		[-4, 2, 0]
 	]
 }
