@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 16:08:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 11:14:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ typedef struct		s_rt_result
 	float			dist;
 }					t_rt_result;
 
-typedef struct		s_hitlst
-{
-	struct s_hitlst	*next;
-	t_rt_result		r;
-}					t_hitlst;
-
 typedef struct		s_object
 {
 	t_obj_type		type;
@@ -60,13 +54,16 @@ typedef struct		s_object
 	float			brightness;
 	t_properties	props;
 	void			(*release)(struct s_object *);
-	t_hitlst		*(*intersect)(struct s_object *, t_vec3f *, t_vec3f *);
+	float			(*intersect)(struct s_object *, t_vec3f *, t_vec3f *);
+	void			(*normal)(struct s_object *, const t_vec3f *hit, t_vec3f *result);
 }					t_object;
 
 int					sphere_init(t_object *object, const t_json_object *data);
-t_hitlst			*sphere_intersect(t_object *o, t_vec3f *cam, t_vec3f *u);
+float				sphere_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
+void				sphere_normal(t_object *o, const t_vec3f *hit, t_vec3f *result);
 
 int					plane_init(t_object *object, const t_json_object *data);
-t_hitlst			*plane_intersect(t_object *o, t_vec3f *cam, t_vec3f *u);
+float				plane_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
+void				plane_normal(t_object *o, const t_vec3f *hit, t_vec3f *result);
 
 #endif

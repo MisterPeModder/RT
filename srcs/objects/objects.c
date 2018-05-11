@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 16:18:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 13:11:01 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int			obj_props(t_object *object, char *str,
 {
 	if (ft_strequ(str, "sphere") && (*type = OBJ_SPHERE))
 		return (sphere_init(object, data));
-	else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
-		return (plane_init(object, data));
+	/*else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
+	  return (plane_init(object, data));*/
 	return (0);
 }
 
@@ -37,12 +37,15 @@ static int			obj_make2(t_object *object, const t_json_object *data)
 	return (1);
 }
 
+#include <stdio.h>
+
 int					obj_make(t_object *object, const t_json_object *data)
 {
 	t_json_value	*tmp;
 
 	if (!vec3f_from_json(json_obj_get(data, "pos"), &object->pos))
 		return (0);
+	printf("pos: (%f, %f, %f)\n", object->pos.x, object->pos.y, object->pos.z);
 	if ((tmp = json_obj_get(data, "angle")))
 	{
 		if (!angle_from_json(tmp, &object->angle))

@@ -42,7 +42,6 @@ SRCS_NAMES :=	angle.c		\
 				cam.c		\
 				color.c		\
 				from_json.c	\
-				hitlst.c	\
 				img.c		\
 				lights.c	\
 				main.c		\
@@ -53,7 +52,6 @@ SRCS_NAMES :=	angle.c		\
 				utils.c		\
 
 SRCS_NAMES +=	objects/objects.c	\
-				objects/plane.c		\
 				objects/sphere.c	\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 18:42:50 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 10:47:34 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ int					make_cam(t_cam *cam, const t_json_object *data);
 int					obj_make(t_object *object, const t_json_object *data);
 int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
-
-t_hitlst			*hitlstnew(t_object *obj, float dist, t_vec3f *pos,
-		t_vec3f *normal);
-void				hitlstdel(t_hitlst *lst);
-t_hitlst			*hitlstjoin(t_hitlst *big, t_hitlst *small);
 
 void				render_frame(t_scene *scene, t_img *img);
 

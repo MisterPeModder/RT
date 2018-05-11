@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/08 11:41:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 14:24:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b)
 	color[2] = b;
 }
 
-#include <stdio.h>
-
 static uint8_t		cclamp(uint8_t c, float b)
 {
 	float			r;
@@ -28,11 +26,14 @@ static uint8_t		cclamp(uint8_t c, float b)
 	r = (float)c * b;
 	if (r > 255)
 		return (255);
-	return (r < 0 ? 0 : r);
+	return (r < 0.f ? 0 : (uint8_t)r);
 }
+
+#include <stdio.h>
 
 void				color_brightness(t_color color, t_color src, float b)
 {
-	/*b = (b + 1.f) * 20;*/
-	color_fill(color, cclamp(src[0], b), cclamp(src[1], b), cclamp(src[2], b));
+	color[0] += cclamp(src[0], b);
+	color[1] += cclamp(src[1], b);
+	color[2] += cclamp(src[2], b);
 }

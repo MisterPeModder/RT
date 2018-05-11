@@ -27,24 +27,24 @@
 			"brightness": 0.5,
 			"color": [153, 153, 153] //gray
 		},
-		{
-			"type": "plane",
-			"pos": [0, 1.0, -1.0],
-			"angle": [0, 0, 0],
-			"brightness": 1,
+/*		{
+	"type": "plane",
+	"pos": [0, 1.0, -1.0],
+	"angle": [0, 0, 0],
+	"brightness": 1,
 			"color": [18, 99, 229] //blue
-		},
-		/*{
-			"type": "cone",
-			"pos": [12, 17, -40]
-		}*/
-		{
-			"type": "sphere",
-			"pos": [0, 0, -30],
-			"radius": 24,
-			"brightness": 1,
+},*/
+/*{
+	"type": "cone",
+	"pos": [12, 17, -40]
+}*/
+{
+	"type": "sphere",
+	"pos": [0, 0, -30],
+	"radius": 24,
+	"brightness": 1,
 			"color": [187, 187, 187] //light gray
-		}
+}
 	],
 	"lights": [
 		[-4, 7, -9],
