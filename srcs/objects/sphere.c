@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:16:17 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 17:54:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/11 21:21:24 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,24 @@ float				sphere_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	float	b;
 	float	c;
 	float	delta;
-	float	d;
+	t_vec3f	tmp;
 
-	a = u->x * u->x + u->y * u->y + u->z * u->z;
-	b = 2 * (u->x * (origin->x - obj->pos.x)
-			+ u->y * (origin->y - obj->pos.y)
-			+ u->z * (origin->z - obj->pos.z));
-	c = ((origin->x - obj->pos.x) * (origin->x - obj->pos.x)
-			+ (origin->y - obj->pos.y) * (origin->y - obj->pos.y)
-			+ (origin->z - obj->pos.z) * (origin->z - obj->pos.z))
+	a = vec3f_dot_product(u, u);
+	b = 2 * vec3f_dot_product(u, vec3f_sub(origin, &obj->pos, &tmp));
+	c = vec3f_dot_product(vec3f_sub(origin, &obj->pos, &tmp), &tmp)
 		- obj->props.sphere.radius * obj->props.sphere.radius;
 	delta = b * b - 4 * a * c;
 	if (delta < 0)
 		return (FLT_MAX);
 	else if (delta == 0)
-		d = -b / (2 * a);
+		c = -b / (2 * a);
 	else
 	{
-		d = (-b - sqrt(delta)) / (2 * a);
-		c = (-b + sqrt(delta)) / (2 * a);
-		d = d > c ? c : d;
+		c = (-b - sqrt(delta)) / (2 * a);
+		a = (-b + sqrt(delta)) / (2 * a);
+		c = c > a ? a : c;
 	}
-	return (d);
+	return (c);
 }
 
 int					sphere_init(t_object *object, const t_json_object *data)
