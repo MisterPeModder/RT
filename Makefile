@@ -1,18 +1,22 @@
 # Project settings
 NAME := rtv1
 
+## LIBS
+LIBS := $(CURDIR)/libs
+
+
 # Libft
-LIBFT_PATH := libft
+LIBFT_PATH := $(LIBS)/libft
 LIBFT_NAME := ft
 LIBFT := $(LIBFT_PATH)/lib$(LIBFT_NAME).a
 
 # Libftjson
-LIBFT_JSON_PATH := ft_json
+LIBFT_JSON_PATH := $(LIBS)/ft_json
 LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
 # MLX
-MLX_PATH := minilibx_macos
+MLX_PATH := $(LIBS)/minilibx_macos
 MLX_NAME := mlx
 MLX = $(MLX_PATH)/lib$(MLX_NAME).a
 
@@ -88,7 +92,7 @@ $(LIBFT):
 	@make -C $(LIBFT_PATH) VERBOSE=0
 
 $(LIBFT_JSON):
-	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=../$(LIBFT_PATH)
+	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)
 
 $(MLX):
 	@printf "\033[90mCompiling \033[0m$(MLX_NAME)\033[90m: \033[0m"
@@ -110,14 +114,15 @@ clean:
 	@$(RM) $(OBJS) 2> /dev/null || true
 	@$(RMDIR) $(OBJS_DIRS) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) clean > /dev/null
+	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) clean > /dev/null
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)object files!$(RESET)\n"
 
 fclean: clean
 	@$(RM) $(NAME) 2> /dev/null || true
 	@$(RM) $(TEST_NAME) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) fclean > /dev/null
-	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=../$(LIBFT_PATH) fclean > /dev/null
-	@make -C $(MLX_PATH) clean 2> /dev/null || true
+	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) fclean > /dev/null
+	@make -C $(MLX_PATH) clean &> /dev/null || true
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)$(NAME) executable!$(RESET)\n\n"
 
 re: fclean all
