@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/12 16:24:08 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 17:31:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 #include <float.h>
 #include <math.h>
 #include "rtv1.h"
-
-#include <stdio.h>
-
-/*
-   float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
-   {
-   float			a;
-   float			b;
-   float			c;
-   float			delta;
-
-   a = 
-   }
-*/
-
 
 float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {

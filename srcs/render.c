@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 16:18:16 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 18:15:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include <math.h>
 #include "rtv1.h"
 
-#include <stdio.h>
-
-//CONVERTED
 static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img, unsigned int pix_x, unsigned int pix_y)
 {
 	t_vec3f			vec;
@@ -31,7 +28,6 @@ static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img, unsigned int pix_
 	return (vec);
 }
 
-//CONVERTED
 static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u, t_rt_result *r)
 {
 	size_t			i;
@@ -59,7 +55,6 @@ static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u, t_rt_result *r)
 	return (1);
 }
 
-//CONVERTED
 static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 {
 	size_t			i;
@@ -69,29 +64,28 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	float			component[2];
 
 	i = 0;
-	color_fill(c, 0, 0, 0);//c'est ici que doit etre initialiser la composante Ambient du shading. a (0, 0, 0), elle est desactive.
+	//color_fill(c, r->obj->color[0], r->obj->color[1], r->obj->color[2]);
+	color_fill(c, 0, 0, 0);//c'est ici que doit etre initialisé la composante Ambient du shading. a (0, 0, 0), elle est desactive.
 	while (i < scene->lights_num)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i], &r->pos, &lvec), &lvec);
-//		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
-		start = r->pos;
+		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
+//		start = r->pos;
 		if (!get_hitpos(scene, &start, &lvec, &sink))
 		{
-			component[0] = 0.25 * vec3f_dot_product(&lvec, &r->normal);
+			component[0] = 0.5 * vec3f_dot_product(&lvec, &r->normal);
 			component[1] = vec3f_dot_product(&r->normal, &lvec);
 			if (component[1] < 0)
 				component[1] = 0;
 			component[1] = pow(vec3f_dot_product(vec3f_sub(
 							vec3f_mul(&r->normal, 2 * component[1], &start),
-							&r->normal, &start), &lvec), 60) * 0.25;
-//			dprintf(2, "power: %.4f\n", component[1]);
+							&r->normal, &start), &lvec), 60) * 0.5;
 			colorize(c, r->obj->color, component);
 		}
 		++i;
 	}
 }
 
-//CONVERTED
 void				render_frame(t_scene *scene, t_img *img)
 {
 	unsigned int	i;

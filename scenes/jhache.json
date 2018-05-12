@@ -2,7 +2,7 @@
 {
 	"background_color": [0, 0, 0],
 	"camera": {
-		"pos": [0, 0, 0],
+		"pos": [1, 2, 10],
 		"fov": 90
 	},
 	"objects": [
@@ -26,34 +26,39 @@
 			"radius": 1,
 			"brightness": 0.2,
 			"color": [153, 153, 153] //gray
-		}/*,
+		},
 		{
-	"type": "plane",
-	"pos": [0, 1.0, -1.0],
-	"angle": [0, 0, 0],
-	"brightness": 1,
-	"color": [18, 99, 229] //blue
-		},*/
-/*		{
+			"type": "plane",
+			"pos": [0, -5.0, -10.0],
+			"angle": [0, 0, 0],
+			"brightness": 1,
+			"color": [18, 99, 229] //blue*/
+		},
+		{
+			"type": "plane",
+			"pos": [-20, -5.0, -10.0],
+			"angle": [90, 45, 0],
+			"brightness": 1,
+			"color": [18, 56, 164] //blue
+		}//,
+		/*{
 			"type": "cone",
 			"pos": [0, 2, -3],
 			"angle": [0, 0, 0],//normal = (0, 1, 0)
 			"opening_angle": 45,//* M_PI / 180
 			"brightness": 0.5,
 			"color": [255, 0, 0]
-		}*/
-/*,{
-	"type": "sphere",
-	"pos": [0, 0, -30],
-	"radius": 24,
-	"brightness": 1,
+		},*/
+		/*{
+			"type": "sphere",
+			"pos": [0, 0, -30],
+			"radius": 24,
+			"brightness": 1,
 			"color": [187, 187, 187] //light gray
-}*/
+		}*/
 	],
 	"lights": [
-		[-4, 7, -9],
-		[-5, 6, -8],
-		[-2, 4, -3],
-		[-1, 0, 0]
+		[-5, 10, 0],
+		[5, 5, 0]
 	]
 }
