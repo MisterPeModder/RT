@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 11:27:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 15:03:59 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,14 @@ void				*ret_free(void *obj);
 void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 
 /*
-** color_brightness: Adds the color 'src' to the color 'color'.
+** colorize: Adds the color 'src' to the color 'color'.
 **
-** -color: where to store the result
+** -color: where the result is stored
 ** -src: the color to be added to 'color'
-** -b: the amount of color to be added.
+** -comp[2]: the diffuse and specular component
+**	(between 0 and 1) of the computed color.
 */
-void				color_brightness(t_color color, t_color src, float b);
+void				colorize(t_color color, t_color src, float comp[2]);
 
 /*
 ** scene_parse: Parses the scene JSON file.

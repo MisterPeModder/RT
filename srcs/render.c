@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 17:54:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 15:22:11 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,26 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	t_vec3f			lvec;
 	t_rt_result		sink;
 	t_vec3f			start;
-	float			power;
+	float			component[2];
 
 	i = 0;
-	color_fill(c, 0, 0, 0);
+	color_fill(c, 0, 0, 0);//c'est ici que doit etre initialiser la composante Ambient du shading. a (0, 0, 0), elle est desactive.
 	while (i < scene->lights_num)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i], &r->pos, &lvec), &lvec);
-//		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.01, &start), &start);
+//		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
 		start = r->pos;
 		if (!get_hitpos(scene, &start, &lvec, &sink))
 		{
-			power = 0.5 * vec3f_dot_product(&lvec, &r->normal);
-/*			dprintf(2, "power: %.4f\n", r->obj->brightness);*/
-			color_brightness(c, r->obj->color, power);
+			component[0] = 0.25 * vec3f_dot_product(&lvec, &r->normal);
+			component[1] = vec3f_dot_product(&r->normal, &lvec);
+			if (component[1] < 0)
+				component[1] = 0;
+			component[1] = pow(vec3f_dot_product(vec3f_sub(
+							vec3f_mul(&r->normal, 2 * component[1], &start),
+							&r->normal, &start), &lvec), 60) * 0.25;
+//			dprintf(2, "power: %.4f\n", component[1]);
+			colorize(c, r->obj->color, component);
 		}
 		++i;
 	}
