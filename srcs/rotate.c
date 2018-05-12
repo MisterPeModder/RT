@@ -6,11 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 07:32:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 09:10:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 10:47:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math.h"
+#include <math.h>
 #include "rtv1.h"
 
 t_vec3f				*rotate_x(const t_vec3f *src, t_vec3f *dst, float rx)
