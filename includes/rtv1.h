@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 21:39:05 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 11:27:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ int					objs_release(t_object *objs, size_t num);
 void				render_frame(t_scene *scene, t_img *img);
 
 /*
-** rotate_*: Rotates the vector 'src' by the angle 'r'.
+** rotate_*: Rotates the vector 'vec' by the angle 'r'.
 */
-t_vec3f				*rotate_x(const t_vec3f *src, t_vec3f *dst, float rx);
-t_vec3f				*rotate_y(const t_vec3f *src, t_vec3f *dst, float ry);
-t_vec3f				*rotate_z(const t_vec3f *src, t_vec3f *dst, float rz);
+t_vec3f				*rotate_x(t_vec3f *vec, float rx);
+t_vec3f				*rotate_y(t_vec3f *vec, float ry);
+t_vec3f				*rotate_z(t_vec3f *vec, float rz);
 
 # define USE_MLX 1
 

@@ -6,48 +6,48 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 07:32:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 10:47:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 11:50:20 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "rtv1.h"
 
-t_vec3f				*rotate_x(const t_vec3f *src, t_vec3f *dst, float rx)
+t_vec3f				*rotate_x(t_vec3f *vec, float rx)
 {
 	float			cos_x;
 	float			sin_x;
 
 	cos_x = cos(rx);
 	sin_x = sin(rx);
-	return (vec3f_fill(dst,
-				src->x,
-				cos_x * src->y + sin_x * src->z,
-				cos_x * src->z + sin_x * src->y));
+	return (vec3f_fill(vec,
+				vec->x,
+				cos_x * vec->y - sin_x * vec->z,
+				cos_x * vec->z + sin_x * vec->y));
 }
 
-t_vec3f				*rotate_y(const t_vec3f *src, t_vec3f *dst, float ry)
+t_vec3f				*rotate_y(t_vec3f *vec, float ry)
 {
 	float			cos_y;
 	float			sin_y;
 
 	cos_y = cos(ry);
 	sin_y = sin(ry);
-	return (vec3f_fill(dst,
-				cos_y * src->x - sin_y * src->z,
-				src->y,
-				cos_y * src->z + sin_y * src->x));
+	return (vec3f_fill(vec,
+				cos_y * vec->x + sin_y * vec->z,
+				vec->y,
+				cos_y * vec->z - sin_y * vec->x));
 }
 
-t_vec3f				*rotate_z(const t_vec3f *src, t_vec3f *dst, float rz)
+t_vec3f				*rotate_z(t_vec3f *vec, float rz)
 {
 	float			cos_z;
 	float			sin_z;
 
 	cos_z = cos(rz);
 	sin_z = sin(rz);
-	return (vec3f_fill(dst,
-				cos_z * src->x - sin_z * src->y,
-				cos_z * src->y - sin_z * src->x,
-				sin_z * src->x + src->z));
+	return (vec3f_fill(vec,
+				cos_z * vec->x - sin_z * vec->y,
+				cos_z * vec->y - sin_z * vec->x,
+				vec->z));
 }
