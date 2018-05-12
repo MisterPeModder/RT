@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/12 11:57:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/12 16:24:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,30 @@
 
 #include <stdio.h>
 
+/*
+   float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
+   {
+   float			a;
+   float			b;
+   float			c;
+   float			delta;
+
+   a = 
+   }
+*/
+
+
 float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	delta;
-	t_vec3f	tmp;
+	float			a;
+	float			b;
+	float			c;
+	float			delta;
+	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	c = cos(obj->props.cone.opening_angle)
-		* cos(obj->props.cone.opening_angle);
+	c = cos(obj->props.cone.opening_angle);
+	c *= c;
 	a = pow(vec3f_dot_product(u, &obj->props.cone.axis), 2) - c;
 	b = 2 * (vec3f_dot_product(u, &obj->props.cone.axis)
 			* vec3f_dot_product(&tmp, &obj->props.cone.axis)
@@ -49,21 +62,21 @@ float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	return (c);
 }
 
+
 void				cone_normal(t_object *o, t_rt_result *r)
 {
-//	t_real	m;
-//	t_real	k;
-	t_vec3f	normal;
-	t_vec2f	tmp;
+	t_vec3f			vs;
+	t_vec3f			n;
+	float			s;
+	t_vec3f			v;
 
-/*	m = dot_product(r->VECT_DIR, rt->curr_obj->vec) * r->LEN*//* + dot_product(rt->cam->pos*//* - p*//*, rt->curr_obj->vec)*//*;
-																															   k = vec3f_norm(vec3f_sub(r->pos, vec3f_add(o->pos, vec3f_mult(o->props.cone.axis, m, &normal), &normal), &normal)) / m;
-																															   vec3f_normalize(vec3f_sub(r->pos, vec3f_add(o->pos, vec3f_mult(o->props.cone.axis, m * (1 + k * k), &normal), &normal), &normal), &normal);*/
-	vec2f_fill(&tmp, r->pos.x, r->pos.y);
-	vec3f_cpy(&r->pos, &normal);
-	normal.z = vec2f_norm(&tmp) * sin(o->props.cone.opening_angle);
-	vec3f_normalize(&normal, &normal);
-	r->normal = normal;
+	s = vec3f_norm(vec3f_sub(&r->pos, &o->pos, &vs));
+	n = o->props.cone.axis;
+	if (vec3f_dot_product(&o->props.cone.axis, &vs) < 0)
+		vec3f_neg(&n, &n);
+	vec3f_mul(&n, s / cos(o->props.cone.opening_angle), &v);
+	vec3f_add(&o->pos, &v, &v);
+	vec3f_normalize(vec3f_sub(&r->pos, &v, &v), &r->normal);
 }
 
 int					cone_init(t_object *object, const t_json_object *data)

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 15:02:19 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/12 16:13:52 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b)
 }
 
 /*static uint8_t		cclamp(uint8_t c, float b)
-{
-	float			r;
+  {
+  float			r;
 
-	r = (float)c * b;
-	if (r > 255)
-		return (255);
-	return (r < 0.f ? 0 : (uint8_t)r);
-}*/
+  r = (float)c * b;
+  if (r > 255)
+  return (255);
+  return (r < 0.f ? 0 : (uint8_t)r);
+  }*/
 
 void				colorize(t_color color, t_color src, float comp[2])
 {
