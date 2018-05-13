@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 14:20:41 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 15:48:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	render_frame(&scene, img);
-	objs_release(scene.objs, scene.objs_num);
+	scene_release(&scene);
 	if (USE_MLX)
 		img_mlx_output(img);
 	else

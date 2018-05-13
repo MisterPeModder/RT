@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 13:02:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 15:19:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	color_fill(c, 0, 0, 0);
 	while (i < scene->lights_num)
 	{
-		vec3f_normalize(vec3f_sub(&scene->lights[i], &r->pos, &lvec), &lvec);
+		vec3f_normalize(vec3f_sub(&scene->lights[i].pos, &r->pos, &lvec), &lvec);
 		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
 		if (!raytrace(scene, &start, &lvec, &sink))
 		{
