@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 18:34:44 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/13 12:39:31 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,15 @@
 # include <stdint.h>
 # include <libft_math/vec3.h>
 
+/*
+** t_color: The color type.
+**          Entries are stored in the RGB format.
+*/
 typedef uint8_t		t_color[3];
 
+/*
+** t_obj_type: Contains each type of object currently available.
+*/
 typedef enum		e_obj_type
 {
 	OBJ_SPHERE = 1,
@@ -27,6 +34,9 @@ typedef enum		e_obj_type
 	OBJ_CYLINDER
 }					t_obj_type;
 
+/*
+** t_properties: Contains the special properties of objects.
+*/
 typedef union		u_properties
 {
 	struct {
@@ -43,6 +53,14 @@ typedef union		u_properties
 
 struct s_object;
 
+/*
+** t_rt_result: Stands for: RayTraceResult. Stores the infos about a ray.
+**
+** -obj: the touched object.
+** -pos: where the intersection is located.
+** -normal: normal vector of the surface at the intersection point.
+** -dist: distance of the intersection from the ray's origin.
+*/
 typedef struct		s_rt_result
 {
 	struct s_object	*obj;
@@ -51,6 +69,20 @@ typedef struct		s_rt_result
 	float			dist;
 }					t_rt_result;
 
+/*
+** t_object: Stores all the info about an object instance.
+**
+** -type: its type, see the t_obj_type enum for more info.
+** -pos: where the object is located.
+** -angle: its orientation.
+** -brightness: self explanatory.
+** -props: the properties of this object.
+** -release: a function that frees memory that has been allocated by the object.
+**           may be NULL.
+** -intersect: a function that computes the intersection between a ray
+**             and this object.
+** -normal: a function that computes the normal vector at the given position.
+*/
 typedef struct		s_object
 {
 	t_obj_type		type;
@@ -64,6 +96,12 @@ typedef struct		s_object
 	void			(*normal)(struct s_object *, t_rt_result *r);
 }					t_object;
 
+/*
+** OBJECT FUNCTIONS:
+**
+** each object must declare an initialization function, an intersect function,
+** a notmal function and optionnaly a release function.
+*/
 int					sphere_init(t_object *object, const t_json_object *data);
 float				sphere_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
 void				sphere_normal(t_object *o, t_rt_result *r);

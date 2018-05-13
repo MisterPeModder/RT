@@ -6,12 +6,26 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:36:32 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 17:47:00 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 13:03:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "rtv1.h"
+
+/*
+** make_cam: Parses the camera properties.
+**
+** -cam: the camera instance.
+** -data: the source JSON object.
+**
+** The camera requires the folliwing properties:
+** "pos": an array three numbers, mandatory.
+** "angle": an array of three angles, in degrees, optional.
+** "fov": a number in degrees, optionnal.
+**
+** returns: 0 if a parse error occoured, 1 otherwise.
+*/
 
 int					make_cam(t_cam *cam, const t_json_object *data)
 {

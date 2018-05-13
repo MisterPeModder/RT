@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 11:59:03 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 13:02:54 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,18 @@ static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img,
 	return (vec);
 }
 
-static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u,
+/*
+** raytrace: Handles the ray tracing operation.
+**
+** -scene: the scene instance.
+** -o: origin of the ray.
+** -u: unit vector (direction) of that ray.
+** -r: where the result will be stored.
+**
+** returns: 1 if an intersection has been found, 0 otherwise.
+*/
+
+static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 		t_rt_result *r)
 {
 	size_t			i;
@@ -57,6 +68,14 @@ static int			get_hitpos(t_scene *scene, t_vec3f *o, t_vec3f *u,
 	return (1);
 }
 
+/*
+** shading: Handles the shading using the Phong algorithm.
+**
+** -scene: the scene instance.
+** -r: the primary ray's raytrace result.
+** -c: where the color of the pixel will be stored.
+*/
+
 static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 {
 	size_t			i;
@@ -71,7 +90,7 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i], &r->pos, &lvec), &lvec);
 		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
-		if (!get_hitpos(scene, &start, &lvec, &sink))
+		if (!raytrace(scene, &start, &lvec, &sink))
 		{
 			component[0] = 0.5 * vec3f_dot_product(&lvec, &r->normal);
 			component[1] = vec3f_dot_product(&r->normal, &lvec);
@@ -85,6 +104,13 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 		++i;
 	}
 }
+
+/*
+** render_frame: Handles everything. Literally.
+**
+** -scene: the scene instance.
+** -img: the frame buffer instance.
+*/
 
 void				render_frame(t_scene *scene, t_img *img)
 {
@@ -100,7 +126,7 @@ void				render_frame(t_scene *scene, t_img *img)
 		while (j < img->w)
 		{
 			unit = compute_pixel_coor(scene, img, j, i);
-			if (!get_hitpos(scene, &scene->cam.pos, &unit, &r))
+			if (!raytrace(scene, &scene->cam.pos, &unit, &r))
 				color_fill(img->data[j][i], scene->bg_color[0],
 						scene->bg_color[1], scene->bg_color[2]);
 			else
