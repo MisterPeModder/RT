@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 13:08:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 12:09:57 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,29 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 	return (1);
 }
 
-static int			rel_error(const char *msg, t_json_object **obj)
+static int			scene_parse2(t_scene *scene, t_json_object *obj)
 {
-	if (msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
-	json_release((t_json_value **)obj);
-	return (0);
+	t_json_value	*tmp;
+
+	if (!(tmp = json_obj_get(obj, "lights")) || tmp->obj.type != JSON_ARRAY)
+	{
+		objs_release(scene->objs, scene->objs_num);
+		return (rel_error("No lights or invalid format", &obj));
+	}
+	if (!scene_lights(scene, &tmp->arr))
+	{
+		objs_release(scene->objs, scene->objs_num);
+		return (rel_error(NULL, &obj));
+	}
+	if ((tmp = json_obj_get(obj, "background_color")))
+	{
+		if (!color_from_json(tmp, scene->bg_color))
+			return (rel_error("Invalid background color", &obj) ||
+					objs_release(scene->objs, scene->objs_num));
+	}
+	else
+		color_fill(scene->bg_color, 0, 0, 0);
+	return (1);
 }
 
 int					scene_parse(t_scene *scene, const char *path)
@@ -115,20 +132,8 @@ int					scene_parse(t_scene *scene, const char *path)
 		return (rel_error("Invalid objects format", &obj));
 	if (!scene_objs(scene, &tmp->arr))
 		return (rel_error(NULL, &obj));
-	if (!(tmp = json_obj_get(obj, "lights")) || tmp->obj.type != JSON_ARRAY)
-		return (rel_error("No lights or invalid format", &obj) ||
-				objs_release(scene->objs, scene->objs_num));
-	if (!scene_lights(scene, &tmp->arr))
-		return (rel_error(NULL, &obj) ||
-				objs_release(scene->objs, scene->objs_num));
-	if ((tmp = json_obj_get(obj, "background_color")))
-	{
-		if (!color_from_json(tmp, scene->bg_color))
-			return (rel_error("Invalid background color", &obj) ||
-					objs_release(scene->objs, scene->objs_num));
-	}
-	else
-		color_fill(scene->bg_color, 0, 0, 0);
+	if (!scene_parse2(scene, obj))
+		return (0);
 	json_release((t_json_value **)&obj);
 	return (1);
 }

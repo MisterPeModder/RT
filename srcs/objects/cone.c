@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/12 17:31:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 12:21:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,46 @@
 #include <math.h>
 #include "rtv1.h"
 
+/*
+** cone_intersect: Calculates the distance between the intersection
+**                 of the ray and the cone and the ray origin.
+**
+** -obj: the cone object
+** -origin: the starting postion of the ray
+** -u: the ray's unit vector
+**
+** note: the i[] variable holds the a, b, and c parameters of the quadratic.
+**
+** returns: the distance, if an intersectection point has been found.
+**          Returns FLT_MAX otherwise.
+*/
+
 float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {
-	float			a;
-	float			b;
-	float			c;
+	float			i[3];
 	float			delta;
 	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	c = cos(obj->props.cone.opening_angle);
-	c *= c;
-	a = pow(vec3f_dot_product(u, &obj->props.cone.axis), 2) - c;
-	b = 2 * (vec3f_dot_product(u, &obj->props.cone.axis)
+	i[2] = cos(obj->props.cone.opening_angle);
+	i[2] *= i[2];
+	i[0] = pow(vec3f_dot_product(u, &obj->props.cone.axis), 2) - i[2];
+	i[1] = 2 * (vec3f_dot_product(u, &obj->props.cone.axis)
 			* vec3f_dot_product(&tmp, &obj->props.cone.axis)
-			- vec3f_dot_product(u, &tmp) * c);
-	c = vec3f_dot_product(&tmp, &obj->props.cone.axis)
+			- vec3f_dot_product(u, &tmp) * i[2]);
+	i[2] = vec3f_dot_product(&tmp, &obj->props.cone.axis)
 		* vec3f_dot_product(&tmp, &obj->props.cone.axis)
-		- vec3f_dot_product(&tmp, &tmp) * c;
-	delta = b * b - 4 * a * c;
+		- vec3f_dot_product(&tmp, &tmp) * i[2];
+	delta = i[1] * i[1] - 4 * i[0] * i[2];
 	if (delta < 0)
 		return (FLT_MAX);
 	else if (delta == 0)
-		c = -b / (2 * a);
-	else
-	{
-		c = (-b - sqrt(delta)) / (2 * a);
-		a = (-b + sqrt(delta)) / (2 * a);
-		c = c > a ? a : c;
-	}
-	return (c);
+		return (-i[1] / (2 * i[0]));
+	i[2] = (-i[1] - sqrt(delta)) / (2 * i[0]);
+	i[0] = (-i[1] + sqrt(delta)) / (2 * i[0]);
+	i[2] = i[2] > i[0] ? i[0] : i[2];
+	return (i[2]);
 }
-
 
 void				cone_normal(t_object *o, t_rt_result *r)
 {

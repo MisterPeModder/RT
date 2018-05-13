@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/07 18:05:56 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 11:56:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int					color_from_json(const t_json_value *arr, t_color color)
 {
 	t_json_value	*tmp;
 
-	if (!arr ||arr->arr.type != JSON_ARRAY || arr->arr.values_num != 3)
+	if (!arr || arr->arr.type != JSON_ARRAY || arr->arr.values_num != 3)
 		return (0);
 	if (!(tmp = json_arr_get(&arr->arr, 0)) || tmp->n_i.type != JSON_INT ||
 			tmp->n_i.value < 0 || tmp->n_i.value > 255)

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 15:03:59 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/13 12:02:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int					angle_from_json(const t_json_value *arr, t_vec3f *vec);
 ** ret_free: Frees the given pointer and returns NULL
 */
 void				*ret_free(void *obj);
+int					rel_error(const char *msg, t_json_object **obj);
 
 /*
 ** color_fill: Sets the red, green and blue values of the passed t_color.

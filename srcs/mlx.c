@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/10 17:47:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 11:57:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void				img_mlx_output(t_img *img)
 		x = 0;
 		while (x < img->w)
 		{
-			//c'est crade je sais...
 			mlx_pixel_put(mlx, win, (int)x, (int)y, 0 +
 					((int)img->data[x][y][0] << 16) +
 					((int)img->data[x][y][1] << 8) +
