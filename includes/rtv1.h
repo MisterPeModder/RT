@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 15:41:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 16:34:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,13 @@ t_vec3f				*rotate_x(t_vec3f *vec, float rx);
 t_vec3f				*rotate_y(t_vec3f *vec, float ry);
 t_vec3f				*rotate_z(t_vec3f *vec, float rz);
 
-# define USE_MLX 1
+/*
+** read_args: Parses argv.
+**
+** returns: -1 if an error occured, 0 if the program should output to
+**          a ppm image or 1 if it should display a window.
+*/
+int					read_args(int ac, char **av);
 
 void				img_ppm_output(t_img *img);
 void				img_mlx_output(t_img *img);

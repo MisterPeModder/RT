@@ -43,6 +43,7 @@ PRINT := printf
 NORM := norminette
 
 SRCS_NAMES :=	angle.c		\
+				args.c		\
 				cam.c		\
 				color.c		\
 				events.c	\
