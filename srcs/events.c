@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 14:20:41 by yguaye           ###   ########.fr       */
+/*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
+/*   Updated: 2018/05/13 14:29:50 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft_base/io.h>
 #include <unistd.h>
+#include "mlx_defs.h"
 #include "rtv1.h"
 
-int					main(int argc, char **argv)
+static int			exit_rtv1(t_img *img)
 {
-	t_img			*img;
-	t_scene			scene;
-
-	if (argc != 2)
-	{
-		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	if (!(img = img_make(900, 900)) || !scene_parse(&scene, argv[1]))
-	{
+	if (img)
 		img_release(&img);
-		return (EXIT_FAILURE);
-	}
-	render_frame(&scene, img);
-	objs_release(scene.objs, scene.objs_num);
-	if (USE_MLX)
-		img_mlx_output(img);
-	else
-		img_ppm_output(img);
+	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
+}
+
+int					on_key_released(int key, void *img)
+{
+	if (key == ESC_KEY)
+		return (exit_rtv1(img));
+	return (0);
+}
+
+int					on_window_closing(void *img)
+{
+	return (exit_rtv1(img));
 }

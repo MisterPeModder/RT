@@ -45,6 +45,7 @@ NORM := norminette
 SRCS_NAMES :=	angle.c		\
 				cam.c		\
 				color.c		\
+				events.c	\
 				from_json.c	\
 				img.c		\
 				lights.c	\
@@ -64,7 +65,8 @@ SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	objects.h	\
+INCS :=	mlx_defs.h	\
+		objects.h	\
 		rtv1.h		\
 
 # THE NORM IS REAL

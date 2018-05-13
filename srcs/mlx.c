@@ -6,11 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 11:57:16 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 14:30:37 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
+#include "mlx_defs.h"
 #include "rtv1.h"
 
 void				img_mlx_output(t_img *img)
@@ -22,7 +23,8 @@ void				img_mlx_output(t_img *img)
 
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, (int)img->w, (int)img->h, "rtv1");
-	mlx_hook(win, X11_DESTROYNOTIFY, X11_STRUCTURENOTIFYMASK, &exit_rtv1, img);
+	mlx_hook(win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, &on_window_closing, img);
+	mlx_key_hook(win, &on_key_released, img);
 	y = 0;
 	while (y < img->h)
 	{

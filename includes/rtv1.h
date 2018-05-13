@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 12:02:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 14:18:18 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ typedef struct		s_scene
 	size_t			lights_num;
 	t_color			bg_color;
 }					t_scene;
-
-/*
-** exit_rtv1: Exits the program.
-*/
-int					exit_rtv1(t_img *img);
 
 /*
 ** img_make: Allocates memory for image and initializes it.
@@ -148,9 +143,6 @@ t_vec3f				*rotate_y(t_vec3f *vec, float ry);
 t_vec3f				*rotate_z(t_vec3f *vec, float rz);
 
 # define USE_MLX 1
-
-# define X11_DESTROYNOTIFY 17
-# define X11_STRUCTURENOTIFYMASK (1L << 17)
 
 void				img_ppm_output(t_img *img);
 void				img_mlx_output(t_img *img);
