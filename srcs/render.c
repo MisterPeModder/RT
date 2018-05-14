@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 16:43:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/14 17:05:28 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,13 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i].pos, &r->pos, &lvec),
 				&lvec);
-		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.0001, &start), &start);
-		if (!raytrace(scene, &start, &lvec, &sink))
+		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.001, &start), &start);
+//		start = r->pos;
+		if (!raytrace(scene, &start, &lvec, &sink)
+			|| vec3f_norm(vec3f_sub(&scene->lights[i].pos, &r->pos, &start))
+			< sink.dist)
 		{
-			component[0] = 0.5 * vec3f_dot_product(&lvec, &r->normal);
+			component[0] = vec3f_dot_product(&lvec, &r->normal);
 			component[1] = vec3f_dot_product(&r->normal, &lvec);
 			component[1] = component[1] < 0 ? 0 : component[1];
 			component[1] = pow(vec3f_dot_product(vec3f_sub(

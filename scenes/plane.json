@@ -1,0 +1,41 @@
+{
+	"background_color": [0, 0, 0],
+	"camera": {
+		"pos": [0, 0, 7],
+		"fov": 90
+	},
+	"objects": [
+		{
+			"type": "sphere",
+			"pos": [0, 0, -5],
+			"radius":2,
+			"color": [255, 0, 0]
+		},
+		{
+			"type": "plane",
+			"pos": [0, 0, -9],
+			"angle": [90, 0, 0],
+			"color": [0, 0, 255]
+		},
+		{
+			"type": "cylinder",
+			"pos": [5, 0, -3],
+			"angle": [90, 0, 0],
+			"radius": 1,
+			"color": [123, 123, 123]
+		}/*,
+		{
+			"type": "cone",
+			"pos": [5, 0, -3],
+			"angle": [0, 0, 0],
+			"open_angle": 10,
+			"color": [123, 123, 123]
+		}*/
+	],
+	"lights": [
+		{
+			"pos": [3, 2, 7]
+		}
+	]
+}
+			

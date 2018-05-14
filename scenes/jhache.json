@@ -33,22 +33,22 @@
 			"angle": [0, 0, 0],
 			"brightness": 1,
 			"color": [18, 99, 229] //blue*/
-		}/*,
+		},
 		{
 			"type": "plane",
 			"pos": [-20, -5.0, -10.0],
 			"angle": [90, 45, 0],
 			"brightness": 1,
-			"color": [18, 56, 164] //blue
-		}*///,
-		/*{
-			"type": "cone",
-			"pos": [0, 2, -3],
+			"color": [247, 78, 17] //blue
+		}/*,
+		{
+			"type": "cylinder",
+			"pos": [-6, 2, -3],
 			"angle": [0, 0, 0],//normal = (0, 1, 0)
-			"opening_angle": 45,//* M_PI / 180
-			"brightness": 0.5,
+			"radius": 3,
+			"brightness": 1,
 			"color": [255, 0, 0]
-		},*/
+		}
 		/*{
 			"type": "sphere",
 			"pos": [0, 0, -30],
@@ -59,12 +59,12 @@
 	],
 	"lights": [
 		{
-			"pos": [-5, 10, 0]
-		},
+			"pos": [3, 10, 3]
+		}/*,
 		{
 			"pos": [5, 5, 0],
 			"power": 1,
 			"color": [255, 255, 0]
-		}
+		}*/
 	]
 }
