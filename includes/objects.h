@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 12:39:31 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/14 15:45:16 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ typedef union		u_properties
 		t_vec3f		axis;
 		float		opening_angle;
 	}				cone;
+	struct {
+		t_vec3f		axis;
+		float		radius;
+	}				cylinder;
 }					t_properties;
 
 struct s_object;
@@ -113,4 +117,9 @@ void				plane_normal(t_object *o, t_rt_result *r);
 int					cone_init(t_object *object, const t_json_object *data);
 float				cone_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
 void				cone_normal(t_object *o, t_rt_result *r);
+
+int					cylinder_init(t_object *object, const t_json_object *data);
+float				cylinder_intersect(t_object *o, t_vec3f *origin,
+							t_vec3f *u);
+void				cylinder_normal(t_object *o, t_rt_result *r);
 #endif
