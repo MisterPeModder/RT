@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/14 15:45:26 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/14 17:14:12 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@
 #include "rtv1.h"
 
 /*
-** cylidner_intersect: Calculates the distance between the intersection!!!!!!!!!!!!
-**                 of the ray and the cone and the ray origin.
+** cylinder_intersect: Calculates the distance between the intersection
+**						of the ray and the cylinder and the ray origin.
 **
-** -obj: the cone object
+** -obj: the cylinder object
 ** -origin: the starting postion of the ray
 ** -u: the ray's unit vector
 **
-** note: the i[] variable holds the a, b, and c parameters of the quadratic.
-**
 ** returns: the distance, if an intersectection point has been found.
-**          Returns FLT_MAX otherwise.
+**			Returns FLT_MAX otherwise.
 */
 
 float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
@@ -38,7 +36,8 @@ float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	a = vec3f_dot_product(u, u) - vec3f_dot_product(u, &obj->props.cylinder.axis) * vec3f_dot_product(u, &obj->props.cylinder.axis);
+	a = vec3f_dot_product(u, &obj->props.cylinder.axis);
+	a = vec3f_dot_product(u, u) - a * a;
 	b = 2 * (vec3f_dot_product(u, &tmp) - vec3f_dot_product(u, &obj->props.cylinder.axis) * vec3f_dot_product(&tmp, &obj->props.cylinder.axis));
 	c = vec3f_dot_product(&tmp, &tmp) - pow(vec3f_dot_product(&tmp, &obj->props.cylinder.axis), 2) - obj->props.cylinder.radius * obj->props.cylinder.radius;
 	delta = b * b - 4 * a * c;
