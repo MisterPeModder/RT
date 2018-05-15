@@ -1,6 +1,6 @@
 //The corresponding scene file for early jhache's hardcoded scene.
 {
-	"background_color": [0, 0, 0],
+	"background_color": [0, 0, 10],
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90
@@ -40,7 +40,7 @@
 			"angle": [90, 45, 0],
 			"brightness": 1,
 			"color": [247, 78, 17] //blue
-		}/*,
+		},
 		{
 			"type": "cylinder",
 			"pos": [-6, 2, -3],
@@ -48,6 +48,13 @@
 			"radius": 3,
 			"brightness": 1,
 			"color": [255, 0, 0]
+		},
+		{
+			"type": "cone",
+			"pos": [15, 2, -12],
+			"opening_angle": 30,
+			"color": [244, 197, 66],
+			"angle": [0, 0, 30]
 		}
 		/*{
 			"type": "sphere",
@@ -59,12 +66,13 @@
 	],
 	"lights": [
 		{
-			"pos": [3, 10, 3]
-		}/*,
+			"pos": [3, 10, 3],
+			"color": [255, 0, 0]
+		},
 		{
 			"pos": [5, 5, 0],
 			"power": 1,
 			"color": [255, 255, 0]
-		}*/
+		}
 	]
 }

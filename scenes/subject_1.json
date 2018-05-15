@@ -1,0 +1,20 @@
+{
+	"objects": [
+		{
+			"type": "sphere",
+			"pos": [0, 0, -5],
+			"color": [80, 0, 0],
+			"radius": 1
+		}
+	],
+	"lights": [
+		{
+			"pos": [4, 0, 2],
+			"power": 0.8
+		}
+	],
+	"camera": {
+		"pos": [0, 0, 0],
+		"angle": [0, 0, 25]
+	}
+}

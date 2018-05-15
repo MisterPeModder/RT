@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 16:34:45 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/13 17:17:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_light
 {
 	t_vec3f			pos;
 	float			power;
-	t_color			color;
+	t_vec3f			color;
 }					t_light;
 
 /*
@@ -123,9 +123,11 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 ** -color: where the result is stored
 ** -src: the color to be added to 'color'
 ** -comp[2]: the diffuse and specular component
-**	(between 0 and 1) of the computed color.
+**           (between 0 and 1) of the computed color.
+** -light_color: a 3d vector containing the light's color.
 */
-void				colorize(t_color color, t_color src, float comp[2]);
+void				colorize(t_color color, t_color src, float comp[2],
+		t_vec3f *light_color);
 
 /*
 ** scene_parse: Parses the scene JSON file.

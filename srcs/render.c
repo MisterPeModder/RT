@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/14 17:05:28 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/15 12:54:21 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	float			component[2];
 
 	i = 0;
-	color_fill(c, 0, 0, 0);
+	color_fill(c, (float)r->obj->color[0] * .1, (float)r->obj->color[1] * .1, (float)r->obj->color[2] * .1);
 	while (i < scene->lights_num)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i].pos, &r->pos, &lvec),
@@ -93,16 +93,16 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.001, &start), &start);
 //		start = r->pos;
 		if (!raytrace(scene, &start, &lvec, &sink)
-			|| vec3f_norm(vec3f_sub(&scene->lights[i].pos, &r->pos, &start))
-			< sink.dist)
+				|| vec3f_norm(vec3f_sub(&scene->lights[i].pos, &r->pos, &start))
+				< sink.dist)
 		{
-			component[0] = vec3f_dot_product(&lvec, &r->normal);
+			component[0] = scene->lights[i].power * vec3f_dot_product(&lvec, &r->normal);
 			component[1] = vec3f_dot_product(&r->normal, &lvec);
 			component[1] = component[1] < 0 ? 0 : component[1];
 			component[1] = pow(vec3f_dot_product(vec3f_sub(
 							vec3f_mul(&r->normal, 2 * component[1], &start),
-							&r->normal, &start), &lvec), 60) * 0.5;
-			colorize(c, r->obj->color, component);
+							&r->normal, &start), &lvec), 40) * scene->lights[i].power;
+			colorize(c, r->obj->color, component, &scene->lights[i].color);
 		}
 		++i;
 	}
