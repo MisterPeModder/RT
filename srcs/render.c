@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 12:54:21 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 17:11:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img,
 	float			fov;
 
 	fov = tan(scene->cam.fov / 2);
-	vec.x = (2 * ((pix_x + 0.5) / img->w) - 1) * (img->w / img->h) * fov;
+	vec.x = (2 * ((pix_x + 0.5) / img->w) - 1) * img->w / (float)img->h * fov;
 	vec.y = (1 - 2 * ((pix_y + 0.5) / img->h)) * fov;
 	vec.z = -1;
 	vec3f_normalize(&vec, &vec);
@@ -91,7 +91,6 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 		vec3f_normalize(vec3f_sub(&scene->lights[i].pos, &r->pos, &lvec),
 				&lvec);
 		vec3f_add(&r->pos, vec3f_mul(&lvec, 0.001, &start), &start);
-//		start = r->pos;
 		if (!raytrace(scene, &start, &lvec, &sink)
 				|| vec3f_norm(vec3f_sub(&scene->lights[i].pos, &r->pos, &start))
 				< sink.dist)

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 15:32:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 17:24:06 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 /*
 ** IMG_W, IMG_H: The image's width and height.
 */
-# define IMG_W 900
-# define IMG_H 900
+# define IMG_W 1200
+# define IMG_H 675
 
 /*
 ** t_img: The frame buffer
