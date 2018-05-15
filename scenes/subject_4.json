@@ -1,0 +1,113 @@
+{
+	"camera": {
+		"pos": [0, 4, 3.5],
+		"fov": 80
+	},
+	"lights": [
+		{
+			"pos": [-15, 4, 10],
+			"color": [255, 127, 0]
+		},
+		{
+			"pos": [15, 4, 10],
+			"color": [0, 127, 255]
+		}
+	],
+	"objects": [
+		{
+			"type": "plane",
+			"pos": [0, 0, 0],
+			"color": [150, 150, 150]
+		},
+		{
+			"type": "plane",
+			"pos": [0, 8, 0],
+			"color": [50, 50, 50],
+			"angle": [180, 0, 0]
+		},
+		{
+			"type": "plane",
+			"pos": [0, 0, -20],
+			"color": [9, 65, 155],
+			"angle": [90, 0, 0]
+		},
+		{
+			"type": "cylinder",
+			"pos": [-5, 0, -5],
+			"color": [100, 100, 100],
+			"radius": 1
+		},
+		{
+			"type": "sphere",
+			"pos": [-5, 0, -5],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "sphere",
+			"pos": [-5, 8, -5],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "cylinder",
+			"pos": [-5, 0, -15],
+			"color": [100, 100, 100],
+			"radius": 1
+		},
+		{
+			"type": "sphere",
+			"pos": [-5, 0, -15],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "sphere",
+			"pos": [-5, 8, -15],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "cylinder",
+			"pos": [5, 0, -5],
+			"color": [100, 100, 100],
+			"radius": 1
+		},
+		{
+			"type": "sphere",
+			"pos": [5, 0, -5],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "sphere",
+			"pos": [5, 8, -5],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "cylinder",
+			"pos": [5, 0, -15],
+			"color": [100, 100, 100],
+			"radius": 1
+		},
+		{
+			"type": "sphere",
+			"pos": [5, 0, -15],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "sphere",
+			"pos": [5, 8, -15],
+			"color": [100, 100, 100],
+			"radius": 1.5
+		},
+		{
+			"type": "sphere",
+			"pos": [0, 0.8, -5],
+			"radius": 0.5,
+			"color": [255, 0, 0]
+		}
+	]
+}
