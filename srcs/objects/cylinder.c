@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/14 17:14:12 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/15 15:34:52 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 /*
 ** cylinder_intersect: Calculates the distance between the intersection
-**						of the ray and the cylinder and the ray origin.
+**                     of the ray and the cylinder and the ray origin.
 **
 ** -obj: the cylinder object
 ** -origin: the starting postion of the ray
 ** -u: the ray's unit vector
 **
-** returns: the distance, if an intersectection point has been found.
+** returns: the distance, if an intersection point has been found.
 **			Returns FLT_MAX otherwise.
 */
 
@@ -71,7 +71,7 @@ int					cylinder_init(t_object *object, const t_json_object *data)
 	rotate_y(&object->props.cylinder.axis, object->angle.y);
 	rotate_z(&object->props.cylinder.axis, object->angle.z);
 	if (!float_from_json(json_obj_get(data, "radius"),
-						&object->props.cylinder.radius))
+				&object->props.cylinder.radius))
 		return (0);
 	return (1);
 }

@@ -6,15 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:16:17 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/11 21:21:24 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/15 15:35:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <float.h>
 #include <math.h>
 #include "rtv1.h"
-
-#include <stdio.h>
 
 float				sphere_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {

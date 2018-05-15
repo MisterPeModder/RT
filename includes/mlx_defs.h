@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 14:23:58 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 15:34:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@
 */
 int					on_key_released(int key, void *img);
 int					on_window_closing(void *img);
-
 
 #endif
