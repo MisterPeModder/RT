@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/15 16:17:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 16:47:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 ** hit_height = ph . axis
 ** h_pos = hit_height * axis
 ** normal = (hitpos - h_pos) normalized.
+**
+** normal = hitpos - ((hitpos - objpos) . axis) * axis [normalized]
 */
 
 void				cylinder_normal(t_object *o, t_rt_result *r)
