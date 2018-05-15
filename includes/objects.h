@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/14 15:45:16 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/15 18:23:36 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ typedef struct		s_rt_result
 ** -intersect: a function that computes the intersection between a ray
 **             and this object.
 ** -normal: a function that computes the normal vector at the given position.
+**
+** -inside: a function thats tells if the given point is behind/inside
+**          the object. Used for backface rendering.
 */
 typedef struct		s_object
 {
@@ -98,6 +101,7 @@ typedef struct		s_object
 	void			(*release)(struct s_object *);
 	float			(*intersect)(struct s_object *, t_vec3f *, t_vec3f *);
 	void			(*normal)(struct s_object *, t_rt_result *r);
+	int				(*inside)(struct s_object *, const t_vec3f *);
 }					t_object;
 
 /*
@@ -113,6 +117,7 @@ void				sphere_normal(t_object *o, t_rt_result *r);
 int					plane_init(t_object *object, const t_json_object *data);
 float				plane_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
 void				plane_normal(t_object *o, t_rt_result *r);
+int					plane_behind(t_object *object, const t_vec3f *pos);
 
 int					cone_init(t_object *object, const t_json_object *data);
 float				cone_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
@@ -120,6 +125,6 @@ void				cone_normal(t_object *o, t_rt_result *r);
 
 int					cylinder_init(t_object *object, const t_json_object *data);
 float				cylinder_intersect(t_object *o, t_vec3f *origin,
-							t_vec3f *u);
+		t_vec3f *u);
 void				cylinder_normal(t_object *o, t_rt_result *r);
 #endif

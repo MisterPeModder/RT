@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/15 15:37:51 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 18:13:48 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int					cone_init(t_object *object, const t_json_object *data)
 	object->release = NULL;
 	object->intersect = &cone_intersect;
 	object->normal = &cone_normal;
+	object->inside = NULL;
 	vec3f_fill(&object->props.cone.axis, 0, 1, 0);
 	rotate_x(&object->props.cone.axis, object->angle.x);
 	rotate_y(&object->props.cone.axis, object->angle.y);
