@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/13 12:21:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 15:37:51 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int					cone_init(t_object *object, const t_json_object *data)
 	rotate_y(&object->props.cone.axis, object->angle.y);
 	rotate_z(&object->props.cone.axis, object->angle.z);
 	if (!float_from_json(json_obj_get(data, "opening_angle"),
-				&object->props.cone.opening_angle) &&
-			object->props.cone.opening_angle <= 0 &&
+				&object->props.cone.opening_angle) ||
+			object->props.cone.opening_angle <= 0 ||
 			object->props.cone.opening_angle >= 90)
 		return (0);
 	object->props.cone.opening_angle *= M_PI / 180;
