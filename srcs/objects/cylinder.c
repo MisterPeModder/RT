@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/15 15:34:52 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 16:17:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 ** -u: the ray's unit vector
 **
 ** returns: the distance, if an intersection point has been found.
-**			Returns FLT_MAX otherwise.
+**          Returns FLT_MAX otherwise.
 */
 
 float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
@@ -51,14 +51,26 @@ float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	return (c);
 }
 
+/*
+** cylinder_normal: Computes the normal vector at the intersection point.
+**
+** formula:
+** ph (vector) = hitpos - objpos
+** hit_height = ph . axis
+** h_pos = hit_height * axis
+** normal = (hitpos - h_pos) normalized.
+*/
+
 void				cylinder_normal(t_object *o, t_rt_result *r)
 {
-	r->normal = o->pos;
-	r->normal.y = r->pos.y;
-	rotate_x(&r->normal, o->angle.x);
-	rotate_y(&r->normal, o->angle.y);
-	rotate_z(&r->normal, o->angle.z);
-	vec3f_normalize(vec3f_sub(&r->pos, &r->normal, &r->normal), &r->normal);
+	t_vec3f			ph;
+	t_vec3f			h_pos;
+
+	vec3f_sub(&r->pos, &o->pos, &ph);
+	vec3f_add(vec3f_mul(&o->props.cylinder.axis,
+				vec3f_dot_product(&ph, &o->props.cylinder.axis), &h_pos),
+			&o->pos, &h_pos);
+	vec3f_normalize(vec3f_sub(&r->pos, &h_pos, &r->normal), &r->normal);
 }
 
 int					cylinder_init(t_object *object, const t_json_object *data)
