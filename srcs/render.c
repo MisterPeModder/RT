@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 14:34:15 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:40:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 		++i;
 	}
 }
-
 
 /*
 ** render_frame: Handles everything. Literally.
