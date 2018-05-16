@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 14:47:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:24:43 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct		s_scene
 	t_light			*lights;
 	size_t			objs_num;
 	size_t			lights_num;
-	t_color			bg_color;
+	t_vec3f			bg_color;
 }					t_scene;
 
 /*
@@ -109,7 +109,7 @@ float				to_degrees(float rad);
 */
 int					float_from_json(const t_json_value *val, float *f);
 int					vec3f_from_json(const t_json_value *arr, t_vec3f *vec);
-int					color_from_json(const t_json_value *arr, t_color color);
+int					color_from_json(const t_json_value *arr, t_vec3f *color);
 int					angle_from_json(const t_json_value *arr, t_vec3f *vec);
 
 /*
@@ -134,7 +134,7 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 ** -c: where the color of the pixel will be stored.
 */
 void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
-		t_color c);
+		t_vec3f *c);
 
 /*
 ** scene_parse: Parses the scene JSON file.

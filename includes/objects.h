@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/14 15:45:16 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:55:11 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct		s_object
 	t_obj_type		type;
 	t_vec3f			pos;
 	t_vec3f			angle;
-	t_color			color;
+	t_vec3f			color;
 	float			brightness;
 	t_properties	props;
 	void			(*release)(struct s_object *);
@@ -120,6 +120,6 @@ void				cone_normal(t_object *o, t_rt_result *r);
 
 int					cylinder_init(t_object *object, const t_json_object *data);
 float				cylinder_intersect(t_object *o, t_vec3f *origin,
-							t_vec3f *u);
+		t_vec3f *u);
 void				cylinder_normal(t_object *o, t_rt_result *r);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 14:49:45 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:26:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,17 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b)
 ** -light_color: a 3d vector containing the light's color.
 */
 
-static void			add_components(t_color color, t_color src, float comp[2],
+static void			add_components(t_vec3f *color, t_vec3f *src, float comp[2],
 		t_vec3f *light_color)
 {
-	float	r;
-	float	g;
-	float	b;
-	t_vec3f	s_color;
-
-	vec3f_fill(&s_color, src[0], src[1], src[2]);
-	vec3f_div(&s_color, 255, &s_color);
 	comp[0] = comp[0] < 0 ? 0 : comp[0];
 	comp[1] = comp[1] < 0 ? 0 : comp[1];
-	r = (float)color[0] + (s_color.x * comp[0] + comp[1]) * light_color->x
-		* 255;
-	g = (float)color[1] + (s_color.y * comp[0] + comp[1]) * light_color->y
-		* 255;
-	b = (float)color[2] + (s_color.z * comp[0] + comp[1]) * light_color->z
-		* 255;
-	color[0] = ((r > 255) ? 255 : r);
-	color[1] = ((g > 255) ? 255 : g);
-	color[2] = ((b > 255) ? 255 : b);
+	color->x += (src->x * comp[0] + comp[1]) * light_color->x;
+	color->y += (src->y * comp[0] + comp[1]) * light_color->y;
+	color->z += (src->z * comp[0] + comp[1]) * light_color->z;
+	color->x = color->x > 1.f ? 1.f : color->x;
+	color->y = color->y > 1.f ? 1.f : color->y;
+	color->z = color->z > 1.f ? 1.f : color->z;
 }
 
 /*
@@ -65,7 +55,7 @@ static void			add_components(t_color color, t_color src, float comp[2],
 */
 
 void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
-		t_color c)
+		t_vec3f *c)
 {
 	float			component[2];
 	t_vec3f			tmp;
@@ -77,5 +67,5 @@ void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
 	component[1] = pow(vec3f_dot_product(vec3f_sub(
 					vec3f_mul(&r->normal, 2 * component[1], &tmp),
 					&r->normal, &tmp), &lvec), 40) * light.power;
-	add_components(c, r->obj->color, component, &light.color);
+	add_components(c, &r->obj->color, component, &light.color);
 }

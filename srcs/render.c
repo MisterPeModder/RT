@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 14:47:47 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:35:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 ** -c: where the color of the pixel will be stored.
 */
 
-static void			shading(t_scene *scene, t_rt_result *r, t_color c)
+static void			shading(t_scene *scene, t_rt_result *r, t_vec3f *c)
 {
 	size_t			i;
 	t_vec3f			lvec;
@@ -84,8 +84,7 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	t_vec3f			start;
 
 	i = 0;
-	color_fill(c, (float)r->obj->color[0] * .1, (float)r->obj->color[1] * .1,
-			(float)r->obj->color[2] * .1);
+	vec3f_div(&r->obj->color, 10, c);
 	while (i < scene->lights_num)
 	{
 		vec3f_normalize(vec3f_sub(&scene->lights[i].pos, &r->pos, &lvec),
@@ -112,6 +111,7 @@ void				render_frame(t_scene *scene, t_img *img)
 	unsigned int	j;
 	t_vec3f			unit;
 	t_rt_result		r;
+	t_vec3f			c;
 
 	i = 0;
 	while (i < img->h)
@@ -121,11 +121,10 @@ void				render_frame(t_scene *scene, t_img *img)
 		{
 			unit = compute_pixel_coor(scene, img, j, i);
 			if (!raytrace(scene, &scene->cam.pos, &unit, &r))
-				color_fill(img->data[j][i], scene->bg_color[0],
-						scene->bg_color[1], scene->bg_color[2]);
+				vec3f_cpy(&scene->bg_color, &c);
 			else
-				shading(scene, &r, img->data[j][i]);
-			++j;
+				shading(scene, &r, &c);
+			color_fill(img->data[j++][i], c.x * 255, c.y * 255, c.z * 255);
 		}
 		++i;
 	}

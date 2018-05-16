@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 12:09:57 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:40:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,12 @@ static int			scene_parse2(t_scene *scene, t_json_object *obj)
 	}
 	if ((tmp = json_obj_get(obj, "background_color")))
 	{
-		if (!color_from_json(tmp, scene->bg_color))
+		if (!color_from_json(tmp, &scene->bg_color))
 			return (rel_error("Invalid background color", &obj) ||
 					objs_release(scene->objs, scene->objs_num));
 	}
 	else
-		color_fill(scene->bg_color, 0, 0, 0);
+		vec3f_fill(&scene->bg_color, 0, 0, 0);
 	return (1);
 }
 

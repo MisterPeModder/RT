@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/14 14:35:26 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:41:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int					obj_make(t_object *object, const t_json_object *data)
 		vec3f_fill(&object->angle, 0, 0, 0);
 	if ((tmp = json_obj_get(data, "color")))
 	{
-		if (!color_from_json(tmp, object->color))
+		if (!color_from_json(tmp, &object->color))
 			return (0);
 	}
 	else
-		color_fill(object->color, 255, 255, 255);
+		vec3f_fill(&object->color, 1, 1, 1);
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);

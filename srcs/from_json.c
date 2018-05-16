@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 11:56:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:06:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int					angle_from_json(const t_json_value *arr, t_vec3f *vec)
 	return (1);
 }
 
-int					color_from_json(const t_json_value *arr, t_color color)
+int					color_from_json(const t_json_value *arr, t_vec3f *color)
 {
 	t_json_value	*tmp;
 
@@ -60,14 +60,14 @@ int					color_from_json(const t_json_value *arr, t_color color)
 	if (!(tmp = json_arr_get(&arr->arr, 0)) || tmp->n_i.type != JSON_INT ||
 			tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
-	color[0] = tmp->n_i.value;
+	color->x = tmp->n_i.value / 255.f;
 	if (!(tmp = json_arr_get(&arr->arr, 1)) || tmp->n_i.type != JSON_INT ||
 			tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
-	color[1] = tmp->n_i.value;
+	color->y = tmp->n_i.value / 255.f;
 	if (!(tmp = json_arr_get(&arr->arr, 2)) || tmp->n_i.type != JSON_INT ||
 			tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
-	color[2] = tmp->n_i.value;
+	color->z = tmp->n_i.value / 255.f;
 	return (1);
 }
