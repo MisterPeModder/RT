@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 14:40:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:47:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,6 @@ static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 }
 
 /*
-** compute_color: Compute the Diffuse and the Specular components of the color.
-**         Colorize is the function which will
-**         add those components into one color.
-** -light: the light's data structure we are using for computing the color.
-** -lvec: a vector which is going from the intersection point
-**        to the light coord.
-** -r: the primary ray's raytrace result.
-** -c: where the color of the pixel will be stored.
-*/
-
-static void			compute_color(t_light light, t_vec3f lvec, t_rt_result r,
-		t_color c)
-{
-	float			component[2];
-	t_vec3f			tmp;
-
-	component[0] = light.power
-		* vec3f_dot_product(&lvec, &r->normal);
-	component[1] = vec3f_dot_product(&r->normal, &lvec);
-	component[1] = component[1] < 0 ? 0 : component[1];
-	component[1] = pow(vec3f_dot_product(vec3f_sub(
-					vec3f_mul(&r->normal, 2 * component[1], &tmp),
-					&r->normal, &tmp), &lvec), 40) * light.power;
-	colorize(c, r->obj->color, component, &light.color);
-}
-
-/*
 ** shading: Handles the shading using the Phong algorithm.
 **
 ** -scene: the scene instance.
@@ -109,7 +82,6 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 	t_vec3f			lvec;
 	t_rt_result		sink;
 	t_vec3f			start;
-	float			component[2];
 
 	i = 0;
 	color_fill(c, (float)r->obj->color[0] * .1, (float)r->obj->color[1] * .1,
@@ -122,7 +94,7 @@ static void			shading(t_scene *scene, t_rt_result *r, t_color c)
 		if (!raytrace(scene, &start, &lvec, &sink)
 				|| vec3f_norm(vec3f_sub(&scene->lights[i].pos, &r->pos, &start))
 				< sink.dist)
-			compute_color(scene->lights[i], lvec, r, c);
+			colorize(scene->lights[i], lvec, r, c);
 		++i;
 	}
 }

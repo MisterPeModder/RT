@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 17:24:06 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:47:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,17 @@ int					rel_error(const char *msg, t_json_object **obj);
 void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 
 /*
-** colorize: Adds the color 'src' to the color 'color'.
-**
-** -color: where the result is stored
-** -src: the color to be added to 'color'
-** -comp[2]: the diffuse and specular component
-**           (between 0 and 1) of the computed color.
-** -light_color: a 3d vector containing the light's color.
+** compute_color: Compute the Diffuse and the Specular components of the color.
+**         Colorize is the function which will
+**         add those components into one color.
+** -light: the light's data structure we are using for computing the color.
+** -lvec: a vector which is going from the intersection point
+**        to the light coord.
+** -r: the primary ray's raytrace result.
+** -c: where the color of the pixel will be stored.
 */
-void				colorize(t_color color, t_color src, float comp[2],
-		t_vec3f *light_color);
+void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
+		t_color c);
 
 /*
 ** scene_parse: Parses the scene JSON file.
