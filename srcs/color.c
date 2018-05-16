@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 15:26:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 17:45:11 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
 	float			component[2];
 	t_vec3f			tmp;
 
-	component[0] = light.power
-		* vec3f_dot_product(&lvec, &r->normal);
 	component[1] = vec3f_dot_product(&r->normal, &lvec);
-	component[1] = component[1] < 0 ? 0 : component[1];
-	component[1] = pow(vec3f_dot_product(vec3f_sub(
-					vec3f_mul(&r->normal, 2 * component[1], &tmp),
-					&r->normal, &tmp), &lvec), 40) * light.power;
+	component[0] = light.power * component[1];
+	if (component[1] < 0)
+		component[1] = 0;
+	else
+	{
+		component[1] = pow(vec3f_dot_product(vec3f_sub(
+						vec3f_mul(&r->normal, 2 * component[1], &tmp),
+						&r->normal, &tmp), &lvec), 40) * light.power;
+	}
 	add_components(c, &r->obj->color, component, &light.color);
 }
