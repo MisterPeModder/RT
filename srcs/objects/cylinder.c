@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/15 16:47:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:32:50 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 **          Returns FLT_MAX otherwise.
 */
 
-float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
+float				cylinder_intersect(t_object *obj, t_vec3f *origin,
+		t_vec3f *u)
 {
 	float			a;
 	float			b;
@@ -38,8 +39,12 @@ float				cylinder_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	vec3f_sub(origin, &obj->pos, &tmp);
 	a = vec3f_dot_product(u, &obj->props.cylinder.axis);
 	a = vec3f_dot_product(u, u) - a * a;
-	b = 2 * (vec3f_dot_product(u, &tmp) - vec3f_dot_product(u, &obj->props.cylinder.axis) * vec3f_dot_product(&tmp, &obj->props.cylinder.axis));
-	c = vec3f_dot_product(&tmp, &tmp) - pow(vec3f_dot_product(&tmp, &obj->props.cylinder.axis), 2) - obj->props.cylinder.radius * obj->props.cylinder.radius;
+	b = 2 * (vec3f_dot_product(u, &tmp)
+		- vec3f_dot_product(u, &obj->props.cylinder.axis)
+		* vec3f_dot_product(&tmp, &obj->props.cylinder.axis));
+	c = vec3f_dot_product(&tmp, &tmp)
+		- pow(vec3f_dot_product(&tmp, &obj->props.cylinder.axis), 2)
+		- obj->props.cylinder.radius * obj->props.cylinder.radius;
 	delta = b * b - 4 * a * c;
 	if (delta < 0)
 		return (FLT_MAX);
