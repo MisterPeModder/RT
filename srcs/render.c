@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 18:16:19 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 17:11:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 	vec3f_mul(u, d, &r->pos);
 	vec3f_add(o, &r->pos, &r->pos);
 	r->obj->normal(r->obj, r);
-	if (r->obj->inside && r->obj->inside(r->obj, o))
-		vec3f_neg(&r->normal, &r->normal);
 	return (1);
 }
 

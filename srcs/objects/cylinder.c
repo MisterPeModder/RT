@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/15 18:13:57 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/15 16:47:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int					cylinder_init(t_object *object, const t_json_object *data)
 	object->release = NULL;
 	object->intersect = &cylinder_intersect;
 	object->normal = &cylinder_normal;
-	object->inside = NULL;
 	vec3f_fill(&object->props.cylinder.axis, 0, 1, 0);
 	rotate_x(&object->props.cylinder.axis, object->angle.x);
 	rotate_y(&object->props.cylinder.axis, object->angle.y);
