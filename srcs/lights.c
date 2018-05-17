@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 18:38:46 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 15:27:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 16:00:38 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int			make_light(t_light *light, const t_json_object *data)
 		vec3f_fill(&light->color, 1, 1, 1);
 	if ((tmp = json_obj_get(data, "power")))
 	{
-		if (!float_from_json(tmp, &light->power))
+		if (!float_from_json(tmp, &light->power) || light->power < 0 ||
+				light->power > 5)
 			return (0);
 	}
 	else
