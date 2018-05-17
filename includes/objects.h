@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 13:56:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 15:44:44 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ typedef struct		s_rt_result
 	float			dist;
 }					t_rt_result;
 
+/*
+** OBJ_TYPES_COUNT: defines the number of object types
+*/
 # define OBJ_TYPES_COUNT 4
+
+/*
+** OBJ_NAME_SIZE: Maximum size of objects name
+*/
 # define OBJ_NAME_SIZE 32
 
 struct s_object;
@@ -93,6 +100,9 @@ typedef struct		s_object
 	t_obj_class		*type;
 }					t_object;
 
+/*
+** add_object_classes: Initializes the object class index.
+*/
 void					add_object_classes(t_obj_class *classes);
 
 /*
