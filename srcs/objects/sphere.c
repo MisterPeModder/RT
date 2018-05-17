@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 23:16:17 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 15:35:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:53:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ float				sphere_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 
 int					sphere_init(t_object *object, const t_json_object *data)
 {
-	object->release = NULL;
-	object->intersect = &sphere_intersect;
-	object->normal = &sphere_normal;
 	return (float_from_json(json_obj_get(data, "radius"),
 				&object->props.sphere.radius) &&
 			object->props.sphere.radius > 0);

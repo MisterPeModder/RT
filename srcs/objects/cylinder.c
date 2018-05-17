@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/17 12:52:21 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:52:40 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,6 @@ void				cylinder_normal(t_object *o, t_rt_result *r)
 
 int					cylinder_init(t_object *object, const t_json_object *data)
 {
-	object->release = NULL;
-	object->intersect = &cylinder_intersect;
-	object->normal = &cylinder_normal;
-	if (!float_from_json(json_obj_get(data, "radius"),
-				&object->props.cylinder.radius))
-		return (0);
-	return (1);
+	return (float_from_json(json_obj_get(data, "radius"),
+				&object->props.cylinder.radius));
 }

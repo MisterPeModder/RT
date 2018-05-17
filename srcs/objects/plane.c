@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 06:50:22 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 12:51:44 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:52:51 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,4 @@ float				plane_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 void				plane_normal(t_object *o, t_rt_result *r)
 {
 	r->normal = o->facing;
-}
-
-int					plane_init(t_object *object, const t_json_object *data)
-{
-	object->release = NULL;
-	object->intersect = &plane_intersect;
-	object->normal = &plane_normal;
-	(void)data;
-	return (1);
 }

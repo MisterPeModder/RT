@@ -6,24 +6,28 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 12:08:12 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:51:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
 #include "rtv1.h"
 
-static int			obj_props(t_object *object, char *str,
-		const t_json_object *data, t_obj_type *type)
+static int			obj_props(t_object *obj, char *str,
+		const t_json_object *data, t_obj_class *types)
 {
-	if (ft_strequ(str, "sphere") && (*type = OBJ_SPHERE))
-		return (sphere_init(object, data));
-	else if (ft_strequ(str, "cone") && (*type = OBJ_CONE))
-		return (cone_init(object, data));
-	else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
-		return (plane_init(object, data));
-	else if (ft_strequ(str, "cylinder") && (*type = OBJ_CYLINDER))
-		return (cylinder_init(object, data));
+	int				i;
+
+	i = 0;
+	while (i < OBJ_TYPES_COUNT)
+	{
+		if (ft_strequ(str, types[i].name))
+		{
+			obj->type = &types[i];
+			return (!obj->type->construct || obj->type->construct(obj, data));
+		}
+		++i;
+	}
 	return (0);
 }
 
@@ -42,7 +46,8 @@ static int			calc_angle(t_object *object, const t_json_value *v)
 	return (1);
 }
 
-int					obj_make(t_object *object, const t_json_object *data)
+int					obj_make(t_object *object, t_obj_class *types,
+		const t_json_object *data)
 {
 	t_json_value	*tmp;
 
@@ -57,27 +62,7 @@ int					obj_make(t_object *object, const t_json_object *data)
 	else
 		vec3f_fill(&object->color, 1, 1, 1);
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
-			!obj_props(object, tmp->str.value, data, &object->type))
+			!obj_props(object, tmp->str.value, data, types))
 		return (0);
 	return (1);
-}
-
-int					obj_release(t_object *obj)
-{
-	if (obj->release)
-		(*obj->release)(obj);
-	return (0);
-}
-
-int					objs_release(t_object *objs, size_t num)
-{
-	size_t			i;
-
-	if (!objs)
-		return (0);
-	i = 0;
-	while (i < num)
-		obj_release(&objs[i++]);
-	free(objs);
-	return (0);
 }

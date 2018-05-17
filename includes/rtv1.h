@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 15:24:43 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:52:02 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct		s_light
 ** t_scene: A structure that stores all the information about the current scene.
 **
 ** -cam: the camera structure (see above)
+** -types: an array of object classes, containes the info about
+**         the avalible object types.
 ** -lights: an array of vectors containing the lights' positions
 ** -objs_num: the number of object stored
 ** -lights_num: the number of lights stored
@@ -75,6 +77,7 @@ typedef struct		s_light
 typedef struct		s_scene
 {
 	t_cam			cam;
+	t_obj_class		types[OBJ_TYPES_COUNT];
 	t_object		*objs;
 	t_light			*lights;
 	size_t			objs_num;
@@ -153,9 +156,8 @@ void				scene_release(t_scene *scene);
 */
 int					make_cam(t_cam *cam, const t_json_object *data);
 
-int					obj_make(t_object *object, const t_json_object *data);
-int					obj_release(t_object *obj);
-int					objs_release(t_object *objs, size_t num);
+int					obj_make(t_object *object, t_obj_class *types,
+		const t_json_object *data);
 
 void				render_frame(t_scene *scene, t_img *img);
 

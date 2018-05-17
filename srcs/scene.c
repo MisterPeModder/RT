@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 15:40:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 13:48:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,18 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 	t_json_value	*tmp;
 
 	scene->objs_num = data->values_num;
+	add_object_classes(scene->types);
 	if (!(scene->objs = malloc(sizeof(t_object) * scene->objs_num)))
 		return (0);
 	i = 0;
 	while (i < scene->objs_num)
 	{
 		if (!(tmp = json_arr_get(data, i)) || tmp->obj.type != JSON_OBJECT ||
-				!obj_make(&scene->objs[i], &tmp->obj))
+				!obj_make(&scene->objs[i], scene->types, &tmp->obj))
 		{
 			ft_putstr_fd("Invalid format for object #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
-			while (i > 0)
-				obj_release(&scene->objs[--i]);
 			free(scene->objs);
 			return (0);
 		}
@@ -99,19 +98,21 @@ static int			scene_parse2(t_scene *scene, t_json_object *obj)
 
 	if (!(tmp = json_obj_get(obj, "lights")) || tmp->obj.type != JSON_ARRAY)
 	{
-		objs_release(scene->objs, scene->objs_num);
+		free(scene->objs);
 		return (rel_error("No lights or invalid format", &obj));
 	}
 	if (!scene_lights(scene, &tmp->arr))
 	{
-		objs_release(scene->objs, scene->objs_num);
+		free(scene->objs);
 		return (rel_error(NULL, &obj));
 	}
 	if ((tmp = json_obj_get(obj, "background_color")))
 	{
 		if (!color_from_json(tmp, &scene->bg_color))
-			return (rel_error("Invalid background color", &obj) ||
-					objs_release(scene->objs, scene->objs_num));
+		{
+			free(scene->objs);
+			return (rel_error("Invalid background color", &obj));
+		}
 	}
 	else
 		vec3f_fill(&scene->bg_color, 0, 0, 0);
