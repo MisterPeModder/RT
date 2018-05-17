@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/16 14:32:50 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/17 12:52:21 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ float				cylinder_intersect(t_object *obj, t_vec3f *origin,
 	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	a = vec3f_dot_product(u, &obj->props.cylinder.axis);
+	a = vec3f_dot_product(u, &obj->facing);
 	a = vec3f_dot_product(u, u) - a * a;
 	b = 2 * (vec3f_dot_product(u, &tmp)
-		- vec3f_dot_product(u, &obj->props.cylinder.axis)
-		* vec3f_dot_product(&tmp, &obj->props.cylinder.axis));
+			- vec3f_dot_product(u, &obj->facing)
+			* vec3f_dot_product(&tmp, &obj->facing));
 	c = vec3f_dot_product(&tmp, &tmp)
-		- pow(vec3f_dot_product(&tmp, &obj->props.cylinder.axis), 2)
+		- pow(vec3f_dot_product(&tmp, &obj->facing), 2)
 		- obj->props.cylinder.radius * obj->props.cylinder.radius;
 	delta = b * b - 4 * a * c;
 	if (delta < 0)
@@ -74,8 +74,8 @@ void				cylinder_normal(t_object *o, t_rt_result *r)
 	t_vec3f			h_pos;
 
 	vec3f_sub(&r->pos, &o->pos, &ph);
-	vec3f_add(vec3f_mul(&o->props.cylinder.axis,
-				vec3f_dot_product(&ph, &o->props.cylinder.axis), &h_pos),
+	vec3f_add(vec3f_mul(&o->facing,
+				vec3f_dot_product(&ph, &o->facing), &h_pos),
 			&o->pos, &h_pos);
 	vec3f_normalize(vec3f_sub(&r->pos, &h_pos, &r->normal), &r->normal);
 }
@@ -85,10 +85,6 @@ int					cylinder_init(t_object *object, const t_json_object *data)
 	object->release = NULL;
 	object->intersect = &cylinder_intersect;
 	object->normal = &cylinder_normal;
-	vec3f_fill(&object->props.cylinder.axis, 0, 1, 0);
-	rotate_x(&object->props.cylinder.axis, object->angle.x);
-	rotate_y(&object->props.cylinder.axis, object->angle.y);
-	rotate_z(&object->props.cylinder.axis, object->angle.z);
 	if (!float_from_json(json_obj_get(data, "radius"),
 				&object->props.cylinder.radius))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 11:47:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/17 12:03:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,9 @@ typedef union		u_properties
 		float		radius;
 	}				sphere;
 	struct {
-		t_vec3f		normal;
-	}				plane;
-	struct {
-		t_vec3f		axis;
 		float		opening_angle;
 	}				cone;
 	struct {
-		t_vec3f		axis;
 		float		radius;
 	}				cylinder;
 }					t_properties;
@@ -78,7 +73,7 @@ typedef struct		s_rt_result
 **
 ** -type: its type, see the t_obj_type enum for more info.
 ** -pos: where the object is located.
-** -angle: its orientation.
+** -facing: its orientation.
 ** -props: the properties of this object.
 ** -release: a function that frees memory that has been allocated by the object.
 **           may be NULL.
@@ -90,7 +85,7 @@ typedef struct		s_object
 {
 	t_obj_type		type;
 	t_vec3f			pos;
-	t_vec3f			angle;
+	t_vec3f			facing;
 	t_vec3f			color;
 	t_properties	props;
 	void			(*release)(struct s_object *);
