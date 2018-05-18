@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/17 13:42:20 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/18 18:25:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,31 @@
 
 float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {
-	float			i[3];
+	float			a;
+	float			b;
+	float			c;
 	float			delta;
 	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	i[2] = cos(obj->props.cone.opening_angle);
-	i[2] *= i[2];
-	i[0] = pow(vec3f_dot_product(u, &obj->facing), 2) - i[2];
-	i[1] = 2 * (vec3f_dot_product(u, &obj->facing)
+	c = cos(obj->props.cone.opening_angle);
+	c *= c;
+	a = pow(vec3f_dot_product(u, &obj->facing), 2) - c;
+	b = 2 * (vec3f_dot_product(u, &obj->facing)
 			* vec3f_dot_product(&tmp, &obj->facing)
-			- vec3f_dot_product(u, &tmp) * i[2]);
-	i[2] = vec3f_dot_product(&tmp, &obj->facing)
+			- vec3f_dot_product(u, &tmp) * c);
+	c = vec3f_dot_product(&tmp, &obj->facing)
 		* vec3f_dot_product(&tmp, &obj->facing)
-		- vec3f_dot_product(&tmp, &tmp) * i[2];
-	delta = i[1] * i[1] - 4 * i[0] * i[2];
+		- vec3f_dot_product(&tmp, &tmp) * c;
+	delta = b * b - 4 * a * c;
 	if (delta < 0)
 		return (FLT_MAX);
 	else if (delta == 0)
-		return (-i[1] / (2 * i[0]));
-	i[2] = (-i[1] - sqrt(delta)) / (2 * i[0]);
-	i[0] = (-i[1] + sqrt(delta)) / (2 * i[0]);
-	i[2] = i[2] > i[0] ? i[0] : i[2];
-	return (i[2]);
+		return (-b / (2 * a));
+	c = (-b - sqrt(delta)) / (2 * a);
+	a = (-b + sqrt(delta)) / (2 * a);
+	c = c > a ? a : c;
+	return (a > 0 ? a : c);
 }
 
 void				cone_normal(t_object *o, t_rt_result *r)
