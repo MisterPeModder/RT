@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 07:32:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/12 11:50:20 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/18 14:06:14 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ t_vec3f				*rotate_z(t_vec3f *vec, float rz)
 	sin_z = sin(rz);
 	return (vec3f_fill(vec,
 				cos_z * vec->x - sin_z * vec->y,
-				cos_z * vec->y - sin_z * vec->x,
+				cos_z * vec->y + sin_z * vec->x,
 				vec->z));
 }

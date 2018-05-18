@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 13:39:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/18 14:13:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img,
 	vec.x = (2 * ((pix_x + 0.5) / img->w) - 1) * img->w / (float)img->h * fov;
 	vec.y = (1 - 2 * ((pix_y + 0.5) / img->h)) * fov;
 	vec.z = -1;
+	rotate_x(&vec, scene->cam.angle.x);
+	rotate_y(&vec, scene->cam.angle.y);
+	rotate_z(&vec, scene->cam.angle.z);
 	vec3f_normalize(&vec, &vec);
 	return (vec);
 }
