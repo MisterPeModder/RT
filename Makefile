@@ -28,7 +28,7 @@ INC_PATH := includes
 SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 
 # Compiler flags
-CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
+CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
 CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME)
