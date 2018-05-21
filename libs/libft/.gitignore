@@ -1,0 +1,5 @@
+*.o
+libft.a
+norm.log
+*.dSYM
+.bin
