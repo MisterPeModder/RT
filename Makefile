@@ -100,7 +100,7 @@ INCS :=	mlx_defs.h	\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log
-NORM_FILES := $(SRCS) $(INCS)
+NORM_FILES := $(SRCS) $(addprefix $(INC_PATH)/,$(INCS))
 
 # Cosmetic features
 DETAILED = 1
@@ -164,7 +164,7 @@ norm:
 	@$(PRINT) "$(GREY)Checking $(RESET)The Norm$(GREY)...$(RESET)\n"
 	@$(PRINT) "Found $(GREEN)$(words $(NORM_FILES))$(RESET) files!\n"
 	@$(RM) $(NORM_LOG)
-	@$(NORM) $(NORM_FILES) >> $(NORM_LOG)
+	@$(NORM) $(NORM_FILES) > $(NORM_LOG)
 	@$(PRINT) "Norm Errors: "
 	@cat $(NORM_LOG) | grep Error | wc -l | bc
 	@$(PRINT) "See $(UNDERLINE)$(NORM_LOG)$(RESET) for details.\n"
