@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 15:44:44 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/21 15:19:02 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct		s_object
 /*
 ** add_object_classes: Initializes the object class index.
 */
-void					add_object_classes(t_obj_class *classes);
+void				add_object_classes(t_obj_class *classes);
 
 /*
 ** OBJECT FUNCTIONS:
