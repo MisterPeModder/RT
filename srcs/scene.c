@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 13:48:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:08:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <libft_base/io.h>
-#include "rtv1.h"
+#include "rt.h"
 
 static int			scene_open(const char *path)
 {

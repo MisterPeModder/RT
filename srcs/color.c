@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 17:45:11 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:06:53 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b)
 {

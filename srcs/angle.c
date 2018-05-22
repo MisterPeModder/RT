@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 20:10:02 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 13:01:31 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:05:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 /*
 ** to_radians: Converts degrees to radians.

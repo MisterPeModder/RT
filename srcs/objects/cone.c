@@ -6,14 +6,14 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/18 18:25:04 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:09:58 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_math/vec2.h>
 #include <float.h>
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 /*
 ** cone_intersect: Calculates the distance between the intersection

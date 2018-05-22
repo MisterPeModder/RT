@@ -96,7 +96,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
 INCS :=	mlx_defs.h	\
 		objects.h	\
-		rtv1.h		\
+		rt.h		\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

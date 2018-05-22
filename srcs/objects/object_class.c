@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 13:07:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 15:27:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:10:11 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
-#include "rtv1.h"
+#include "rt.h"
 
 static t_obj_class	*make_class(t_obj_class *type, const char *name)
 {

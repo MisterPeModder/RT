@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 13:51:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:10:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
-#include "rtv1.h"
+#include "rt.h"
 
 static int			obj_props(t_object *obj, char *str,
 		const t_json_object *data, t_obj_class *types)

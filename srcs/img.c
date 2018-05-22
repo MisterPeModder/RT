@@ -6,14 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/13 15:37:03 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:06:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
 #include <libft_base/io.h>
 #include <stdlib.h>
-#include "rtv1.h"
+#include "rt.h"
 
 t_img				*img_make(unsigned int w, unsigned int h)
 {

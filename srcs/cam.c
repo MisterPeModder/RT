@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:36:32 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 11:56:47 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:06:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "rtv1.h"
+#include "rt.h"
 
 /*
 ** make_cam: Parses the camera properties.

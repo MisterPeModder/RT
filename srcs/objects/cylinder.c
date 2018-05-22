@@ -6,14 +6,14 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/17 13:52:40 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:10:07 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_math/vec2.h>
 #include <float.h>
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 /*
 ** cylinder_intersect: Calculates the distance between the intersection

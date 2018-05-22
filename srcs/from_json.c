@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/16 15:06:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:06:18 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "rtv1.h"
+#include "rt.h"
 
 int					float_from_json(const t_json_value *val, float *f)
 {

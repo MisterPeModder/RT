@@ -6,13 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 06:50:22 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/17 13:52:51 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:10:20 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <float.h>
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 float				plane_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {

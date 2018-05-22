@@ -6,14 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/18 14:13:08 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/22 19:08:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/memory.h>
 #include <float.h>
 #include <math.h>
-#include "rtv1.h"
+#include "rt.h"
 
 static t_vec3f		compute_pixel_coor(t_scene *scene, t_img *img,
 		unsigned int pix_x, unsigned int pix_y)
