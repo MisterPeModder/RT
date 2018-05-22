@@ -18,10 +18,11 @@ LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 # MLX
 ifeq ($(UNAME), Darwin)
 	MLX_PATH := $(LIBS)/minilibx_macos
-	FRAMEWORKS = -framework OpenCL -framework OpenGL -framework AppKit
+	FRAMEWORKS := -framework OpenCL -framework OpenGL -framework AppKit
 else
 	MLX_PATH := $(LIBS)/minilibx_x11
-	FRAMEWORKS = -lXext -lX11
+	FRAMEWORKS := -lXext -lX11
+	EXTRA_FLAGS := -D X11_MLX
 endif
 
 MLX_NAME := mlx
@@ -139,7 +140,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(addprefix $(INC_PATH)/,$(INCS))
 ifeq ($(DETAILED), 1)
 	@tput dl; tput el1; tput cub 100; $(PRINT) "$(GREY)Creating object files: $(RESET)$(notdir $@)"
 endif
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $(EXTRA_FLAGS) -c $< -o $@
 
 clean:
 	@$(RM) $(NORM_LOG)

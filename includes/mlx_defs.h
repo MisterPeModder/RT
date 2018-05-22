@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/15 15:34:12 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/23 00:45:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@
 /*
 ** Key codes, these are the key codes for macOS version of the mlx.
 */
-# define ESC_KEY 53
+# ifdef X11_MLX
+#  define ESC_KEY 65307
+# else
+#  define ESC_KEY 53
+#endif
 
 /*
 ** == EVENTS ==
