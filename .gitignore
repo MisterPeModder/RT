@@ -1,6 +1,6 @@
 *.o
 *.a
-rtv1
+rt
 *.ppm
 *.dSYM
 norm.log

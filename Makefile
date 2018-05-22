@@ -1,5 +1,5 @@
 # Project settings
-NAME := rtv1
+NAME := rt
 
 ## LIBS
 LIBS := $(CURDIR)/libs
@@ -16,7 +16,14 @@ LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
 # MLX
-MLX_PATH := $(LIBS)/minilibx_macos
+ifeq ($(UNAME), Darwin)
+	MLX_PATH := $(LIBS)/minilibx_macos
+	FRAMEWORKS = -framework OpenCL -framework OpenGL -framework AppKit
+else
+	MLX_PATH := $(LIBS)/minilibx_x11
+	FRAMEWORKS = -lXext -lX11
+endif
+
 MLX_NAME := mlx
 MLX = $(MLX_PATH)/lib$(MLX_NAME).a
 
@@ -31,8 +38,27 @@ SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
 CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
-			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME)
-FRAMEWORKS = -framework OpenCL -framework OpenGL -framework AppKit
+	-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
+
+# Commands
+CC := gcc
+RM := rm -f
+RMDIR := rmdir -p
+MKDIR := mkdir -p
+PRINT := printf
+
+# Basic definitions
+SRC_PATH := srcs
+OBJ_PATH := .bin
+INC_PATH := includes
+
+SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
+
+# Compiler flags
+CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g
+LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
+			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
 
 # Commands
 CC := gcc
