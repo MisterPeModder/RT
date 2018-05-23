@@ -16,6 +16,8 @@ LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
 # MLX
+UNAME := $(shell uname -s 2> /dev/null)
+
 ifeq ($(UNAME), Darwin)
 	MLX_PATH := $(LIBS)/minilibx_macos
 	FRAMEWORKS := -framework OpenCL -framework OpenGL -framework AppKit

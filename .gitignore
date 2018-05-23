@@ -4,3 +4,6 @@ rt
 *.ppm
 *.dSYM
 norm.log
+libs/minilibx_x11/Makefile.gen
+libs/minilibx_x11/test/Makefile.gen
+libs/minilibx_x11/test/mlx-test
