@@ -51,20 +51,21 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-SRCS_NAMES :=	angle.c		\
-				args.c		\
-				cam.c		\
-				color.c		\
-				events.c	\
-				from_json.c	\
-				img.c		\
-				lights.c	\
-				main.c		\
-				mlx.c		\
-				render.c	\
-				rotate.c	\
-				scene.c		\
-				utils.c		\
+SRCS_NAMES :=	angle.c			\
+				args.c			\
+				cam.c			\
+				color.c			\
+				events.c		\
+				from_json.c		\
+				img.c			\
+				lights.c		\
+				main.c			\
+				mlx.c			\
+				render.c		\
+				rotate.c		\
+				scene.c			\
+				utils.c			\
+				opencl_data.c	\
 
 SRCS_NAMES +=	objects/cone.c			\
 				objects/cylinder.c		\
@@ -80,6 +81,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 INCS :=	mlx_defs.h	\
 		objects.h	\
 		rt.h		\
+		ocl_data.h	\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

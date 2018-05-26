@@ -6,14 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/26 17:37:50 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/26 19:06:37 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/io.h>
 #include <unistd.h>
 #include "rt.h"
-
+#include "ocl_data.h"
 int					main(int argc, char **argv)
 {
 	t_img			*img;
@@ -28,7 +28,12 @@ int					main(int argc, char **argv)
 		img_release(&img);
 		return (EXIT_FAILURE);
 	}
-	ocl_init(&ocl);
+	if (ocl_init(&ocl) < 0)
+	{
+		img_release(&img);
+		scene_release(&scene);
+		return (EXIT_FAILURE);
+	}
 	render_frame(&scene, img);
 	scene_release(&scene);
 	if (use_mlx)
