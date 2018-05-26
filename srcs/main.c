@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:07:36 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/26 17:37:50 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int					main(int argc, char **argv)
 {
 	t_img			*img;
 	t_scene			scene;
+	t_ocl			ocl;
 	int				use_mlx;
 
 	if ((use_mlx = read_args(argc, argv)) == -1)
@@ -27,6 +28,7 @@ int					main(int argc, char **argv)
 		img_release(&img);
 		return (EXIT_FAILURE);
 	}
+	ocl_init(&ocl);
 	render_frame(&scene, img);
 	scene_release(&scene);
 	if (use_mlx)
