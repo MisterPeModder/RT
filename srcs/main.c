@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 14:23:43 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 19:32:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int					main(int ac, char **av)
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	if (!mlxctx_init(&core, IMG_W, IMG_H))
+	if (!core_init(&core, IMG_W, IMG_H))
 		return (EXIT_FAILURE);
 	if (!(core.frame = img_make(&core.mlx, IMG_W, IMG_H)) ||
 			!scene_parse(&core.scene, av[1]))
@@ -33,10 +33,7 @@ int					main(int ac, char **av)
 		img_release(&core.mlx, &core.frame);
 		return (EXIT_FAILURE);
 	}
-	render_frame(&core.scene, core.frame);
-	scene_release(&core.scene);
-	mlx_put_image_to_window(core.mlx.mlx_ptr, core.mlx.win_ptr,
-			core.frame->mlx_img, 0, 0);
+	core.should_update = 1;
 	mlx_loop(core.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 14:16:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 14:59:58 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ typedef struct		s_rt
 	t_scene			scene;
 	t_mlx_ctx		mlx;
 	t_img			*frame;
+	int				should_update;
 }					t_rt;
 
-int					mlxctx_init(t_rt *core, unsigned int w, unsigned int h);
+int					core_init(t_rt *core, unsigned int w, unsigned int h);
 
 float				to_radians(float deg);
 float				to_degrees(float rad);

@@ -54,12 +54,13 @@ NORM := norminette
 SRCS_NAMES :=	angle.c		\
 				cam.c		\
 				color.c		\
+				core.c		\
 				events.c	\
 				from_json.c	\
 				img.c		\
 				lights.c	\
 				main.c		\
-				mlx.c		\
+				move.c		\
 				render.c	\
 				rotate.c	\
 				scene.c		\
@@ -78,6 +79,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
 INCS :=	image.h		\
 		mlx_defs.h	\
+		move.h		\
 		objects.h	\
 		rt.h		\
 		scene.h		\
