@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/27 16:49:05 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 22:01:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct			s_ocl
 ** OpenCL creation and destruction functions :
 */
 cl_int					ocl_init(t_ocl *ocl);
-cl_int					ft_create_kernel(t_ocl *ocl, const char *path);
+cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 									cl_int ret);
 

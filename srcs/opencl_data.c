@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 14:01:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/27 16:56:00 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 22:04:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,21 @@ cl_int		ocl_release(t_ocl *ocl, const char *debug_msg, cl_int ret)
 	return (ret);
 }
 
-cl_int		ft_create_kernel(t_ocl *ocl, const char *path)
+cl_int		ft_create_kernel(t_ocl *ocl)
 {
 	cl_int	ret;
 	char	**src;
 	cl_uint	count;
 
-	src = read_src_file(path, &count);
+	if ((src = read_src_file(KERNEL_PATH, &count)) == NULL)
+		return (-1);
 	ocl->program = clCreateProgramWithSource(ocl->context, count,
 			(const char **)src, NULL, &ret);
 	free_strtab(src, count);
 	if (ocl->program == NULL || ret < 0)
 	{
 		ft_putendl("error while creating program.");
-		return (-1);
+		return (ret < 0 ? ret : -1);
 	}
 	if ((ret = clBuildProgram(ocl->program, 1,
 				&ocl->device, OPENCL_BUILD_FLAGS, NULL, NULL)) < 0)
@@ -69,7 +70,7 @@ cl_int		ft_create_kernel(t_ocl *ocl, const char *path)
 	if ((ret = clCreateKernelsInProgram(ocl->program,
 					1, &ocl->kernel, NULL)) < 0)
 		ft_putendl("error while creating kernels.");
-	return (ret);
+	return (ret < 0 ? ret : 0);
 }
 
 cl_int		ocl_init(t_ocl *ocl)
@@ -90,6 +91,7 @@ cl_int		ocl_init(t_ocl *ocl)
 	ocl->queue = clCreateCommandQueue(ocl->context, ocl->device, 0, &ret);
 	if (ret < 0)
 		return (ocl_release(ocl, "error while creating a queue.", ret));
-	ft_create_kernel(ocl, KERNEL_PATH);
+	if ((ret = ft_create_kernel(ocl)) < 0)
+		return (ocl_release(ocl, NULL, ret));
 	return (0);
 }

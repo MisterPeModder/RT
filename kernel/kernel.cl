@@ -1,22 +1,12 @@
-__kernel void is_prime(
-		 __global int* input,
-		 __global int* output,
-		 const unsigned int count)
+__kernel void a_frame(
+		private unsigned int x_size,
+		private unsigned int y_size,
+		write_only image2d_t output)
 {
-	private unsigned int i = get_global_id(0);
-	private int j = 2;
-	if (i < count)
-	{
-		while (j * j <= input[i])
-		{
-			if (input[i] % j == 0)
-			{
-				output[i] = 0;
-				break ;
-			}
-		++j;
-		}
-		if (!(j * j <= input[i]))
-			output[i] = input[i];
-	}
+	private int2 coord;
+
+	coord.x = get_global_id(0);
+	coord.y = get_global_id(1);
+	write_imageui(output, coord, (uint4)(255 * (coord.x / (float)x_size), 0,
+										 255 * (coord.y / (float)y_size), 0));
 }

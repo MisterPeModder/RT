@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 17:27:15 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 22:11:03 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int			init_core(t_rt *core, char *scene_file)
 	return (1);
 }
 
+void				compute_a_frame(t_rt *core);
+cl_mem				ocl_set_kernel_arg(t_rt *core);
 int					main(int ac, char **av)
 {
 	t_rt			core;
@@ -47,8 +49,8 @@ int					main(int ac, char **av)
 	}
 	if (init_core(&core, av[1]) == 0)
 		return (EXIT_FAILURE);
-	render_frame(&core.scene, core.frame);
-	scene_release(&core.scene);
+//	render_frame(&core.scene, core.frame);
+	compute_a_frame(&core);
 	mlx_put_image_to_window(core.mlx.mlx_ptr, core.mlx.win_ptr,
 			core.frame->mlx_img, 0, 0);
 	mlx_loop(core.mlx.mlx_ptr);

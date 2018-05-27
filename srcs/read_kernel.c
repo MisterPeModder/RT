@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:40:35 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/27 15:10:31 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 22:01:27 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void				*ft_realloc(void *src, size_t len, size_t added)
 {
 	void			*result;
 
-	result = ft_memalloc(sizeof(len));
+	if ((result = ft_memalloc(sizeof(len))) == NULL)
+		return (src);
 	if (src != NULL)
 		ft_memmove(result, src, len - added);
 	return (result);
@@ -48,13 +49,13 @@ char				**read_src_file(const char *file_name, cl_uint *size)
 	fd = open(file_name, O_RDONLY);
 	if ((*size = 0) || fd <= 0 || size == NULL)
 		return (NULL);
+	result = NULL;
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		if (*size % TAB_STEP_SIZE == 0)
 		{
 			if (!(result = ft_realloc(result, sizeof(char *)
-							* (*size + TAB_STEP_SIZE),
-							TAB_STEP_SIZE)))
+							* (*size + TAB_STEP_SIZE), TAB_STEP_SIZE)))
 				return (free_strtab(result, *size));
 		}
 		buff[ret] = '\0';

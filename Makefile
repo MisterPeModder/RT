@@ -64,6 +64,7 @@ SRCS_NAMES :=	angle.c			\
 				lights.c		\
 				main.c			\
 				mlx.c			\
+				ocl_render.c	\
 				opencl_data.c	\
 				read_kernel.c	\
 				render.c		\
