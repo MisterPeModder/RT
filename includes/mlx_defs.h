@@ -6,12 +6,29 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/23 21:44:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 14:16:20 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_DEFS_H
 # define MLX_DEFS_H
+
+# include <mlx.h>
+
+/*
+** t_mlx_ctx: contains info about the mlx window.
+*/
+typedef struct		s_mlx_ctx
+{
+	void			*mlx_ptr;
+	void			*win_ptr;
+	unsigned int	win_width;
+	unsigned int	win_height;
+}					t_mlx_ctx;
+
+/*
+** == EVENTS ==
+*/
 
 /*
 ** Event ids
@@ -32,10 +49,7 @@
 #  define ESC_KEY 53
 # endif
 
-/*
-** == EVENTS ==
-*/
-int					on_key_released(int key, void *img);
-int					on_window_closing(void *img);
+int					on_key_released(int key, void *core);
+int					on_window_closing(void *core);
 
 #endif

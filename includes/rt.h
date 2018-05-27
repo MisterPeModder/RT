@@ -6,99 +6,30 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/23 21:45:24 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 16:54:25 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
 
-# include "objects.h"
+# include "image.h"
+# include "scene.h"
+# include "mlx_defs.h"
+# include "ocl_data.h"
 
 /*
-** IMG_W, IMG_H: The image's width and height.
+** t_rt: The central structure.
 */
-# define IMG_W 1200
-# define IMG_H 675
-
-/*
-** t_img: The frame buffer
-**
-** -w: the image width
-** -h: the image height
-** -data: A bidimensional array of colors
-*/
-typedef struct		s_img
+typedef struct		s_rt
 {
-	unsigned int	w;
-	unsigned int	h;
-	t_color			**data;
-}					t_img;
+	t_scene			scene;
+	t_mlx_ctx		mlx;
+	t_ocl			ocl;
+	t_img			*frame;
+}					t_rt;
 
-/*
-** t_cam: The camera
-**
-** -pos: where the cam is located
-** -angle: its angle
-** -fov: the field of view
-*/
-typedef struct		s_cam
-{
-	t_vec3f			pos;
-	t_vec3f			angle;
-	float			fov;
-}					t_cam;
-
-/*
-** t_light: Represents a light.
-**
-** -pos: its location
-** -power: how bright it is
-** -color: its color
-*/
-typedef struct		s_light
-{
-	t_vec3f			pos;
-	float			power;
-	t_vec3f			color;
-}					t_light;
-
-/*
-** t_scene: A structure that stores all the information about the current scene.
-**
-** -cam: the camera structure (see above)
-** -types: an array of object classes, containes the info about
-**         the avalible object types.
-** -lights: an array of vectors containing the lights' positions
-** -objs_num: the number of object stored
-** -lights_num: the number of lights stored
-** -bg_color: the background color
-*/
-typedef struct		s_scene
-{
-	t_cam			cam;
-	t_obj_class		types[OBJ_TYPES_COUNT];
-	t_object		*objs;
-	t_light			*lights;
-	size_t			objs_num;
-	size_t			lights_num;
-	t_vec3f			bg_color;
-}					t_scene;
-
-/*
-** img_make: Allocates memory for image and initializes it.
-**
-** -w: image width
-** -h: image height
-**
-** returns: the image.
-*/
-t_img				*img_make(unsigned int w, unsigned int h);
-
-/*
-** img_release: Frees the passed image.
-*/
-void				img_release(t_img **img);
+int					mlxctx_init(t_rt *core, unsigned int w, unsigned int h);
 
 float				to_radians(float deg);
 float				to_degrees(float rad);
@@ -122,11 +53,6 @@ void				*ret_free(void *obj);
 int					rel_error(const char *msg, t_json_object **obj);
 
 /*
-** color_fill: Sets the red, green and blue values of the passed t_color.
-*/
-void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
-
-/*
 ** compute_color: Compute the Diffuse and the Specular components of the color.
 **         Colorize is the function which will
 **         add those components into one color.
@@ -138,18 +64,6 @@ void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b);
 */
 void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
 		t_vec3f *c);
-
-/*
-** scene_parse: Parses the scene JSON file.
-**
-** -scene: the scene object
-** -path: the file path
-**
-** returns: 1 if successful, 0 if not.
-*/
-int					scene_parse(t_scene *scene, const char *path);
-int					scene_lights(t_scene *scene, const t_json_array *data);
-void				scene_release(t_scene *scene);
 
 /*
 ** make_cam: Handles the parsing of the camera properties.

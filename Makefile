@@ -15,6 +15,10 @@ LIBFT_JSON_PATH := $(LIBS)/ft_json
 LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
+# OPENCL
+KERNEL_PATH := kernel
+KERNELSRC_PATH := '"$(KERNEL_PATH)/kernel.cl"'
+
 # MLX
 UNAME := $(shell uname -s 2> /dev/null)
 
@@ -39,7 +43,7 @@ SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g -D KERNEL_PATH=$(KERNELSRC_PATH)
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
 
@@ -52,7 +56,6 @@ PRINT := printf
 NORM := norminette
 
 SRCS_NAMES :=	angle.c			\
-				args.c			\
 				cam.c			\
 				color.c			\
 				events.c		\
@@ -61,11 +64,12 @@ SRCS_NAMES :=	angle.c			\
 				lights.c		\
 				main.c			\
 				mlx.c			\
+				opencl_data.c	\
+				read_kernel.c	\
 				render.c		\
 				rotate.c		\
 				scene.c			\
 				utils.c			\
-				opencl_data.c	\
 
 SRCS_NAMES +=	objects/cone.c			\
 				objects/cylinder.c		\
@@ -78,10 +82,12 @@ SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	mlx_defs.h	\
+INCS :=	image.h		\
+		mlx_defs.h	\
 		objects.h	\
-		rt.h		\
 		ocl_data.h	\
+		rt.h		\
+		scene.h		\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

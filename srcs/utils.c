@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:09:07 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 16:42:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 void				*ret_free(void *obj)
 {
-	if (obj)
-		free(obj);
+	free(obj);
 	return (NULL);
 }
 
@@ -33,8 +32,8 @@ int					rel_error(const char *msg, t_json_object **obj)
 
 void				scene_release(t_scene *scene)
 {
-	if (scene->objs)
-		free(scene->objs);
-	if (scene->lights)
-		free(scene->lights);
+	free(scene->objs);
+	scene->objs = NULL;
+	free(scene->lights);
+	scene->lights = NULL;
 }

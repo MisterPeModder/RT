@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:06:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 14:00:06 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,55 @@
 #include <libft_base/io.h>
 #include <stdlib.h>
 #include "rt.h"
+#include "image.h"
+#include "mlx_defs.h"
 
-t_img				*img_make(unsigned int w, unsigned int h)
+t_img				*img_make(t_mlx_ctx *mlx, unsigned int w, unsigned int h)
 {
 	t_img			*img;
-	unsigned int	x;
+	int				bpp;
 
-	if (!(img = (t_img *)malloc(sizeof(t_img))))
+	if (!mlx || !(img = (t_img *)malloc(sizeof(t_img))))
 		return (NULL);
 	img->w = w;
 	img->h = h;
-	if (!(img->data = (t_color **)malloc(sizeof(t_color *) * w)))
-	{
-		free(img);
-		return (NULL);
-	}
-	x = 0;
-	while (x < w)
-		if (!(img->data[x++] = (t_color *)malloc(sizeof(t_color) * h)))
-		{
-			w = x - 1;
-			x = 0;
-			while (x < w)
-				free(img->data[x++]);
-			free(img->data);
-			free(img);
-			return (NULL);
-		}
+	if (!(img->mlx_img = mlx_new_image(mlx->mlx_ptr, (int)w, (int)h)))
+		return (ret_free(img));
+	if (!(img->data = (t_color *)mlx_get_data_addr(img->mlx_img, &bpp,
+					&img->line_size, &img->endian)))
+		return (ret_free(img));
+	img->line_size /= 4;
 	return (img);
 }
 
-void				img_release(t_img **img)
+void				img_pixel_put(t_img *img, t_color c,
+		unsigned int x, unsigned int y)
 {
-	unsigned int	x;
+	unsigned int	pos;
 
-	if (!img || !*img)
-		return ;
-	if ((*img)->data)
+	pos = x + y * (unsigned int)img->line_size;
+	if (img->endian)
 	{
-		x = 0;
-		while (x < (*img)->w)
-			free((*img)->data[x++]);
-		free((*img)->data);
+		img->data[pos].bytes[0] = 0;
+		img->data[pos].bytes[1] = c.bytes[1];
+		img->data[pos].bytes[2] = c.bytes[2];
+		img->data[pos].bytes[3] = c.bytes[3];
 	}
-	free(*img);
-	*img = NULL;
+	else
+	{
+		img->data[pos].bytes[3] = 0;
+		img->data[pos].bytes[2] = c.bytes[1];
+		img->data[pos].bytes[1] = c.bytes[2];
+		img->data[pos].bytes[0] = c.bytes[3];
+	}
 }
 
-void				img_ppm_output(t_img *img)
+void				img_release(t_mlx_ctx *mlx, t_img **img)
 {
-	char			*tmp;
-	unsigned int	x;
-	unsigned int	y;
-
-	ft_putendl("P6");
-	ft_putstr((tmp = ft_itoa((int)img->w)));
-	free(tmp);
-	ft_putchar(' ');
-	ft_putendl((tmp = ft_itoa((int)img->h)));
-	free(tmp);
-	ft_putendl("255");
-	y = 0;
-	while (y < img->h)
-	{
-		x = 0;
-		while (x < img->w)
-		{
-			ft_putchar((char)img->data[x][y][0]);
-			ft_putchar((char)img->data[x][y][1]);
-			ft_putchar((char)img->data[x++][y][2]);
-		}
-		++y;
-	}
-	img_release(&img);
+	if (!img || !*img)
+		return ;
+	if ((*img)->mlx_img)
+		mlx_destroy_image(mlx->mlx_ptr, (*img)->mlx_img);
+	free(*img);
+	*img = NULL;
 }

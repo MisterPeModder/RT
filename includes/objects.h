@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/21 15:19:02 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/26 17:52:03 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 # include <json.h>
 # include <stdint.h>
 # include <libft_math/vec3.h>
-
-/*
-** t_color: The color type.
-**          Entries are stored in the RGB format.
-*/
-typedef uint8_t		t_color[3];
 
 /*
 ** t_rt_result: Stands for: RayTraceResult. Stores the infos about a ray.

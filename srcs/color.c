@@ -6,18 +6,21 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 10:13:55 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:06:53 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 13:24:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "rt.h"
 
-void				color_fill(t_color color, uint8_t r, uint8_t g, uint8_t b)
+t_color				color_make(int8_t r, int8_t g, int8_t b)
 {
-	color[0] = r;
-	color[1] = g;
-	color[2] = b;
+	t_color			c;
+
+	c.bytes[1] = r;
+	c.bytes[2] = g;
+	c.bytes[3] = b;
+	return (c);
 }
 
 /*

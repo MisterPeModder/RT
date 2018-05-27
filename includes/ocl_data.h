@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/26 19:05:50 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 16:49:05 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,22 @@
 #  include <CL/cl.h>
 # endif
 
+# ifndef KERNEL_PATH
+#  error "KERNEL_PATH not specified"
+# endif
+
 /*
 ** program building's flags :
 */
 # define OPENCL_BUILD_FLAGS "-Werror"
 
+# define BUFF_SIZE 32
+# define TAB_STEP_SIZE 10
 
 /*
 ** definition of the t_ocl struct, which contain data for openCL functions.
 */
-typedef struct			s_opencl_data
+typedef struct			s_ocl
 {
 	cl_platform_id		platform;
 	cl_device_id		device;
@@ -38,10 +44,18 @@ typedef struct			s_opencl_data
 	cl_kernel			kernel;
 }						t_ocl;
 
-
+/*
+** OpenCL creation and destruction functions :
+*/
+cl_int					ocl_init(t_ocl *ocl);
+cl_int					ft_create_kernel(t_ocl *ocl, const char *path);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 									cl_int ret);
-cl_int					ft_create_kernel(t_ocl *ocl, const char *path,
-									size_t len);
-cl_int					ocl_init(t_ocl *ocl);
+
+/*
+** Functions for reading the kernel :
+*/
+void					*free_strtab(char **tab, unsigned int str_nb);
+void					*ft_realloc(void *src, size_t len, size_t added);
+char					**read_src_file(const char *file_name, cl_uint *size);
 #endif
