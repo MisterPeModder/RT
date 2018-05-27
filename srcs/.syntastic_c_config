@@ -1,1 +1,2 @@
--I ../libft/includes
+-I ../libs/libft/includes
+../includes

@@ -52,7 +52,6 @@ PRINT := printf
 NORM := norminette
 
 SRCS_NAMES :=	angle.c		\
-				args.c		\
 				cam.c		\
 				color.c		\
 				events.c	\
@@ -77,9 +76,11 @@ SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	mlx_defs.h	\
+INCS :=	image.h		\
+		mlx_defs.h	\
 		objects.h	\
 		rt.h		\
+		scene.h		\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

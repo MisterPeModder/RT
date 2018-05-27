@@ -6,32 +6,37 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:07:36 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 14:23:43 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/io.h>
 #include <unistd.h>
 #include "rt.h"
+#include "image.h"
+#include "mlx_defs.h"
 
-int					main(int argc, char **argv)
+int					main(int ac, char **av)
 {
-	t_img			*img;
-	t_scene			scene;
-	int				use_mlx;
+	t_rt			core;
 
-	if ((use_mlx = read_args(argc, argv)) == -1)
-		return (EXIT_FAILURE);
-	if (!(img = img_make(IMG_W, IMG_H)) || !scene_parse(&scene, argv[1]))
+	if (ac != 2)
 	{
-		img_release(&img);
+		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	render_frame(&scene, img);
-	scene_release(&scene);
-	if (use_mlx)
-		img_mlx_output(img);
-	else
-		img_ppm_output(img);
+	if (!mlxctx_init(&core, IMG_W, IMG_H))
+		return (EXIT_FAILURE);
+	if (!(core.frame = img_make(&core.mlx, IMG_W, IMG_H)) ||
+			!scene_parse(&core.scene, av[1]))
+	{
+		img_release(&core.mlx, &core.frame);
+		return (EXIT_FAILURE);
+	}
+	render_frame(&core.scene, core.frame);
+	scene_release(&core.scene);
+	mlx_put_image_to_window(core.mlx.mlx_ptr, core.mlx.win_ptr,
+			core.frame->mlx_img, 0, 0);
+	mlx_loop(core.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

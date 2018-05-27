@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:08:16 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/27 14:24:29 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,25 +110,26 @@ static void			shading(t_scene *scene, t_rt_result *r, t_vec3f *c)
 
 void				render_frame(t_scene *scene, t_img *img)
 {
-	unsigned int	i;
-	unsigned int	j;
+	unsigned int	x;
+	unsigned int	y;
 	t_vec3f			unit;
 	t_rt_result		r;
 	t_vec3f			c;
 
-	i = 0;
-	while (i < img->h)
+	y = 0;
+	while (y < img->h)
 	{
-		j = 0;
-		while (j < img->w)
+		x = 0;
+		while (x < img->w)
 		{
-			unit = compute_pixel_coor(scene, img, j, i);
+			unit = compute_pixel_coor(scene, img, x, y);
 			if (!raytrace(scene, &scene->cam.pos, &unit, &r))
 				vec3f_cpy(&scene->bg_color, &c);
 			else
 				shading(scene, &r, &c);
-			color_fill(img->data[j++][i], c.x * 255, c.y * 255, c.z * 255);
+			img_pixel_put(img,
+					color_make(c.x * 255, c.y * 255, c.z * 255), x++, y);
 		}
-		++i;
+		++y;
 	}
 }
