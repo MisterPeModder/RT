@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 16:54:40 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/27 17:27:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,25 @@
 #include "mlx_defs.h"
 #include "ocl_data.h"
 
+static int			init_core(t_rt *core, char *scene_file)
+{
+	if (!mlxctx_init(core, IMG_W, IMG_H))
+		return (0);
+	if (!(core->frame = img_make(&core->mlx, IMG_W, IMG_H)) ||
+			!scene_parse(&core->scene, scene_file))
+	{
+		img_release(&core->mlx, &core->frame);
+		return (0);
+	}
+	if (ocl_init(&core->ocl) < 0)
+	{
+		img_release(&core->mlx, &core->frame);
+		scene_release(&core->scene);
+		return (0);
+	}
+	return (1);
+}
+
 int					main(int ac, char **av)
 {
 	t_rt			core;
@@ -26,20 +45,8 @@ int					main(int ac, char **av)
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	if (!mlxctx_init(&core, IMG_W, IMG_H))
+	if (init_core(&core, av[1]) == 0)
 		return (EXIT_FAILURE);
-	if (!(core.frame = img_make(&core.mlx, IMG_W, IMG_H)) ||
-			!scene_parse(&core.scene, av[1]))
-	{
-		img_release(&core.mlx, &core.frame);
-		return (EXIT_FAILURE);
-	}
-	if (ocl_init(&core.ocl) < 0)
-	{
-		img_release(&core.mlx, &core.frame);
-		scene_release(&core.scene);
-		return (EXIT_FAILURE);
-	}
 	render_frame(&core.scene, core.frame);
 	scene_release(&core.scene);
 	mlx_put_image_to_window(core.mlx.mlx_ptr, core.mlx.win_ptr,
