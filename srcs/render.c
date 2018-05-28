@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:32:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 14:24:29 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/28 17:25:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 	d = FLT_MAX;
 	while (i < scene->objs_num)
 	{
-		tmp = scene->objs[i].type->intersect(&scene->objs[i], o, u);
+		tmp = scene->objs[i].intersect(&scene->objs[i], o, u);
 		if (tmp > 0 && tmp < d)
 		{
 			r->obj = scene->objs + i;
@@ -67,7 +67,7 @@ static int			raytrace(t_scene *scene, t_vec3f *o, t_vec3f *u,
 	r->dist = d;
 	vec3f_mul(u, d, &r->pos);
 	vec3f_add(o, &r->pos, &r->pos);
-	r->obj->type->normal(r->obj, r);
+	r->obj->normal(r->obj, r);
 	return (1);
 }
 

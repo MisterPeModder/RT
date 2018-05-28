@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 16:54:25 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/28 21:10:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ typedef struct		s_rt
 	t_mlx_ctx		mlx;
 	t_ocl			ocl;
 	t_img			*frame;
+	int				should_update;
 }					t_rt;
 
-int					mlxctx_init(t_rt *core, unsigned int w, unsigned int h);
+int					core_init(t_rt *core, unsigned int w, unsigned int h);
 
 float				to_radians(float deg);
 float				to_degrees(float rad);
@@ -70,8 +71,9 @@ void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
 */
 int					make_cam(t_cam *cam, const t_json_object *data);
 
-int					obj_make(t_object *object, t_obj_class *types,
-		const t_json_object *data);
+int					obj_make(t_object *object, const t_json_object *data);
+int					obj_release(t_object *obj);
+int					objs_release(t_object *objs, size_t num);
 
 void				render_frame(t_scene *scene, t_img *img);
 

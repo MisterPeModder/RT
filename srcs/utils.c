@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 16:42:40 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/28 21:13:11 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int					rel_error(const char *msg, t_json_object **obj)
 
 void				scene_release(t_scene *scene)
 {
-	free(scene->objs);
+	objs_release(scene->objs, scene->objs_num);
 	scene->objs = NULL;
 	free(scene->lights);
 	scene->lights = NULL;

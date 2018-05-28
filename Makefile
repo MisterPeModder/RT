@@ -58,26 +58,27 @@ NORM := norminette
 SRCS_NAMES :=	angle.c			\
 				cam.c			\
 				color.c			\
+				core.c			\
 				events.c		\
 				from_json.c		\
 				img.c			\
 				lights.c		\
 				main.c			\
-				mlx.c			\
+				move.c			\
 				ocl_render.c	\
 				opencl_data.c	\
 				read_kernel.c	\
 				render.c		\
 				rotate.c		\
 				scene.c			\
+				timer.c			\
 				utils.c			\
 
-SRCS_NAMES +=	objects/cone.c			\
-				objects/cylinder.c		\
-				objects/object_class.c	\
-				objects/objects.c		\
-				objects/plane.c			\
-				objects/sphere.c		\
+SRCS_NAMES +=	objects/cone.c		\
+				objects/objects.c	\
+				objects/plane.c		\
+				objects/sphere.c	\
+				objects/cylinder.c	\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
@@ -87,11 +88,13 @@ INCS :=	image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
 		mlx_defs.h				\
+		move.h					\
 		objects.h				\
 		ocl_data.h				\
 		ocl_types.h				\
 		rt.h					\
 		scene.h					\
+		timer.h					\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/22 19:09:58 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/28 17:22:21 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void				cone_normal(t_object *o, t_rt_result *r)
 
 int					cone_init(t_object *object, const t_json_object *data)
 {
+	object->release = NULL;
+	object->intersect = &cone_intersect;
+	object->normal = &cone_normal;
 	if (!float_from_json(json_obj_get(data, "opening_angle"),
 				&object->props.cone.opening_angle) ||
 			object->props.cone.opening_angle <= 0 ||
