@@ -6,13 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 19:52:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/28 16:32:36 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "rt.h"
 #include "move.h"
+#include "timer.h"
 
 static int			exit_rt(t_rt *core)
 {
@@ -43,14 +44,18 @@ int					on_window_closing(void *core)
 int					on_tick(void *c)
 {
 	t_rt			*core;
+	t_timer			timer;
 
 	core = (t_rt *)c;
 	if (core->should_update)
 	{
+		timer_start(&timer);
 		render_frame(&core->scene, core->frame);
 		mlx_put_image_to_window(core->mlx.mlx_ptr, core->mlx.win_ptr,
 				core->frame->mlx_img, 0, 0);
 		core->should_update = 0;
+		timer_end(&timer);
+		timer_display(&timer);
 	}
 	return (0);
 }

@@ -64,6 +64,7 @@ SRCS_NAMES :=	angle.c		\
 				render.c	\
 				rotate.c	\
 				scene.c		\
+				timer.c		\
 				utils.c		\
 
 SRCS_NAMES +=	objects/cone.c			\
@@ -83,6 +84,7 @@ INCS :=	image.h		\
 		objects.h	\
 		rt.h		\
 		scene.h		\
+		timer.h		\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log
