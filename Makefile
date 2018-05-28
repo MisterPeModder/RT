@@ -83,12 +83,15 @@ SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	image.h		\
-		mlx_defs.h	\
-		objects.h	\
-		ocl_data.h	\
-		rt.h		\
-		scene.h		\
+INCS :=	image.h					\
+		internal_ocl_types_c.h	\
+		internal_ocl_types_cl.h	\
+		mlx_defs.h				\
+		objects.h				\
+		ocl_data.h				\
+		ocl_types.h				\
+		rt.h					\
+		scene.h					\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log
