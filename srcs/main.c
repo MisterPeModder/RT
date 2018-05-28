@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 21:12:54 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/28 22:34:14 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "mlx_defs.h"
 #include "ocl_data.h"
 
-void				compute_a_frame(t_rt *core);
-cl_mem				ocl_set_kernel_arg(t_rt *core);
 int					main(int ac, char **av)
 {
 	t_rt			core;
@@ -43,8 +41,6 @@ int					main(int ac, char **av)
 		return (0);
 	}
 	core.should_update = 1;
-//	render_frame(&core.scene, core.frame);
-//	compute_a_frame(&core);
 	mlx_loop(core.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

@@ -90,6 +90,7 @@ INCS :=	image.h					\
 		mlx_defs.h				\
 		move.h					\
 		objects.h				\
+		ocl_common_structs.h	\
 		ocl_data.h				\
 		ocl_types.h				\
 		rt.h					\
