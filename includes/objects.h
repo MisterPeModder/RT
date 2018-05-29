@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:58:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 12:53:41 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef union		u_properties
 	}				cone;
 	struct {
 		float		radius;
+		float		len;
+		int			face;
 	}				cylinder;
 }					t_properties;
 
@@ -108,6 +110,10 @@ void				cone_normal(t_object *o, t_rt_result *r);
 int					cylinder_init(t_object *object, const t_json_object *data);
 float				cylinder_intersect(t_object *o, t_vec3f *origin,
 		t_vec3f *u);
+float				cylinder_intersect2(t_object *o, t_vec3f *origin,
+		t_vec3f *u, int i);
+float				cylinder_intersect3(t_object *o, t_vec3f *origin,
+		t_vec3f *u, float c);
 void				cylinder_normal(t_object *o, t_rt_result *r);
 
 #endif
