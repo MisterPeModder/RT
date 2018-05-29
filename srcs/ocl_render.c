@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 13:47:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:50:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static cl_mem		ocl_set_kernel_arg(t_rt *core)
 {
 	cl_int			ret;
 	cl_mem			tmp[4];
-	cl_image_format	format = {CL_RGBA, CL_UNSIGNED_INT8};
+	cl_image_format	format = {{CL_RGBA, CL_UNSIGNED_INT8}};
 	cl_image_desc	desc = {CL_MEM_OBJECT_IMAGE2D, core->frame->w, core->frame->h, 1, 1, 0, 0, 0, 0, NULL};
 
 	tmp[0] = clCreateImage(core->ocl.context, CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, &format, &desc, NULL, &ret);
