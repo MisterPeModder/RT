@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:04:06 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 12:56:58 by jloro            ###   ########.fr       */
+/*   Updated: 2018/05/29 14:16:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ float				cylinder_intersect2(t_object *obj, t_vec3f *origin,
 			&obj->facing) / vec3f_dot_product(u, &obj->facing);
 	vec3f_add(origin, vec3f_mul(u, a, &tmp), &tmp);
 	if (vec3f_dot_product(vec3f_sub(&tmp, &tmp3, &tmp2),
-		vec3f_sub(&tmp, &tmp3, &tmp2)) <= obj->props.cylinder.radius
-		* obj->props.cylinder.radius)
+				vec3f_sub(&tmp, &tmp3, &tmp2)) <= obj->props.cylinder.radius
+			* obj->props.cylinder.radius)
 	{
 		obj->props.cylinder.face = i;
 		return (a);
@@ -144,7 +144,7 @@ int					cylinder_init(t_object *object, const t_json_object *data)
 	if (!float_from_json(json_obj_get(data, "radius"),
 				&object->props.cylinder.radius))
 		return (0);
-	if (float_from_json(json_obj_get(data, "len"),
+	if (float_from_json(json_obj_get(data, "length"),
 				&object->props.cylinder.len))
 	{
 		if (object->props.cylinder.len <= 0)
