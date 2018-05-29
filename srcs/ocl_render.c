@@ -6,11 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 13:29:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:47:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/io.h>
+#include <unistd.h>
 #include "rt.h"
 #include "image.h"
 #include "ocl_data.h"
