@@ -47,6 +47,12 @@ typedef struct		s_mlx_ctx
 */
 # ifdef X11_MLX
 #  define ESC_KEY 65307
+#  define W_KEY 119
+#  define A_KEY 97
+#  define S_KEY 115
+#  define D_KEY 100
+#  define SHIFT_KEY 65505
+#  define SPACE_KEY 32
 # else
 #  define ESC_KEY 53
 #  define W_KEY 13

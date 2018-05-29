@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "mlx_defs.h"
 #include "rt.h"
 #include "move.h"
 #include "timer.h"
