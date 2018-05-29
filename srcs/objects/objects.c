@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:52:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:56:21 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int			obj_props(t_object *object, char *str,
 		return (plane_init(object, data));
 	else if (ft_strequ(str, "cylinder") && (*type = OBJ_CYLINDER))
 		return (cylinder_init(object, data));
+	else if (ft_strequ(str, "disk") && (*type = OBJ_DISK))
+		return (disk_init(object, data));
 	return (0);
 }
 

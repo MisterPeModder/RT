@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 12:53:41 by jloro            ###   ########.fr       */
+/*   Updated: 2018/05/29 14:00:59 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef enum		e_obj_type
 	OBJ_PLANE = 1,
 	OBJ_SPHERE,
 	OBJ_CONE,
-	OBJ_CYLINDER
+	OBJ_CYLINDER,
+	OBJ_DISK
 }					t_obj_type;
 
 /*
@@ -116,4 +117,7 @@ float				cylinder_intersect3(t_object *o, t_vec3f *origin,
 		t_vec3f *u, float c);
 void				cylinder_normal(t_object *o, t_rt_result *r);
 
+float				disk_intersect(t_object *o, t_vec3f *origin,
+		t_vec3f *u);
+int					disk_init(t_object *object, const t_json_object *data);
 #endif

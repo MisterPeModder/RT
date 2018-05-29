@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 06:50:22 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:24:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 14:27:30 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ float				plane_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 	float			l_dot_n;
 	t_vec3f			tmp;
 
+	if (vec3f_dot_product(u, &obj->facing) > 0)
+		vec3f_neg(&obj->facing, &obj->facing);
 	if (fabs(l_dot_n = vec3f_dot_product(u, &obj->facing)) < 1e-6)
 		return (FLT_MAX);
 	return (vec3f_dot_product(vec3f_sub(&obj->pos, origin, &tmp),
