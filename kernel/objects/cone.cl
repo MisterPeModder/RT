@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:04:43 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 22:30:08 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:03:34 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@
 **          Returns FLT_MAX otherwise.
 */
 
-float				cone_intersect(__local t_object *obj, float3 origin, float3 u)
+static float		cone_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
 {
 	float			a;
 	float			b;
@@ -47,7 +51,10 @@ float				cone_intersect(__local t_object *obj, float3 origin, float3 u)
 	return (a > 0 ? a : c);
 }
 
-void				cone_normal(__local t_object *o, t_rt_result *r)
+static void			cone_normal(
+		constant t_object *o,
+		t_rt_result *r
+		)
 {
 	float3			vs;
 	float3			n;

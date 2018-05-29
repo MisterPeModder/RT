@@ -6,11 +6,11 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 22:31:00 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:05:00 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static float3		compute_pixel_coor(__local t_cam *cam, unsigned int w,
+static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
 		unsigned int h, unsigned int x, unsigned int y)
 {
 	float3			vec;
@@ -38,10 +38,12 @@ static float3		compute_pixel_coor(__local t_cam *cam, unsigned int w,
 */
 
 static int			raytrace(
-	__local t_object *objs, size_t objs_num,
-	float3 o, float3 u,
-	t_rt_result *r
-	)
+		constant t_object *objs,
+		size_t objs_num,
+		float3 o,
+		float3 u,
+		t_rt_result *r
+		)
 {
 	size_t			i;
 	float			d;
@@ -53,20 +55,20 @@ static int			raytrace(
 	{
 		switch (objs[i].type)
 		{
-		case OBJ_SPHERE:
-			sphere_intersect(&objs[i], o, u);
-			break;
-		case OBJ_PLANE:
-			plane_intersect(&objs[i], o, u);
-			break;
-		case OBJ_CONE:
-			cone_intersect(&objs[i], o, u);
-			break;
-		case OBJ_CYLINDER:
-			cylinder_intersect(&objs[i], o, u);
-			break;
-		default:
-			tmp = FLT_MAX;
+			case OBJ_SPHERE:
+				tmp = sphere_intersect(&objs[i], o, u);
+				break;
+			case OBJ_PLANE:
+				tmp = plane_intersect(&objs[i], o, u);
+				break;
+			case OBJ_CONE:
+				tmp = cone_intersect(&objs[i], o, u);
+				break;
+			case OBJ_CYLINDER:
+				tmp = cylinder_intersect(&objs[i], o, u);
+				break;
+			default:
+				tmp = FLT_MAX;
 		}
 		if (tmp > 0 && tmp < d)
 		{
@@ -106,10 +108,10 @@ static int			raytrace(
 */
 
 static float3		shading(
-	__local t_object *objs, size_t objs_num,
-	__local t_light *lights, size_t lights_num,
-	t_rt_result *r
-	)
+		constant t_object *objs, size_t objs_num,
+		constant t_light *lights, size_t lights_num,
+		t_rt_result *r
+		)
 {
 	size_t			i;
 	float3			lvec;
@@ -124,7 +126,7 @@ static float3		shading(
 		lvec = normalize(lights[i].pos - r->pos);
 		start = r->pos + 0.001f * r->normal;
 		if (!raytrace(objs, objs_num, start, lvec, &sink)
-			|| length(lights[i].pos - r->pos) < sink.dist)
+				|| length(lights[i].pos - r->pos) < sink.dist)
 			colorize(&lights[i], lvec, r, &result);
 		++i;
 	}

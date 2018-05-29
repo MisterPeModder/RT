@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:09:46 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 22:24:06 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:05:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 */
 
 static void			colorize(
-	__local t_light *light,
-	float3 lvec,
-	t_rt_result *r,
-	float3 *c)
+		constant t_light *light,
+		float3 lvec,
+		t_rt_result *r,
+		float3 *c)
 {
 	float			comp[2];
 	float3			tmp;

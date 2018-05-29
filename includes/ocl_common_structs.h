@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 21:40:37 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 05:01:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** -angle: its angle
 ** -fov: the field of view
 */
-typedef struct __attribute__((packed))		s_cam
+typedef struct /*__attribute__((packed))*/		s_cam
 {
 	t_clfloat3		pos;
 	t_clfloat3		angle;
@@ -36,7 +36,7 @@ typedef struct __attribute__((packed))		s_cam
 ** -power: how bright it is
 ** -color: its color
 */
-typedef struct __attribute__((packed))		s_light
+typedef struct /*__attribute__((packed))*/		s_light
 {
 	t_clfloat3		pos;
 	t_clfloat3		color;
@@ -59,13 +59,13 @@ typedef enum		e_obj_type
 */
 typedef union		u_properties
 {
-	struct __attribute__((packed)) {
+	struct /*__attribute__((packed))*/ {
 		t_clfloat	radius;
 	}				sphere;
-	struct __attribute__((packed)) {
+	struct /*__attribute__((packed))*/ {
 		t_clfloat	opening_angle;
 	}				cone;
-	struct __attribute__((packed)) {
+	struct /*__attribute__((packed))*/ {
 		t_clfloat	radius;
 	}				cylinder;
 }					t_properties;
@@ -79,7 +79,7 @@ typedef union		u_properties
 ** -color: are you really asking ?
 ** -props: the properties of this object.
 */
-typedef struct __attribute__((packed))		s_object
+typedef struct /*__attribute__((packed))*/		s_object
 {
 	t_obj_type		type;
 	t_clfloat3		pos;

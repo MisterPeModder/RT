@@ -15,10 +15,6 @@ LIBFT_JSON_PATH := $(LIBS)/ft_json
 LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
-# OPENCL
-KERNEL_PATH := kernel
-KERNELSRC_PATH := '"$(KERNEL_PATH)/kernel.cl"'
-
 # MLX
 UNAME := $(shell uname -s 2> /dev/null)
 
@@ -39,11 +35,18 @@ SRC_PATH := srcs
 OBJ_PATH := .bin
 INC_PATH := includes
 
+# OPENCL
+KERNEL_PATH := kernel
+KERNELSRC_PATH := $(KERNEL_PATH)/kernel.cl
+OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
+
 SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g -D KERNEL_PATH=$(KERNELSRC_PATH)
+CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
+			-Wno-address-of-packed-member -g								\
+			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
 
@@ -57,7 +60,6 @@ NORM := norminette
 
 SRCS_NAMES :=	angle.c			\
 				cam.c			\
-				color.c			\
 				core.c			\
 				events.c		\
 				from_json.c		\
@@ -66,13 +68,13 @@ SRCS_NAMES :=	angle.c			\
 				main.c			\
 				move.c			\
 				ocl_render.c	\
-				opencl_data.c	\
+				ocl_data.c		\
 				read_kernel.c	\
-				render.c		\
 				rotate.c		\
 				scene.c			\
 				timer.c			\
 				utils.c			\
+				vec3cl.c		\
 
 SRCS_NAMES +=	objects/cone.c		\
 				objects/objects.c	\

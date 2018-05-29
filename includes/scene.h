@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 21:43:16 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 00:59:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct		s_scene
 	t_light			*lights;
 	size_t			objs_num;
 	size_t			lights_num;
-	t_vec3f			bg_color;
+	cl_float3		bg_color;
 }					t_scene;
 
 /*

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 22:37:14 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 07:20:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ int					on_window_closing(void *core)
 	return (exit_rt(core));
 }
 
-
+//WTF ??
 void				compute_a_frame(t_rt *core);
 cl_mem				ocl_set_kernel_arg(t_rt *core);
+
+#include <stdio.h>
+
 int					on_tick(void *c)
 {
 	t_rt			*core;
@@ -54,13 +57,17 @@ int					on_tick(void *c)
 	core = (t_rt *)c;
 	if (core->should_update)
 	{
+		//printf("start\n");
 		timer_start(&timer);
 		render_frame(core);
+		//printf("wie bitte?\n");
 		mlx_put_image_to_window(core->mlx.mlx_ptr, core->mlx.win_ptr,
 				core->frame->mlx_img, 0, 0);
+		//printf("was?\n");
 		core->should_update = 0;
 		timer_end(&timer);
 		timer_display(&timer);
+		//printf("end\n");
 	}
 	return (0);
 }

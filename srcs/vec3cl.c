@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   angle.c                                            :+:      :+:    :+:   */
+/*   vec3cl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/06 20:10:02 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 01:28:14 by yguaye           ###   ########.fr       */
+/*   Created: 2018/05/29 01:36:02 by yguaye            #+#    #+#             */
+/*   Updated: 2018/05/29 01:45:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "rt.h"
 
-/*
-** to_radians: Converts degrees to radians.
-*/
-
-t_clfloat				to_radians(t_clfloat deg)
+t_clfloat3			*vec3cl_fill(t_clfloat3 *vec,
+		t_clfloat x, t_clfloat y, t_clfloat z)
 {
-	return (M_PI * deg / 180);
+	vec->x = x;
+	vec->y = y;
+	vec->z = z;
+	return (vec);
 }
 
-/*
-** to_degrees: converts radians to degrees.
-*/
-
-t_clfloat				to_degrees(t_clfloat rad)
+t_clfloat3			*vec3cl_add(t_clfloat3 *rhs, t_clfloat3 *lhs,
+		t_clfloat3 *dst)
 {
-	return (rad * 180 / M_PI);
+	dst->x = rhs->x + lhs->x;
+	dst->y = rhs->y + lhs->y;
+	dst->z = rhs->z + lhs->z;
+	return (dst);
 }

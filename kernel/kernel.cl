@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 23:00:50 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:31:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 */
 typedef struct				s_rt_result
 {
-	__local struct s_object	*obj;
+	constant t_object		*obj;
 	t_clfloat3				pos;
 	t_clfloat3				normal;
 	float					dist;
@@ -36,16 +36,19 @@ typedef struct				s_rt_result
 #include "objects/sphere.cl"
 #include "render.cl"
 
-__kernel void	render_frame(write_only image2d_t output,
-							 __local t_cam *cam,
-							 __local t_object *objs,
-							 __local t_light *lights,
-							 __private size_t objs_num,
-							 __private size_t lights_num,
-							 __private unsigned int w,
-							 __private unsigned int h/*,
-							 __private float3 bg_color,
-							 __private unsigned int endian*/)
+kernel void	render_frame(
+		write_only image2d_t output,
+		constant t_cam *cam,
+		constant t_object *objs,
+		constant t_light *lights,
+		private size_t objs_num,
+		private size_t lights_num,
+		private unsigned int w,
+		private unsigned int h
+		/*,
+		  __private float3 bg_color,
+		  __private unsigned int endian*/
+		)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -60,25 +63,26 @@ __kernel void	render_frame(write_only image2d_t output,
 //
 	x = get_global_id(0);
 	y = get_global_id(1);
+//	printf("x: %u, y: %u\n", x, y);
 	unit = compute_pixel_coor(cam, w, h, x, y);
 	if (!raytrace(objs, objs_num, cam->pos, unit, &r))
 		color = bg_color;
 	else
 		color = shading(objs, objs_num, lights, lights_num, &r);
-	write_imageui(output, (int2)(x, y), (uint4)(color.x, color.y, color.z, 0));//CHECK ENDIAN
+	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 0));//CHECK ENDIAN
 }
 
 
 /*__kernel void a_frame(
-		private unsigned int x_size,
-		private unsigned int y_size,
-		write_only image2d_t output)
-{
-	private int2 coord;
+  private unsigned int x_size,
+  private unsigned int y_size,
+  write_only image2d_t output)
+  {
+  private int2 coord;
 
-	coord.x = get_global_id(0);
-	coord.y = get_global_id(1);
-	write_imageui(output, coord, (uint4)(255 * (coord.x / (float)x_size), 0,
-										 255 * (coord.y / (float)y_size), 0));
-}
+  coord.x = get_global_id(0);
+  coord.y = get_global_id(1);
+  write_imageui(output, coord, (uint4)(255 * (coord.x / (float)x_size), 0,
+  255 * (coord.y / (float)y_size), 0));
+  }
 */

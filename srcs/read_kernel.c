@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:40:35 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/27 22:01:27 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 03:01:53 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,38 @@
 #include <libft_base/stringft.h>
 #include <libft_base/memory.h>
 
-void				*free_strtab(char **tab, unsigned int str_nb)
+void				*free_strtab(char **tab, size_t size)
 {
-	unsigned int	i;
+	size_t			i;
 
 	i = 0;
 	if (tab == NULL)
 		return (NULL);
-	while (i < str_nb)
+	while (i < size)
 		free(tab[i++]);
 	free(tab);
 	return (NULL);
 }
 
-void				*ft_realloc(void *src, size_t len, size_t added)
+static void			*alloc_strtab(char **tab, size_t size)
 {
-	void			*result;
+	char			**res;
+	size_t			i;
 
-	if ((result = ft_memalloc(sizeof(len))) == NULL)
-		return (src);
-	if (src != NULL)
-		ft_memmove(result, src, len - added);
-	return (result);
+	if (!(res = (char **)malloc(sizeof(char *) * (size + TAB_STEP_SIZE))))
+		return (NULL);
+	i = 0;
+	while (i < size)
+		res[i++] = NULL;
+	if (tab)
+	{
+		ft_memcpy(res, tab, sizeof(char *) * size);
+		free(tab);
+	}
+	return (res);
 }
 
-char				**read_src_file(const char *file_name, cl_uint *size)
+char				**read_src_file(const char *file_name, size_t *size)
 {
 	int		fd;
 	int		ret;
@@ -54,8 +61,7 @@ char				**read_src_file(const char *file_name, cl_uint *size)
 	{
 		if (*size % TAB_STEP_SIZE == 0)
 		{
-			if (!(result = ft_realloc(result, sizeof(char *)
-							* (*size + TAB_STEP_SIZE), TAB_STEP_SIZE)))
+			if (!(result = alloc_strtab(result, *size)))
 				return (free_strtab(result, *size));
 		}
 		buff[ret] = '\0';

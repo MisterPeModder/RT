@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:43:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 22:28:56 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:03:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 **          Returns FLT_MAX otherwise.
 */
 
-float				cylinder_intersect(__local t_object *obj, float3 origin,
-		float3 u)
+static float		cylinder_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
 {
 	float			a;
 	float			b;
@@ -60,7 +63,10 @@ float				cylinder_intersect(__local t_object *obj, float3 origin,
 ** normal = hitpos - ((hitpos - objpos) . axis) * axis [normalized]
 */
 
-void				cylinder_normal(__local t_object *o, t_rt_result *r)
+static void			cylinder_normal(
+		constant t_object *o,
+		t_rt_result *r
+		)
 {
 	float3			ph;
 	float3			h_pos;

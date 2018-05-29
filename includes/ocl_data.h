@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/27 22:01:48 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 03:41:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@
 /*
 ** program building's flags :
 */
-# define OPENCL_BUILD_FLAGS "-Werror"
+# ifndef OPENCL_BUILD_FLAGS
+#  error "OPENCL_BUILD_FLAGS not specified"
+# endif
 
-# define BUFF_SIZE 32
+# define BUFF_SIZE 128
 # define TAB_STEP_SIZE 10
 
 /*
@@ -50,12 +52,11 @@ typedef struct			s_ocl
 cl_int					ocl_init(t_ocl *ocl);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
-									cl_int ret);
+		cl_int ret);
 
 /*
 ** Functions for reading the kernel :
 */
-void					*free_strtab(char **tab, unsigned int str_nb);
-void					*ft_realloc(void *src, size_t len, size_t added);
-char					**read_src_file(const char *file_name, cl_uint *size);
+void					*free_strtab(char **tab, size_t size);
+char					**read_src_file(const char *file_name, size_t *size);
 #endif

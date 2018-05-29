@@ -6,11 +6,15 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:56:10 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 21:53:11 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:03:58 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-float				plane_intersect(__local t_object *obj, float3 origin, float3 u)
+static float		plane_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
 {
 	float			l_dot_n;
 
@@ -19,7 +23,10 @@ float				plane_intersect(__local t_object *obj, float3 origin, float3 u)
 	return (dot((obj->pos - origin), obj->facing) / l_dot_n);
 }
 
-void				plane_normal(__local t_object *o, t_rt_result *r)
+static void			plane_normal(
+		constant t_object *o,
+		t_rt_result *r
+		)
 {
 	r->normal = o->facing;
 }

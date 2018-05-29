@@ -6,11 +6,15 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:58:37 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 22:28:36 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/29 11:04:13 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-float				sphere_intersect(__local t_object *obj, float3 origin, float3 u)
+static float		sphere_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
 {
 	float	a;
 	float	b;
@@ -33,7 +37,10 @@ float				sphere_intersect(__local t_object *obj, float3 origin, float3 u)
 	return (c);
 }
 
-void				sphere_normal(__local t_object *o, t_rt_result *r)
+static void			sphere_normal(
+		constant t_object *o,
+		t_rt_result *r
+		)
 {
 	r->normal = normalize(r->pos - o->pos);
 }
