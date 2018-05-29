@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:07:58 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 16:32:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:32:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void				timer_start(t_timer *timer);
 */
 void				timer_end(t_timer *timer);
 
-void				timer_display(t_timer *timer);
+/*
+** timer_display: Print the elapsed time into standard output.
+**
+** -msg: a message string that will be printed before time. can be NULL
+*/
+void				timer_display(t_timer *timer, const char *msg);
 
 #endif

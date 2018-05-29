@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 03:41:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:26:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ typedef struct			s_ocl
 	cl_kernel			kernel;
 }						t_ocl;
 
+struct s_rt;
+
 /*
 ** OpenCL creation and destruction functions :
 */
-cl_int					ocl_init(t_ocl *ocl);
+cl_int					ocl_init(t_ocl *ocl, struct s_rt *core);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 		cl_int ret);
@@ -59,4 +61,5 @@ cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 */
 void					*free_strtab(char **tab, size_t size);
 char					**read_src_file(const char *file_name, size_t *size);
+
 #endif

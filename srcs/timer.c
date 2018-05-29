@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:16:26 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 16:49:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:31:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void				timer_end(t_timer *timer)
 	timer->secs = timer->val;
 }
 
-void				timer_display(t_timer *timer)
+void				timer_display(t_timer *timer, const char *msg)
 {
+	if (msg)
+		ft_putstr(msg);
 	ft_putnbr(timer->secs);
 	ft_putchar('.');
 	ft_putnbr(timer->nsecs);

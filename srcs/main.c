@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 07:12:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 13:26:34 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,15 @@ int					main(int ac, char **av)
 		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	ft_putendl("parsed args");
 	if (!core_init(&core, IMG_W, IMG_H))
 		return (EXIT_FAILURE);
-	ft_putendl("initialized core");
 	if (!(core.frame = img_make(&core.mlx, IMG_W, IMG_H)) ||
 			!scene_parse(&core.scene, av[1]))
 	{
 		img_release(&core.mlx, &core.frame);
 		return (EXIT_FAILURE);
 	}
-	ft_putendl("made image and parsed scene");
-	if (ocl_init(&core.ocl) < 0)
+	if (ocl_init(&core.ocl, &core) != CL_SUCCESS)
 	{
 		img_release(&core.mlx, &core.frame);
 		scene_release(&core.scene);
