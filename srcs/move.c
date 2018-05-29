@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "move.h"
+#include "mlx_defs.h"
 
 void				move_cam(t_rt *core, int key)
 {
