@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:16:26 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 15:47:00 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:30:20 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ void				timer_start(t_timer *timer)
 void				timer_end(t_timer *timer)
 {
 	struct timeval	end;
+	long long		tmp;
 
 	gettimeofday(&end, NULL);
-	timer->val = end.tv_sec * 1000000 + end.tv_usec - timer->val;
-	timer->msecs = timer->val % 100000;
-	timer->secs = timer->val / 100000;
+	tmp = end.tv_sec * 1000000 + end.tv_usec - timer->val;
+	timer->msecs = tmp % 100000;
+	timer->secs = tmp / 100000;
+}
+
+float				timer_span(t_timer *timer)
+{
+	return ((float)timer->secs + (float)timer->msecs / 100000.f);
 }
 
 void				timer_display(t_timer *timer, const char *msg)

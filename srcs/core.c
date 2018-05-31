@@ -6,11 +6,22 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 19:33:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:44:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static void			mvs_init(t_mv_state *mvs)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < MAX_KEYS)
+		mvs->keys[i++].set = 0;
+	mvs->move_speed = .6f;
+	mvs->rotate_speed = .1f;
+}
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h)
 {
@@ -24,7 +35,10 @@ int					core_init(t_rt *core, unsigned int w, unsigned int h)
 	mlx_hook(core->mlx.win_ptr, DESTROYNOTIFY, STRUCTURENOTIFYMASK,
 			&on_window_closing, core);
 	mlx_hook(core->mlx.win_ptr, KEYPRESS, KEYPRESSMASK, &on_key_pressed, core);
+	mlx_hook(core->mlx.win_ptr, KEYRELEASE, KEYRELEASEMASK, &on_key_released,
+			core);
 	mlx_loop_hook(core->mlx.mlx_ptr, &on_tick, core);
+	mvs_init(&core->mvs);
 	core->should_update = 1;
 	return (1);
 }

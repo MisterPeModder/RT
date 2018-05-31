@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 11:08:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:44:24 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MLX_DEFS_H
 
 # include <mlx.h>
+# include "timer.h"
 
 /*
 ** t_mlx_ctx: contains info about the mlx window.
@@ -26,6 +27,22 @@ typedef struct		s_mlx_ctx
 	unsigned int	win_height;
 }					t_mlx_ctx;
 
+# define MAX_KEYS 8
+
+typedef struct		s_key
+{
+	int				set;
+	t_timer			time;
+	int				code;
+}					t_key;
+
+typedef struct		s_mv_state
+{
+	t_key			keys[MAX_KEYS];
+	float			move_speed;
+	float			rotate_speed;
+}					t_mv_state;
+
 /*
 ** == EVENTS ==
 */
@@ -34,12 +51,14 @@ typedef struct		s_mlx_ctx
 ** Event ids
 */
 # define KEYPRESS 2
+# define KEYRELEASE 3
 # define DESTROYNOTIFY 17
 
 /*
 ** Event masks
 */
 # define KEYPRESSMASK (1L << 0)
+# define KEYRELEASEMASK (1L << 1)
 # define STRUCTURENOTIFYMASK (1L << 17)
 
 /*
@@ -70,6 +89,8 @@ typedef struct		s_mlx_ctx
 # endif
 
 int					on_key_pressed(int key, void *core);
+int					on_key_released(int key, void *core);
+void				on_key_repeat(int key, t_timer *time, void *core);
 int					on_window_closing(void *core);
 int					on_tick(void *core);
 

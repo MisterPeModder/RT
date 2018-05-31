@@ -62,6 +62,7 @@ SRCS_NAMES :=	angle.c			\
 				cam.c			\
 				core.c			\
 				events.c		\
+				events2.c		\
 				from_json.c		\
 				img.c			\
 				lights.c		\

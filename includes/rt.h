@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 15:39:06 by jhache           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:58:22 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_rt
 	t_mlx_ctx		mlx;
 	t_ocl			ocl;
 	t_img			*frame;
+	t_mv_state		mvs;
 	int				should_update;
 }					t_rt;
 

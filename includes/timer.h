@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:07:58 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 15:47:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:28:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void				timer_start(t_timer *timer);
 ** its behavior is undefined.
 */
 void				timer_end(t_timer *timer);
+
+float				timer_span(t_timer *timer);
 
 /*
 ** timer_display: Print the elapsed time into standard output.
