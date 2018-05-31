@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:54:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 13:10:26 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int					float_from_json(const t_json_value *val, float *f);
 int					vec3f_from_json(const t_json_value *arr, t_vec3f *vec);
 int					color_from_json(const t_json_value *arr, t_vec3f *color);
 int					angle_from_json(const t_json_value *arr, t_vec3f *vec);
-
+int					bool_from_json(const t_json_value *arr, t_bool *f);
 /*
 ** ret_free: Frees the given pointer and returns NULL
 */

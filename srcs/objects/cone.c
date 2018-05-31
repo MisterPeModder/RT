@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 16:23:09 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/28 17:22:21 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 12:56:16 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,59 +31,110 @@
 
 float				cone_intersect(t_object *obj, t_vec3f *origin, t_vec3f *u)
 {
-	float			a;
-	float			b;
-	float			c;
-	float			delta;
+	float			i[4];
 	t_vec3f			tmp;
 
 	vec3f_sub(origin, &obj->pos, &tmp);
-	c = cos(obj->props.cone.opening_angle);
-	c *= c;
-	a = pow(vec3f_dot_product(u, &obj->facing), 2) - c;
-	b = 2 * (vec3f_dot_product(u, &obj->facing)
+	i[2] = cos(obj->props.cone.opening_angle);
+	i[2] *= i[2];
+	i[0] = pow(vec3f_dot_product(u, &obj->facing), 2) - i[2];
+	i[1] = 2 * (vec3f_dot_product(u, &obj->facing)
 			* vec3f_dot_product(&tmp, &obj->facing)
-			- vec3f_dot_product(u, &tmp) * c);
-	c = vec3f_dot_product(&tmp, &obj->facing)
+			- vec3f_dot_product(u, &tmp) * i[2]);
+	i[2] = vec3f_dot_product(&tmp, &obj->facing)
 		* vec3f_dot_product(&tmp, &obj->facing)
-		- vec3f_dot_product(&tmp, &tmp) * c;
-	delta = b * b - 4 * a * c;
-	if (delta < 0)
+		- vec3f_dot_product(&tmp, &tmp) * i[2];
+	i[3] = i[1] * i[1] - 4 * i[0] * i[2];
+	if (i[3] < 0)
 		return (FLT_MAX);
-	else if (delta == 0)
-		return (-b / (2 * a));
-	c = (-b - sqrt(delta)) / (2 * a);
-	a = (-b + sqrt(delta)) / (2 * a);
-	c = c > a ? a : c;
-	return (a > 0 ? a : c);
+	else if (i[3] == 0)
+		return (-i[1] / (2 * i[0]));
+	i[2] = (-i[1] - sqrt(i[3])) / (2 * i[0]);
+	i[0] = (-i[1] + sqrt(i[3])) / (2 * i[0]);
+	i[2] = i[2] > i[0] ? i[0] : i[2];
+	i[1] = vec3f_dot_product(u, &obj->facing) * (i[0] > 0 ? i[0] : i[2]) +
+		vec3f_dot_product(vec3f_sub(origin, &obj->pos, &tmp), &obj->facing);
+	return (cone_intersect2(obj, origin, u, i));
 }
 
-void				cone_normal(t_object *o, t_rt_result *r)
+float				cone_intersect2(t_object *obj, t_vec3f *origin,
+		t_vec3f *u, float i[4])
 {
-	t_vec3f			vs;
-	t_vec3f			n;
-	float			s;
-	t_vec3f			v;
-
-	s = vec3f_norm(vec3f_sub(&r->pos, &o->pos, &vs));
-	n = o->facing;
-	if (vec3f_dot_product(&o->facing, &vs) < 0)
-		vec3f_neg(&n, &n);
-	vec3f_mul(&n, s / cos(o->props.cone.opening_angle), &v);
-	vec3f_add(&o->pos, &v, &v);
-	vec3f_normalize(vec3f_sub(&r->pos, &v, &v), &r->normal);
+	obj->props.cone.face = 0;
+	if (obj->props.cone.simple)
+	{
+		if (i[1] > 0)
+			return (FLT_MAX);
+		if (obj->props.cone.simple && obj->props.cone.len != -1 &&
+					i[1] < 0 - obj->props.cone.len)
+			return (cone_intersect_simple(obj, origin, u));
+		return (i[0] > 0 ? i[0] : i[2]);
+	}
+	else
+	{
+		if (obj->props.cone.len == -1)
+			return (i[0] > 0 ? i[0] : i[2]);
+		if (i[1] < 0 - obj->props.cone.len / 2 ||
+				i[1] > obj->props.cone.len / 2)
+		{
+			if ((i[3] = cone_intersect_double(obj, origin, u, 1)) != FLT_MAX)
+				return (i[3]);
+			if ((i[3] = cone_intersect_double(obj, origin, u, 2)) != FLT_MAX)
+				return (i[3]);
+			return (FLT_MAX);
+		}
+		return (i[0] > 0 ? i[0] : i[2]);
+	}
 }
 
-int					cone_init(t_object *object, const t_json_object *data)
+float				cone_intersect_simple(t_object *obj, t_vec3f *origin,
+		t_vec3f *u)
 {
-	object->release = NULL;
-	object->intersect = &cone_intersect;
-	object->normal = &cone_normal;
-	if (!float_from_json(json_obj_get(data, "opening_angle"),
-				&object->props.cone.opening_angle) ||
-			object->props.cone.opening_angle <= 0 ||
-			object->props.cone.opening_angle >= 90)
-		return (0);
-	object->props.cone.opening_angle *= M_PI / 180;
-	return (1);
+	float	delta;
+	t_vec3f	tmp;
+	t_vec3f	tmp2;
+	t_vec3f	tmp3;
+
+	vec3f_sub(&obj->pos, vec3f_mul(&obj->facing, obj->props.cone.len
+		, &tmp2), &tmp3);
+	delta = vec3f_dot_product(vec3f_sub(&tmp3, origin, &tmp),
+			&obj->facing) / vec3f_dot_product(u, &obj->facing);
+	vec3f_add(origin, vec3f_mul(u, delta, &tmp2), &tmp);
+	if (vec3f_dot_product(vec3f_sub(&tmp, &tmp3, &tmp2),
+			vec3f_sub(&tmp, &tmp3, &tmp2)) <=
+			pow(tan(obj->props.cone.opening_angle)
+			* vec3f_norm(vec3f_sub(&tmp3, &obj->pos, &tmp)), 2))
+	{
+		obj->props.cone.face = 1;
+		return (delta);
+	}
+	return (FLT_MAX);
+}
+
+float				cone_intersect_double(t_object *obj, t_vec3f *origin,
+		t_vec3f *u, int i)
+{
+	t_vec3f			tmp;
+	t_vec3f			tmp2;
+	t_vec3f			tmp3;
+	float			a;
+
+	if (i == 2)
+		vec3f_add(&obj->pos, vec3f_mul(&obj->facing, obj->props.cone.len
+					/ 2, &tmp2), &tmp3);
+	else if (i == 1)
+		vec3f_sub(&obj->pos, vec3f_mul(&obj->facing, obj->props.cone.len
+					/ 2, &tmp2), &tmp3);
+	a = vec3f_dot_product(vec3f_sub(&tmp3, origin, &tmp),
+			&obj->facing) / vec3f_dot_product(u, &obj->facing);
+	vec3f_add(origin, vec3f_mul(u, a, &tmp2), &tmp);
+	if (vec3f_dot_product(vec3f_sub(&tmp, &tmp3, &tmp2),
+				vec3f_sub(&tmp, &tmp3, &tmp2)) <=
+				pow(tan(obj->props.cone.opening_angle)
+				* vec3f_norm(vec3f_sub(&tmp3, &obj->pos, &tmp)), 2))
+	{
+		obj->props.cone.face = i;
+		return (a);
+	}
+	return (FLT_MAX);
 }

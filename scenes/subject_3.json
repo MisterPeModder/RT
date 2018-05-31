@@ -27,6 +27,7 @@
 		{
 			"type": "cone",
 			"pos": [1.5, 1, -5],
+			"simple": false,
 			"angle": [0, 0, 30],
 			"color": [255, 255, 0],
 			"opening_angle": 40

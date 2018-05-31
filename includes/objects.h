@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 14:00:59 by jloro            ###   ########.fr       */
+/*   Updated: 2018/05/31 13:09:32 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include <stdint.h>
 # include <libft_math/vec3.h>
 
+typedef enum		e_bool
+{
+	false,
+	true
+}					t_bool;
+
 /*
 ** t_obj_type: Contains each type of object currently available.
 */
@@ -26,7 +32,7 @@ typedef enum		e_obj_type
 	OBJ_SPHERE,
 	OBJ_CONE,
 	OBJ_CYLINDER,
-	OBJ_DISK
+	OBJ_DISK,
 }					t_obj_type;
 
 /*
@@ -39,6 +45,9 @@ typedef union		u_properties
 	}				sphere;
 	struct {
 		float		opening_angle;
+		t_bool		simple;
+		float		len;
+		int			face;
 	}				cone;
 	struct {
 		float		radius;
@@ -106,6 +115,12 @@ void				plane_normal(t_object *o, t_rt_result *r);
 
 int					cone_init(t_object *object, const t_json_object *data);
 float				cone_intersect(t_object *o, t_vec3f *origin, t_vec3f *u);
+float				cone_intersect_simple(t_object *o, t_vec3f *origin,
+		t_vec3f *u);
+float				cone_intersect_double(t_object *o, t_vec3f *origin,
+		t_vec3f *u, int i);
+float				cone_intersect2(t_object *o, t_vec3f *origin, t_vec3f *u,
+		float i[3]);
 void				cone_normal(t_object *o, t_rt_result *r);
 
 int					cylinder_init(t_object *object, const t_json_object *data);
@@ -120,4 +135,5 @@ void				cylinder_normal(t_object *o, t_rt_result *r);
 float				disk_intersect(t_object *o, t_vec3f *origin,
 		t_vec3f *u);
 int					disk_init(t_object *object, const t_json_object *data);
+
 #endif
