@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 13:26:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 16:44:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,18 @@ typedef struct			s_ocl
 	cl_command_queue	queue;
 	cl_program			program;
 	cl_kernel			kernel;
+	cl_mem				ocl_img;
 }						t_ocl;
 
 struct s_rt;
+
+typedef struct			s_kargs
+{
+	cl_mem				arg1;
+	cl_mem				arg2;
+	cl_mem				arg3;
+	cl_mem				arg4;
+}						t_kargs;
 
 /*
 ** OpenCL creation and destruction functions :

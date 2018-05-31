@@ -6,11 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 11:09:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 15:56:22 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <libft_base/io.h>
 #include "mlx_defs.h"
 #include "rt.h"
 #include "ocl_data.h"
@@ -57,8 +58,11 @@ int					on_tick(void *c)
 	if (core->should_update)
 	{
 		timer_start(&timer);
-		render_frame(core);
-		mlx_put_image_to_window(core->mlx.mlx_ptr, core->mlx.win_ptr,
+		if (render_frame(core) != CL_SUCCESS)
+			ft_putendl_fd("\x1b[93mWARNING\x1b[0m: failed to render frame !!",
+					STDERR_FILENO);
+		else
+			mlx_put_image_to_window(core->mlx.mlx_ptr, core->mlx.win_ptr,
 				core->frame->mlx_img, 0, 0);
 		core->should_update = 0;
 		timer_end(&timer);

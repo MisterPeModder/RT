@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 01:39:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 15:39:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int					obj_make(t_object *object, const t_json_object *data);
 int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
 
-void				render_frame(t_rt *core);
+cl_int				render_frame(t_rt *core);
 
 void				img_ppm_output(t_img *img);
 void				img_mlx_output(t_img *img);
