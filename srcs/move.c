@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 01:38:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 16:48:24 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "move.h"
 #include "mlx_defs.h"
 
@@ -33,5 +34,18 @@ void				move_cam(t_rt *core, int key)
 	rotate_y(&move_vec, core->scene.cam.angle.y);
 	rotate_z(&move_vec, core->scene.cam.angle.z);
 	vec3cl_add(&core->scene.cam.pos, &move_vec, &core->scene.cam.pos);
+	core->should_update = 1;
+}
+
+void				rotate_cam(t_rt *core, int key)
+{
+	if (key == ARROW_UP_KEY)
+		core->scene.cam.angle.x += ROTATE_INCREMENT;
+	else if (key == ARROW_DOWN_KEY)
+		core->scene.cam.angle.x -= ROTATE_INCREMENT;
+	else if (key == ARROW_LEFT_KEY)
+		core->scene.cam.angle.y += ROTATE_INCREMENT;
+	else
+		core->scene.cam.angle.y -= ROTATE_INCREMENT;
 	core->should_update = 1;
 }

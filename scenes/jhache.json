@@ -3,7 +3,8 @@
 	"background_color": [0, 0, 10],
 	"camera": {
 		"pos": [1, 2, 10],
-		"fov": 90
+		"fov": 90,
+		"angle": [0, 45, 0]
 	},
 	"objects": [
 		{

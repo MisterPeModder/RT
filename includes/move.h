@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:23:01 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 19:40:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 16:07:37 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "rt.h"
 
 # define MOVE_INCREMENT .5f
+# define ROTATE_INCREMENT .1f
 
 void				move_cam(t_rt *core, int key);
+void				rotate_cam(t_rt *core, int key);
 
 #endif

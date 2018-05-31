@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 13:33:08 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 16:04:40 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int					on_key_pressed(int key, void *core)
 	else if (key == W_KEY || key == A_KEY || key == S_KEY || key == D_KEY ||
 			key == SHIFT_KEY || key == SPACE_KEY)
 		move_cam(core, key);
+	else if (key == ARROW_UP_KEY || key == ARROW_LEFT_KEY || key == ARROW_DOWN_KEY || key == ARROW_RIGHT_KEY)
+		rotate_cam(core, key);
 	return (0);
 }
 
