@@ -6,11 +6,10 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 11:10:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 15:11:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "move.h"
 #include "mlx_defs.h"
 
@@ -39,17 +38,20 @@ void				move_cam(t_rt *core, int key)
 
 void				rotate_cam(t_rt *core, int key)
 {
+	cl_float3		*angle;
+
+	angle = &core->scene.cam.angle;
 	if (key == ARROW_UP_KEY)
-		core->scene.cam.angle.x += ROTATE_INCREMENT;
+		angle->x = fmod(angle->x + ROTATE_INCREMENT, M_PI * 2);
 	else if (key == ARROW_DOWN_KEY)
-		core->scene.cam.angle.x -= ROTATE_INCREMENT;
+		angle->x = fmod(angle->x - ROTATE_INCREMENT, M_PI * 2);
 	else if (key == ARROW_LEFT_KEY)
-		core->scene.cam.angle.y += ROTATE_INCREMENT;
+		angle->y = fmod(angle->y + ROTATE_INCREMENT, M_PI * 2);
 	else if (key == ARROW_RIGHT_KEY)
-		core->scene.cam.angle.y -= ROTATE_INCREMENT;
+		angle->y = fmod(angle->y - ROTATE_INCREMENT, M_PI * 2);
 	else if (key == PG_UP)
-		core->scene.cam.angle.z += ROTATE_INCREMENT;
+		angle->z = fmod(angle->z + ROTATE_INCREMENT, M_PI * 2);
 	else
-		core->scene.cam.angle.z -= ROTATE_INCREMENT;
+		angle->z = fmod(angle->z - ROTATE_INCREMENT, M_PI * 2);
 	core->should_update = 1;
 }
