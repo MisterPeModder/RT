@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:07:58 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 13:32:45 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 15:47:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 ** t_timer: A easy-to-use timer.
 **
 ** -secs the elapsed seconds between start and end
-** -nsecs the elapsed nanoseconds between start and end
+** -msecs the elapsed nanoseconds between start and end
 */
 typedef struct		s_timer
 {
 	long long		val;
 	int				secs;
-	int				nsecs;
+	int				msecs;
 }					t_timer;
 
 /*
