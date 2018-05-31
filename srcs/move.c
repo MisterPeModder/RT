@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 16:48:24 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 11:10:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ void				rotate_cam(t_rt *core, int key)
 		core->scene.cam.angle.x -= ROTATE_INCREMENT;
 	else if (key == ARROW_LEFT_KEY)
 		core->scene.cam.angle.y += ROTATE_INCREMENT;
-	else
+	else if (key == ARROW_RIGHT_KEY)
 		core->scene.cam.angle.y -= ROTATE_INCREMENT;
+	else if (key == PG_UP)
+		core->scene.cam.angle.z += ROTATE_INCREMENT;
+	else
+		core->scene.cam.angle.z -= ROTATE_INCREMENT;
 	core->should_update = 1;
 }

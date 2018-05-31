@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 15:53:38 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 11:08:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct		s_mlx_ctx
 #  define ARROW_LEFT_KEY 123
 #  define ARROW_DOWN_KEY 125
 #  define ARROW_RIGHT_KEY 124
+#  define PG_UP 116
+#  define PG_DOWN 121
 # endif
 
 int					on_key_pressed(int key, void *core);
