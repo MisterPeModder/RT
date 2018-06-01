@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/01 11:19:11 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 15:32:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int					sphere_init(t_object *object, const t_json_object *data);
 int					plane_init(t_object *object, const t_json_object *data);
 int					cone_init(t_object *object, const t_json_object *data);
 int					cylinder_init(t_object *object, const t_json_object *data);
+int					disk_init(t_object *object, const t_json_object *data);
 
 #endif

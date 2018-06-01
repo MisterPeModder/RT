@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 11:31:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 15:27:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct				s_rt_result
 #include "objects/cylinder.cl"
 #include "objects/plane.cl"
 #include "objects/sphere.cl"
+#include "objects/disk.cl"
 #include "render.cl"
 
 kernel void	render_frame(

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 13:40:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 15:25:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef enum		e_obj_type
 	OBJ_PLANE = 1,
 	OBJ_SPHERE,
 	OBJ_CONE,
-	OBJ_CYLINDER
+	OBJ_CYLINDER,
+	OBJ_DISK
 }					t_obj_type;
 
 /*

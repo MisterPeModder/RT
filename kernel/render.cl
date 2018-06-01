@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 14:03:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 15:26:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ static int			raytrace(
 			case OBJ_CYLINDER:
 				tmp = cylinder_intersect(&objs[i], o, u, &face);
 				break;
+			case OBJ_DISK:
+				tmp = disk_intersect(&objs[i], o, u);
+				break;
 			default:
 				tmp = FLT_MAX;
 		}
@@ -88,6 +91,7 @@ static int			raytrace(
 			sphere_normal(r->obj, r);
 			break;
 		case OBJ_PLANE:
+		case OBJ_DISK:
 			plane_normal(r->obj, r);
 			break;
 		case OBJ_CONE:
