@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:26:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 01:58:05 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 			ft_putstr_fd("Invalid format for object #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
-			while (i > 0)
-				obj_release(&scene->objs[--i]);
 			free(scene->objs);
 			return (0);
 		}
@@ -99,22 +97,24 @@ static int			scene_parse2(t_scene *scene, t_json_object *obj)
 
 	if (!(tmp = json_obj_get(obj, "lights")) || tmp->obj.type != JSON_ARRAY)
 	{
-		objs_release(scene->objs, scene->objs_num);
+		free(scene->objs);
 		return (rel_error("No lights or invalid format", &obj));
 	}
 	if (!scene_lights(scene, &tmp->arr))
 	{
-		objs_release(scene->objs, scene->objs_num);
+		free(scene->objs);
 		return (rel_error(NULL, &obj));
 	}
 	if ((tmp = json_obj_get(obj, "background_color")))
 	{
 		if (!color_from_json(tmp, &scene->bg_color))
-			return (rel_error("Invalid background color", &obj) ||
-					objs_release(scene->objs, scene->objs_num));
+		{
+			free(scene->objs);
+			return (rel_error("Invalid background color", &obj));
+		}
 	}
 	else
-		vec3f_fill(&scene->bg_color, 0, 0, 0);
+		vec3cl_fill(&scene->bg_color, 0, 0, 0);
 	return (1);
 }
 

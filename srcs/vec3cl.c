@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objects.h                                          :+:      :+:    :+:   */
+/*   vec3cl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/01 11:19:11 by yguaye           ###   ########.fr       */
+/*   Created: 2018/05/29 01:36:02 by yguaye            #+#    #+#             */
+/*   Updated: 2018/05/29 01:45:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJECTS_H
-# define OBJECTS_H
+#include "rt.h"
 
-# include <json.h>
-# include "ocl_common_structs.h"
+t_clfloat3			*vec3cl_fill(t_clfloat3 *vec,
+		t_clfloat x, t_clfloat y, t_clfloat z)
+{
+	vec->x = x;
+	vec->y = y;
+	vec->z = z;
+	return (vec);
+}
 
-/*
-** OBJECT INITIALIZATION FUNCTIONS:
-*/
-int					sphere_init(t_object *object, const t_json_object *data);
-int					plane_init(t_object *object, const t_json_object *data);
-int					cone_init(t_object *object, const t_json_object *data);
-int					cylinder_init(t_object *object, const t_json_object *data);
-
-#endif
+t_clfloat3			*vec3cl_add(t_clfloat3 *rhs, t_clfloat3 *lhs,
+		t_clfloat3 *dst)
+{
+	dst->x = rhs->x + lhs->x;
+	dst->y = rhs->y + lhs->y;
+	dst->z = rhs->z + lhs->z;
+	return (dst);
+}

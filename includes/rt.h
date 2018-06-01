@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:54:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 13:09:01 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "image.h"
 # include "scene.h"
 # include "mlx_defs.h"
+# include "ocl_data.h"
+# include "ocl_types.h"
 
 /*
 ** t_rt: The central structure.
@@ -24,14 +26,16 @@ typedef struct		s_rt
 {
 	t_scene			scene;
 	t_mlx_ctx		mlx;
+	t_ocl			ocl;
 	t_img			*frame;
+	t_mv_state		mvs;
 	int				should_update;
 }					t_rt;
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h);
 
-float				to_radians(float deg);
-float				to_degrees(float rad);
+t_clfloat			to_radians(t_clfloat deg);
+t_clfloat			to_degrees(t_clfloat rad);
 
 /*
 ** *_from_json: Parses the given t_json_value
@@ -40,29 +44,17 @@ float				to_degrees(float rad);
 **
 ** returns: 1 if successful, 0 if not.
 */
-int					float_from_json(const t_json_value *val, float *f);
-int					vec3f_from_json(const t_json_value *arr, t_vec3f *vec);
-int					color_from_json(const t_json_value *arr, t_vec3f *color);
-int					angle_from_json(const t_json_value *arr, t_vec3f *vec);
+int					float_from_json(const t_json_value *val, t_clfloat *f);
+int					vec3f_from_json(const t_json_value *arr, cl_float3 *vec);
+int					color_from_json(const t_json_value *arr, cl_float3 *color);
+int					angle_from_json(const t_json_value *arr, cl_float3 *vec);
+int					bool_from_json(const t_json_value *val, int *f);
 
 /*
 ** ret_free: Frees the given pointer and returns NULL
 */
 void				*ret_free(void *obj);
 int					rel_error(const char *msg, t_json_object **obj);
-
-/*
-** compute_color: Compute the Diffuse and the Specular components of the color.
-**         Colorize is the function which will
-**         add those components into one color.
-** -light: the light's data structure we are using for computing the color.
-** -lvec: a vector which is going from the intersection point
-**        to the light coord.
-** -r: the primary ray's raytrace result.
-** -c: where the color of the pixel will be stored.
-*/
-void				colorize(t_light light, t_vec3f lvec, t_rt_result *r,
-		t_vec3f *c);
 
 /*
 ** make_cam: Handles the parsing of the camera properties.
@@ -73,24 +65,21 @@ int					obj_make(t_object *object, const t_json_object *data);
 int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
 
-void				render_frame(t_scene *scene, t_img *img);
-
-/*
-** rotate_*: Rotates the vector 'vec' by the angle 'r'.
-*/
-t_vec3f				*rotate_x(t_vec3f *vec, float rx);
-t_vec3f				*rotate_y(t_vec3f *vec, float ry);
-t_vec3f				*rotate_z(t_vec3f *vec, float rz);
-
-/*
-** read_args: Parses argv.
-**
-** returns: -1 if an error occured, 0 if the program should output to
-**          a ppm image or 1 if it should display a window.
-*/
-int					read_args(int ac, char **av);
+cl_int				render_frame(t_rt *core);
 
 void				img_ppm_output(t_img *img);
 void				img_mlx_output(t_img *img);
+
+/*
+** vec3cl_fill: fills the openCL float3 vector with the given coordinates.
+*/
+t_clfloat3			*vec3cl_fill(t_clfloat3 *vec,
+		t_clfloat x, t_clfloat y, t_clfloat z);
+t_clfloat3			*vec3cl_add(t_clfloat3 *rhs, t_clfloat3 *lhs,
+		t_clfloat3 *dst);
+
+cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
+cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
+cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
 
 #endif

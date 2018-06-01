@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:36:32 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/22 19:06:08 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 01:27:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int					make_cam(t_cam *cam, const t_json_object *data)
 			return (0);
 	}
 	else
-		vec3f_fill(&cam->angle, 0, 0, 0);
+		vec3cl_fill(&cam->angle, 0, 0, 0);
 	if ((tmp = json_obj_get(data, "fov")))
 	{
 		if (!float_from_json(tmp, &cam->fov) || cam->fov < 1 || cam->fov > 150)

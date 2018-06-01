@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 17:44:20 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/27 14:25:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 12:46:37 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef union		u_color
 /*
 ** IMG_W, IMG_H: The image's width and height.
 */
-# define IMG_W 1200
-# define IMG_H 675
+# define IMG_W 1600
+# define IMG_H 900
 
 /*
 ** t_img: The frame buffer

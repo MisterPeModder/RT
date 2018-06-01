@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:29:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/29 00:59:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,7 @@
 # define SCENE_H
 
 # include "objects.h"
-
-/*
-** t_cam: The camera
-**
-** -pos: where the cam is located
-** -angle: its angle
-** -fov: the field of view
-*/
-typedef struct		s_cam
-{
-	t_vec3f			pos;
-	t_vec3f			angle;
-	float			fov;
-}					t_cam;
-
-/*
-** t_light: Represents a light.
-**
-** -pos: its location
-** -power: how bright it is
-** -color: its color
-*/
-typedef struct		s_light
-{
-	t_vec3f			pos;
-	float			power;
-	t_vec3f			color;
-}					t_light;
+# include "ocl_common_structs.h"
 
 /*
 ** t_scene: A structure that stores all the information about the current scene.
@@ -60,7 +33,7 @@ typedef struct		s_scene
 	t_light			*lights;
 	size_t			objs_num;
 	size_t			lights_num;
-	t_vec3f			bg_color;
+	cl_float3		bg_color;
 }					t_scene;
 
 /*

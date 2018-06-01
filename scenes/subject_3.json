@@ -22,14 +22,17 @@
 			"pos": [0, 2, -5],
 			"angle": [0, 0, -45],
 			"radius": 0.5,
-			"color": [0, 255, 0]
+			"color": [0, 255, 0],
+			"length": 10
 		},
 		{
 			"type": "cone",
 			"pos": [1.5, 1, -5],
 			"angle": [0, 0, 30],
 			"color": [255, 255, 0],
-			"opening_angle": 40
+			"opening_angle": 40,
+			"length": 10//,
+//			"simple": true
 		}
 	],
 	"lights": [

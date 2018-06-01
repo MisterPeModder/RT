@@ -35,11 +35,18 @@ SRC_PATH := srcs
 OBJ_PATH := .bin
 INC_PATH := includes
 
+# OPENCL
+KERNEL_PATH := kernel
+KERNELSRC_PATH := $(KERNEL_PATH)/kernel.cl
+OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
+
 SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion -g
+CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
+			-g																\
+			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
 
@@ -51,25 +58,27 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-SRCS_NAMES :=	angle.c		\
-				cam.c		\
-				color.c		\
-				core.c		\
-				events.c	\
-				from_json.c	\
-				img.c		\
-				lights.c	\
-				main.c		\
-				move.c		\
-				render.c	\
-				rotate.c	\
-				scene.c		\
-				timer.c		\
-				utils.c		\
+SRCS_NAMES :=	angle.c			\
+				cam.c			\
+				core.c			\
+				events.c		\
+				events2.c		\
+				from_json.c		\
+				img.c			\
+				lights.c		\
+				main.c			\
+				move.c			\
+				ocl_render.c	\
+				ocl_data.c		\
+				read_kernel.c	\
+				rotate.c		\
+				scene.c			\
+				timer.c			\
+				utils.c			\
+				vec3cl.c		\
 
 SRCS_NAMES +=	objects/cone.c		\
 				objects/objects.c	\
-				objects/plane.c		\
 				objects/sphere.c	\
 				objects/cylinder.c	\
 
@@ -77,13 +86,18 @@ SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	image.h		\
-		mlx_defs.h	\
-		move.h		\
-		objects.h	\
-		rt.h		\
-		scene.h		\
-		timer.h		\
+INCS :=	image.h					\
+		internal_ocl_types_c.h	\
+		internal_ocl_types_cl.h	\
+		mlx_defs.h				\
+		move.h					\
+		objects.h				\
+		ocl_common_structs.h	\
+		ocl_data.h				\
+		ocl_types.h				\
+		rt.h					\
+		scene.h					\
+		timer.h					\
 
 # THE NORM IS REAL
 NORM_LOG := norm.log

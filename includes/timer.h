@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:07:58 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 16:32:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/05/31 19:28:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 ** t_timer: A easy-to-use timer.
 **
 ** -secs the elapsed seconds between start and end
-** -nsecs the elapsed nanoseconds between start and end
+** -msecs the elapsed nanoseconds between start and end
 */
 typedef struct		s_timer
 {
 	long long		val;
 	int				secs;
-	int				nsecs;
+	int				msecs;
 }					t_timer;
 
 /*
@@ -43,6 +43,13 @@ void				timer_start(t_timer *timer);
 */
 void				timer_end(t_timer *timer);
 
-void				timer_display(t_timer *timer);
+float				timer_span(t_timer *timer);
+
+/*
+** timer_display: Print the elapsed time into standard output.
+**
+** -msg: a message string that will be printed before time. can be NULL
+*/
+void				timer_display(t_timer *timer, const char *msg);
 
 #endif

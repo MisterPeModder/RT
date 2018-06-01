@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/28 17:52:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 11:06:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			obj_props(t_object *object, char *str,
 	else if (ft_strequ(str, "cone") && (*type = OBJ_CONE))
 		return (cone_init(object, data));
 	else if (ft_strequ(str, "plane") && (*type = OBJ_PLANE))
-		return (plane_init(object, data));
+		return (1);
 	else if (ft_strequ(str, "cylinder") && (*type = OBJ_CYLINDER))
 		return (cylinder_init(object, data));
 	return (0);
@@ -29,13 +29,13 @@ static int			obj_props(t_object *object, char *str,
 
 static int			calc_angle(t_object *object, const t_json_value *v)
 {
-	t_vec3f			angle;
+	cl_float3			angle;
 
 	if (!v)
-		vec3f_fill(&angle, 0, 0, 0);
+		vec3cl_fill(&angle, 0, 0, 0);
 	else if (!angle_from_json(v, &angle))
 		return (0);
-	vec3f_fill(&object->facing, 0, 1, 0);
+	vec3cl_fill(&object->facing, 0, 1, 0);
 	rotate_x(&object->facing, angle.x);
 	rotate_y(&object->facing, angle.y);
 	rotate_z(&object->facing, angle.z);
@@ -55,29 +55,9 @@ int					obj_make(t_object *object, const t_json_object *data)
 			return (0);
 	}
 	else
-		vec3f_fill(&object->color, 1, 1, 1);
+		vec3cl_fill(&object->color, 1, 1, 1);
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
 	return (1);
-}
-
-int					obj_release(t_object *obj)
-{
-	if (obj->release)
-		(*obj->release)(obj);
-	return (0);
-}
-
-int					objs_release(t_object *objs, size_t num)
-{
-	size_t			i;
-
-	if (!objs)
-		return (0);
-	i = 0;
-	while (i < num)
-		obj_release(&objs[i++]);
-	free(objs);
-	return (0);
 }
