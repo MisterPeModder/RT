@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:58:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 11:11:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ t_clfloat3			*vec3cl_fill(t_clfloat3 *vec,
 t_clfloat3			*vec3cl_add(t_clfloat3 *rhs, t_clfloat3 *lhs,
 		t_clfloat3 *dst);
 
-cl_float3				*rotate_x(cl_float3 *vec, t_clfloat rx);
-cl_float3				*rotate_y(cl_float3 *vec, t_clfloat ry);
-cl_float3				*rotate_z(cl_float3 *vec, t_clfloat rz);
+cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
+cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
+cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
 
 #endif

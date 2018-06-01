@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:59:44 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/01 10:54:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,17 @@ int					on_key_pressed(int key, void *core)
 	mvs = &((t_rt *)core)->mvs;
 	i = 0;
 	while (i < MAX_KEYS)
-	{
-		if (mvs->keys[i].set && mvs->keys[i].code == key)
+		if (mvs->keys[i++].set && mvs->keys[i - 1].code == key)
 			return (0);
-		++i;
-	}
 	i = 0;
 	while (i < MAX_KEYS)
-	{
-		if (!mvs->keys[i].set)
+		if (!mvs->keys[i++].set)
 		{
-			mvs->keys[i].code = key;
-			mvs->keys[i].set = 1;
-			timer_start(&mvs->keys[i].time);
+			mvs->keys[i - 1].code = key;
+			mvs->keys[i - 1].set = 1;
+			timer_start(&mvs->keys[i - 1].time);
 			return (0);
 		}
-		++i;
-	}
 	return (0);
 }
 

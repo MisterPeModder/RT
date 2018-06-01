@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/31 16:44:31 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/01 11:09:08 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct			s_kargs
 ** OpenCL creation and destruction functions :
 */
 cl_int					ocl_init(t_ocl *ocl, struct s_rt *core);
+cl_int					init_kernel_args(t_ocl *ocl, struct s_rt *core);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 		cl_int ret);

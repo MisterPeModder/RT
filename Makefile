@@ -79,7 +79,6 @@ SRCS_NAMES :=	angle.c			\
 
 SRCS_NAMES +=	objects/cone.c		\
 				objects/objects.c	\
-				objects/plane.c		\
 				objects/sphere.c	\
 				objects/cylinder.c	\
 
