@@ -6,14 +6,15 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 00:08:36 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 01:01:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_DEFS_H
-# define MLX_DEFS_H
+#ifndef SDL_DEFS_H
+# define SDL_DEFS_H
 
-# include <SDL.h>
+# include <SDL_video.h>
+# include <SDL_endian.h>
 # include "timer.h"
 
 /*

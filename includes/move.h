@@ -6,13 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:23:01 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:12:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 00:59:19 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MOVE_H
 # define MOVE_H
 
+# include <SDL_keyboard.h>
 # include <math.h>
 # include "rt.h"
 # include "timer.h"

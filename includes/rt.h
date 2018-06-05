@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 19:09:35 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 01:02:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef struct		s_rt
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h);
 
+/*
+** event_loop: Triggers the main event loop. reminiscent of mlx_loop()
+*/
 void				event_loop(t_rt *core);
 
 t_clfloat			to_radians(t_clfloat deg);
@@ -68,9 +71,6 @@ int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
 
 cl_int				render_frame(t_rt *core);
-
-/*void				img_ppm_output(t_img *img);
-  void				img_mlx_output(t_img *img);*/
 
 /*
 ** vec3cl_fill: fills the openCL float3 vector with the given coordinates.

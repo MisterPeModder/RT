@@ -59,7 +59,6 @@ SRCS_NAMES :=	core.c				\
 				main.c				\
 
 SRCS_NAMES +=	events/events.c		\
-				events/events2.c	\
 				events/loop.c		\
 				events/move.c		\
 

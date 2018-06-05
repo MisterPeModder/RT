@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 17:44:20 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 18:40:08 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 00:57:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,8 @@ t_color				color_make(int8_t r, int8_t g, int8_t b);
 ** -w: image width
 ** -h: image height
 **
-** returns: the image.
+** returns: a SDL_Surface representing this image.
 */
 SDL_Surface			*img_make(unsigned int w, unsigned int h);
-
-/*void				img_pixel_put(t_img *img, t_color c,
-  unsigned int x, unsigned int y);*/
-
-/*
-** img_release: Frees the passed image.
-**
-** -mlx: a valid pointer to a t_mlx_ctx structure
-*/
-/*void				img_release(t **img);*/
 
 #endif

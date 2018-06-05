@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/06 00:11:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 01:05:26 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,10 @@ cl_int				render_frame(t_rt *core)
 	work_dim[2] = 1;
 	ret = clEnqueueNDRangeKernel(core->ocl.queue, core->ocl.kernel, 2, NULL,
 			work_dim, NULL, 0, NULL, NULL);
-	if (ret != CL_SUCCESS)
-	{
-		release_kernel_arg(tmp);
+	if (ret != CL_SUCCESS && !release_kernel_arg(tmp))
 		return (ret);
-	}
 	ft_bzero(offset, sizeof(size_t) * 3);
 	SDL_LockSurface(core->frame);
-	for (unsigned int x = 0; x < core->sdl.w; ++x)
-		for (unsigned int y = 0; y < core->sdl.h; ++y)
-			((uint32_t *)core->frame->pixels)[x + y * core->sdl.w] = 0x6b42f4ff;
 	ret = clEnqueueReadImage(core->ocl.queue, core->ocl.ocl_img, CL_TRUE,
 			offset, work_dim, 0, 0, core->frame->pixels, 0, NULL, NULL);
 	SDL_UnlockSurface(core->frame);

@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 20:04:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 00:35:18 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <SDL.h>
 #include <libft_base/io.h>
 #include "rt.h"
 
