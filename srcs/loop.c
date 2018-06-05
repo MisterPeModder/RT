@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 18:56:11 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 19:59:41 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 21:20:36 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				event_loop(t_rt *core)
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
-				break ;
+				on_window_closing(core);
 			if (event.type == SDL_KEYDOWN)
 				on_key_pressed(event.key.keysym.sym, core);
 			if (event.type == SDL_KEYUP)
