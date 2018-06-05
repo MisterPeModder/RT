@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/01 11:20:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 19:17:23 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static int			exit_rt(t_rt *core)
 	if (core)
 	{
 		scene_release(&core->scene);
-		img_release(&core->mlx, &core->frame);
 		ocl_release(&core->ocl, NULL, 0);
+		SDL_FreeSurface(core->sdl.screen);
+		SDL_DestroyWindow(core->sdl.win);
+		SDL_FreeSurface(core->frame);
 	}
 	exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
@@ -30,7 +32,7 @@ int					on_key_pressed(int key, void *core)
 	t_mv_state		*mvs;
 	unsigned int	i;
 
-	if (key == ESC_KEY)
+	if (key == SDLK_ESCAPE)
 		return (exit_rt(core));
 	mvs = &((t_rt *)core)->mvs;
 	i = 0;
@@ -67,12 +69,12 @@ int					on_key_released(int key, void *core)
 
 void				on_key_repeat(int key, t_timer *time, void *core)
 {
-	if (key == W_KEY || key == A_KEY || key == S_KEY || key == D_KEY ||
-			key == SHIFT_KEY || key == SPACE_KEY)
+	if (key == SDLK_w || key == SDLK_a || key == SDLK_s || key == SDLK_d ||
+			key == SDLK_LSHIFT || key == SDLK_SPACE)
 		move_cam(core, key, time);
-	else if (key == ARROW_UP_KEY || key == ARROW_LEFT_KEY ||
-			key == ARROW_DOWN_KEY || key == ARROW_RIGHT_KEY ||
-			key == PG_UP || key == PG_DOWN)
+	else if (key == SDLK_UP || key == SDLK_LEFT ||
+			key == SDLK_DOWN || key == SDLK_RIGHT ||
+			key == SDLK_PAGEUP || key == SDLK_PAGEDOWN)
 		rotate_cam(core, key, time);
 }
 

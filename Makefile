@@ -15,20 +15,18 @@ LIBFT_JSON_PATH := $(LIBS)/ft_json
 LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
-# MLX
+# SDL2
+LIBSDL_PATH := $(LIBS)/sdl2
+LIBSDL_NAME := sdl2
+LIBSDL := $(LIBSDL_PATH)/lib/lib$(LIBSDL_NAME).a
+
 UNAME := $(shell uname -s 2> /dev/null)
 
 ifeq ($(UNAME), Darwin)
-	MLX_PATH := $(LIBS)/minilibx_macos
-	FRAMEWORKS := -framework OpenCL -framework OpenGL -framework AppKit
+	FRAMEWORKS := -framework OpenCL
 else
-	MLX_PATH := $(LIBS)/minilibx_x11
-	FRAMEWORKS := -lXext -lX11
-	EXTRA_FLAGS := -D X11_MLX
+	FRAMEWORKS :=
 endif
-
-MLX_NAME := mlx
-MLX = $(MLX_PATH)/lib$(MLX_NAME).a
 
 # Basic definitions
 SRC_PATH := srcs
@@ -43,12 +41,13 @@ OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
 SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
 
 # Compiler flags
-CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
+CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
 CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
-			-g																\
+			-g `$(LIBSDL_PATH)/sdl2-config --cflags`						\
 			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
-LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
-			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
+LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH)						\
+			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -lm	\
+			`$(LIBSDL_PATH)/sdl2-config --libs`
 
 # Commands
 CC := gcc
@@ -66,6 +65,7 @@ SRCS_NAMES :=	angle.c			\
 				from_json.c		\
 				img.c			\
 				lights.c		\
+				loop.c			\
 				main.c			\
 				move.c			\
 				ocl_render.c	\
@@ -84,13 +84,12 @@ SRCS_NAMES +=	objects/cone.c		\
 				objects/disk.c		\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
-
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
 INCS :=	image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
-		mlx_defs.h				\
+		sdl_defs.h				\
 		move.h					\
 		objects.h				\
 		ocl_common_structs.h	\
@@ -113,7 +112,11 @@ YELLOW := \033[93m
 DYELLOW := \033[33m
 UNDERLINE := \033[4m
 
-all: $(LIBFT) $(LIBFT_JSON) $(MLX) $(NAME)
+all: $(LIBFT) $(LIBFT_JSON) $(LIBSDL) $(NAME)
+
+test2:
+	@echo "CFLAGS: $(CFLAGS)"
+	@echo "LDFLAGS: $(LDFLAGS)"
 
 $(NAME): $(OBJ_PATH) $(OBJ_PATH) $(SUBDIRS) $(OBJS)
 ifeq ($(DETAILED), 1)
@@ -129,10 +132,8 @@ $(LIBFT):
 $(LIBFT_JSON):
 	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)
 
-$(MLX):
-	@printf "\033[90mCompiling \033[0m$(MLX_NAME)\033[90m: \033[0m"
-	@make -C $(MLX_PATH) &> /dev/null
-	@printf "\033[32mdone!\n\n"
+$(LIBSDL):
+	@make -C $(LIBSDL_PATH) install
 
 $(OBJ_PATH) $(SUBDIRS):
 	@$(MKDIR) $@
@@ -157,7 +158,6 @@ fclean: clean
 	@$(RM) $(TEST_NAME) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) fclean > /dev/null
 	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) fclean > /dev/null
-	@make -C $(MLX_PATH) clean &> /dev/null || true
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)$(NAME) executable!$(RESET)\n\n"
 
 re: fclean all
@@ -171,4 +171,7 @@ norm:
 	@cat $(NORM_LOG) | grep Error | wc -l | bc
 	@$(PRINT) "See $(UNDERLINE)$(NORM_LOG)$(RESET) for details.\n"
 
-.PHONY: all clean fclean re norm
+sdl_install:
+	cd $(LIBSDL_PATH) && ./configure --prefix $(LIBSDL_PATH)
+
+.PHONY: all clean fclean re sdl_install norm

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/01 15:15:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 19:09:35 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "image.h"
 # include "scene.h"
-# include "mlx_defs.h"
+# include "sdl_defs.h"
 # include "ocl_data.h"
 # include "ocl_types.h"
 
@@ -25,14 +25,16 @@
 typedef struct		s_rt
 {
 	t_scene			scene;
-	t_mlx_ctx		mlx;
+	t_sdl_ctx		sdl;
 	t_ocl			ocl;
-	t_img			*frame;
+	SDL_Surface		*frame;
 	t_mv_state		mvs;
 	int				should_update;
 }					t_rt;
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h);
+
+void				event_loop(t_rt *core);
 
 t_clfloat			to_radians(t_clfloat deg);
 t_clfloat			to_degrees(t_clfloat rad);
@@ -67,8 +69,8 @@ int					objs_release(t_object *objs, size_t num);
 
 cl_int				render_frame(t_rt *core);
 
-void				img_ppm_output(t_img *img);
-void				img_mlx_output(t_img *img);
+/*void				img_ppm_output(t_img *img);
+  void				img_mlx_output(t_img *img);*/
 
 /*
 ** vec3cl_fill: fills the openCL float3 vector with the given coordinates.

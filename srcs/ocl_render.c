@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 11:08:19 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 19:31:46 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	form = (cl_image_format){.image_channel_order = CL_RGBA,
 		.image_channel_data_type = CL_UNSIGNED_INT8};
 	des = (cl_image_desc){.image_type = CL_MEM_OBJECT_IMAGE2D,
-		.image_width = core->frame->w, .image_height = core->frame->h,
+		.image_width = core->sdl.w, .image_height = core->sdl.h,
 		.image_depth = 1, .image_array_size = 1, .image_row_pitch = 0,
 		.image_slice_pitch = 0, .num_mip_levels = 0, .num_samples = 0,
 		.buffer = NULL};
@@ -36,8 +36,8 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	ret = clSetKernelArg(ocl->kernel, 4, sizeof(size_t), &core->scene.objs_num);
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(size_t),
 			&core->scene.lights_num);
-	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint), &core->frame->w);
-	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint), &core->frame->h);
+	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint), &core->sdl.w);
+	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint), &core->sdl.h);
 	ret |= clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
 	return (ret);
 }
@@ -109,8 +109,8 @@ cl_int				render_frame(t_rt *core)
 
 	if ((tmp = ocl_set_kernel_arg(core)) == NULL)
 		return (!CL_SUCCESS);
-	work_dim[0] = core->frame->w;
-	work_dim[1] = core->frame->h;
+	work_dim[0] = core->sdl.w;
+	work_dim[1] = core->sdl.h;
 	work_dim[2] = 1;
 	ret = clEnqueueNDRangeKernel(core->ocl.queue, core->ocl.kernel, 2, NULL,
 			work_dim, NULL, 0, NULL, NULL);
@@ -120,8 +120,12 @@ cl_int				render_frame(t_rt *core)
 		return (ret);
 	}
 	ft_bzero(offset, sizeof(size_t) * 3);
+	SDL_LockSurface(core->frame);
 	ret = clEnqueueReadImage(core->ocl.queue, core->ocl.ocl_img, CL_TRUE,
-			offset, work_dim, 0, 0, core->frame->data, 0, NULL, NULL);
+			offset, work_dim, 0, 0, core->frame->pixels, 0, NULL, NULL);
+	SDL_UnlockSurface(core->frame);
+	SDL_BlitSurface(core->frame, NULL, core->sdl.screen, NULL);
+	SDL_UpdateWindowSurface(core->sdl.win);
 	release_kernel_arg(tmp);
 	return (ret);
 }

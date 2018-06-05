@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:44:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 20:04:25 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft_base/io.h>
 #include "rt.h"
 
 static void			mvs_init(t_mv_state *mvs)
@@ -23,21 +24,32 @@ static void			mvs_init(t_mv_state *mvs)
 	mvs->rotate_speed = .1f;
 }
 
+static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
+{
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		ft_putstr("Failed to initialize SDL: ");
+		ft_putendl(SDL_GetError());
+		return (0);
+	}
+	if (!(sdl->win = SDL_CreateWindow("RT",
+					SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+					(int)w, (int)h, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)))
+	{
+		ft_putstr("Failed to open window: ");
+		ft_putendl(SDL_GetError());
+		return (0);
+	}
+	sdl->screen = SDL_GetWindowSurface(sdl->win);
+	return (1);
+}
+
 int					core_init(t_rt *core, unsigned int w, unsigned int h)
 {
-	if (!(core->mlx.mlx_ptr = mlx_init()))
+	if (!sdl_win_init(&core->sdl, w, h))
 		return (0);
-	if (!(core->mlx.win_ptr = mlx_new_window(core->mlx.mlx_ptr, (int)w, (int)h,
-					"rt")))
-		return (0);
-	core->mlx.win_width = w;
-	core->mlx.win_height = h;
-	mlx_hook(core->mlx.win_ptr, DESTROYNOTIFY, STRUCTURENOTIFYMASK,
-			&on_window_closing, core);
-	mlx_hook(core->mlx.win_ptr, KEYPRESS, KEYPRESSMASK, &on_key_pressed, core);
-	mlx_hook(core->mlx.win_ptr, KEYRELEASE, KEYRELEASEMASK, &on_key_released,
-			core);
-	mlx_loop_hook(core->mlx.mlx_ptr, &on_tick, core);
+	core->sdl.w = w;
+	core->sdl.h = h;
 	mvs_init(&core->mvs);
 	core->should_update = 1;
 	return (1);

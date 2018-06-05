@@ -6,12 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:30:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 19:27:22 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "move.h"
-#include "mlx_defs.h"
+#include "sdl_defs.h"
 
 void				move_cam(t_rt *core, int key, t_timer *time)
 {
@@ -19,15 +19,15 @@ void				move_cam(t_rt *core, int key, t_timer *time)
 	float			increment;
 
 	increment = core->mvs.move_speed * timer_span(time);
-	if (key == W_KEY)
+	if (key == SDLK_w)
 		vec3cl_fill(&move_vec, 0, 0, -increment);
-	else if (key == S_KEY)
+	else if (key == SDLK_s)
 		vec3cl_fill(&move_vec, 0, 0, increment);
-	else if (key == A_KEY)
+	else if (key == SDLK_a)
 		vec3cl_fill(&move_vec, -increment, 0, 0);
-	else if (key == D_KEY)
+	else if (key == SDLK_d)
 		vec3cl_fill(&move_vec, increment, 0, 0);
-	else if (key == SHIFT_KEY)
+	else if (key == SDLK_LSHIFT)
 		vec3cl_fill(&move_vec, 0, -increment, 0);
 	else
 		vec3cl_fill(&move_vec, 0, increment, 0);
@@ -45,15 +45,15 @@ void				rotate_cam(t_rt *core, int key, t_timer *time)
 
 	increment = core->mvs.rotate_speed * (float)timer_span(time);
 	angle = &core->scene.cam.angle;
-	if (key == ARROW_UP_KEY)
+	if (key == SDLK_UP)
 		angle->x = fmod(angle->x + increment, M_PI * 2);
-	else if (key == ARROW_DOWN_KEY)
+	else if (key == SDLK_DOWN)
 		angle->x = fmod(angle->x - increment, M_PI * 2);
-	else if (key == ARROW_LEFT_KEY)
+	else if (key == SDLK_LEFT)
 		angle->y = fmod(angle->y + increment, M_PI * 2);
-	else if (key == ARROW_RIGHT_KEY)
+	else if (key == SDLK_RIGHT)
 		angle->y = fmod(angle->y - increment, M_PI * 2);
-	else if (key == PG_UP)
+	else if (key == SDLK_PAGEUP)
 		angle->z = fmod(angle->z + increment, M_PI * 2);
 	else
 		angle->z = fmod(angle->z - increment, M_PI * 2);
