@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:11:40 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 20:01:40 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 00:05:05 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ SDL_Surface			*img_make(unsigned int w, unsigned int h)
 	SDL_Surface		*img;
 
 	if (!(img = SDL_CreateRGBSurfaceWithFormat(0, (int)w, (int)h, 32,
-					SDL_PIXELFORMAT_ARGB32)))
+					IMAGE_FORMAT)))
 		return (NULL);
 	SDL_SetSurfaceRLE(img, 1);
 	return (img);

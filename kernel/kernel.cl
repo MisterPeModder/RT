@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 15:27:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 00:13:51 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ kernel void	render_frame(
 		private size_t lights_num,
 		private unsigned int w,
 		private unsigned int h
-		/*,
-		  __private float3 bg_color,
-		  __private unsigned int endian*/
+		//private float3 bg_color,
 		)
 {
 	unsigned int	x;
@@ -70,7 +68,7 @@ kernel void	render_frame(
 		color = bg_color;
 	else
 		color = shading(objs, objs_num, lights, lights_num, &r);
-	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 0));//CHECK ENDIAN
+	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
 }
 
 

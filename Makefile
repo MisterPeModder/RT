@@ -4,7 +4,6 @@ NAME := rt
 ## LIBS
 LIBS := $(CURDIR)/libs
 
-
 # Libft
 LIBFT_PATH := $(LIBS)/libft
 LIBFT_NAME := ft
@@ -38,8 +37,6 @@ KERNEL_PATH := kernel
 KERNELSRC_PATH := $(KERNEL_PATH)/kernel.cl
 OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
 
-SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
-
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
 CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
@@ -57,25 +54,14 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-SRCS_NAMES :=	angle.c			\
-				cam.c			\
-				core.c			\
-				events.c		\
-				events2.c		\
-				from_json.c		\
-				img.c			\
-				lights.c		\
-				loop.c			\
-				main.c			\
-				move.c			\
-				ocl_render.c	\
-				ocl_data.c		\
-				read_kernel.c	\
-				rotate.c		\
-				scene.c			\
-				timer.c			\
-				utils.c			\
-				vec3cl.c		\
+SRCS_NAMES :=	core.c				\
+				img.c				\
+				main.c				\
+
+SRCS_NAMES +=	events/events.c		\
+				events/events2.c	\
+				events/loop.c		\
+				events/move.c		\
 
 SRCS_NAMES +=	objects/cone.c		\
 				objects/objects.c	\
@@ -83,13 +69,29 @@ SRCS_NAMES +=	objects/cone.c		\
 				objects/cylinder.c	\
 				objects/disk.c		\
 
+SRCS_NAMES +=	ocl/ocl_data.c		\
+				ocl/ocl_render.c	\
+				ocl/read_kernel.c	\
+
+SRCS_NAMES +=	parsing/cam.c		\
+				parsing/from_json.c	\
+				parsing/lights.c	\
+				parsing/scene.c		\
+
+SRCS_NAMES +=	utils/angle.c		\
+				utils/rotate.c		\
+				utils/timer.c		\
+				utils/utils.c		\
+				utils/vec3cl.c		\
+
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
+
+OBJ_DIRS := $(sort $(dir $(OBJS)))
 
 INCS :=	image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
-		sdl_defs.h				\
 		move.h					\
 		objects.h				\
 		ocl_common_structs.h	\
@@ -97,6 +99,7 @@ INCS :=	image.h					\
 		ocl_types.h				\
 		rt.h					\
 		scene.h					\
+		sdl_defs.h				\
 		timer.h					\
 
 # THE NORM IS REAL
@@ -114,11 +117,7 @@ UNDERLINE := \033[4m
 
 all: $(LIBFT) $(LIBFT_JSON) $(LIBSDL) $(NAME)
 
-test2:
-	@echo "CFLAGS: $(CFLAGS)"
-	@echo "LDFLAGS: $(LDFLAGS)"
-
-$(NAME): $(OBJ_PATH) $(OBJ_PATH) $(SUBDIRS) $(OBJS)
+$(NAME): $(OBJ_DIRS) $(OBJS)
 ifeq ($(DETAILED), 1)
 	@tput dl; tput el1; tput cub 100; $(PRINT) "$(GREY)Creating object files: $(GREEN)done!$(RESET)"
 endif
@@ -135,7 +134,7 @@ $(LIBFT_JSON):
 $(LIBSDL):
 	@make -C $(LIBSDL_PATH) install
 
-$(OBJ_PATH) $(SUBDIRS):
+$(OBJ_DIRS):
 	@$(MKDIR) $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(addprefix $(INC_PATH)/,$(INCS))
@@ -148,7 +147,7 @@ clean:
 	@$(RM) $(NORM_LOG)
 	@$(RM) -r *.dSYM
 	@$(RM) $(OBJS) 2> /dev/null || true
-	@$(RMDIR) $(OBJS_DIRS) 2> /dev/null || true
+	@$(RMDIR) $(OBJ_DIRS) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) clean > /dev/null
 	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) clean > /dev/null
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)object files!$(RESET)\n"

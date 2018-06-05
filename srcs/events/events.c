@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 19:17:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/05 21:29:58 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int			exit_rt(t_rt *core)
 	{
 		scene_release(&core->scene);
 		ocl_release(&core->ocl, NULL, 0);
-		SDL_FreeSurface(core->sdl.screen);
 		SDL_DestroyWindow(core->sdl.win);
 		SDL_FreeSurface(core->frame);
 	}
