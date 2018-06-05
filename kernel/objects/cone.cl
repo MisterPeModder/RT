@@ -38,26 +38,34 @@ static float		cone_intersect_double(
 		constant t_object *obj,
 		float3 origin,
 		float3 u,
-		int i,
 		int *face
 		)
 {
 	float3			tmp;
 	float3			tmp2;
 	float			a;
+	float			a2;
+	float			af;
 
-	if (!i)
-		tmp = obj->pos + obj->props.cone.len / 2 * obj->facing;
+	af = dot(u, obj->facing);
+	tmp = obj->pos + obj->props.cone.len / 2 * obj->facing;
+	a2 = dot(tmp - origin, obj->facing) / af;
+	tmp2 = obj->pos - obj->props.cone.len / 2 * obj->facing;
+	a = dot(tmp2 - origin, obj->facing) / af;
+	if (a2 < a)
+		af = a2 > 0 ? a2 : a;
 	else
-		tmp = obj->pos - obj->props.cone.len / 2 * obj->facing;
-	a = dot(tmp - origin, obj->facing) / dot(u, obj->facing);
-	tmp2 = u * a + origin;
+	{
+		tmp = tmp2;
+		af = a > 0 ? a : a2;
+	}
+	tmp2 = u * af + origin;
 	if (dot(tmp2 - tmp, tmp2 - tmp) <=
 			pow(tan(obj->props.cone.opening_angle)
 				* length(tmp - obj->pos), 2))
 	{
-		*face = i;
-		return (a);
+		*face = a2 < a ? 1 : 2;
+		return (af);
 	}
 	return (FLT_MAX);
 }
@@ -74,26 +82,21 @@ static float		cone_intersect2(
 	if (obj->props.cone.simple)
 	{
 		if (i[1] > 0)
-			return (FLT_MAX);
+			return (cone_intersect_simple(obj, origin, u, face));
 		if (obj->props.cone.simple && obj->props.cone.len != -1 &&
 				i[1] < 0 - obj->props.cone.len)
 			return (cone_intersect_simple(obj, origin, u, face));
-		return (i[0] > 0 ? i[0] : i[2]);
+		return (i[4]);
 	}
 	else
 	{
 		if (obj->props.cone.len == -1)
-			return (i[0] > 0 ? i[0] : i[2]);
-		if (i[1] < 0 - obj->props.cone.len / 2 ||
-				i[1] > obj->props.cone.len / 2)
-		{
-			if ((i[3] = cone_intersect_double(obj, origin, u, 0, face)) != FLT_MAX)
-				return (i[3]);
-			if ((i[3] = cone_intersect_double(obj, origin, u, 1, face)) != FLT_MAX)
-				return (i[3]);
-			return (FLT_MAX);
-		}
-		return (i[0] > 0 ? i[0] : i[2]);
+			return (i[4]);
+		if ((i[1] < 0 - obj->props.cone.len / 2 ||
+				i[1] > obj->props.cone.len / 2))
+			return (cone_intersect_double(obj, origin, u, face));
+		i[3] = cone_intersect_double(obj, origin, u, face);
+		return (i[4] < i[3] ? i[4] : i[3]);
 	}
 }
 
@@ -118,7 +121,7 @@ static float		cone_intersect(
 		int *face
 		)
 {
-	float			i[4];
+	float			i[5];
 	float3			tmp;
 
 	tmp = origin - obj->pos;
@@ -138,8 +141,9 @@ static float		cone_intersect(
 		return (-i[1] / (2 * i[0]));
 	i[2] = (-i[1] - sqrt(i[3])) / (2 * i[0]);
 	i[0] = (-i[1] + sqrt(i[3])) / (2 * i[0]);
-	i[2] = i[2] > i[0] ? i[0] : i[2];
-	i[1] = dot(u, obj->facing) * (i[0] > 0 ? i[0] : i[2]) +
+	i[4] = i[2] > i[0] ? i[0] : i[2];
+	i[4] = i[0] > 0 ? i[0] : i[4];
+	i[1] = dot(u, obj->facing) * i[4] +
 		dot(origin - obj->pos, obj->facing);
 	return (cone_intersect2(obj, origin, u, i, face));
 }

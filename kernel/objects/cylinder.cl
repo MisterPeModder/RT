@@ -28,7 +28,7 @@ static float				cylinder_intersect2(
 		tmp = obj->pos - obj->props.cylinder.len / 2 * obj->facing;
 	a = dot(tmp - origin, obj->facing) / dot(u, obj->facing);
 	tmp2 = origin + u * a;
-	if (dot(tmp2 - tmp, tmp2 - tmp) <= obj->props.cylinder.radius * obj->props.cylinder.radius)
+	if (dot(tmp2 - tmp, tmp2 - tmp) <= obj->props.cylinder.radius * obj->props.cylinder.radius && a > 1e-6)
 	{
 		*face = i;
 		return (a);
@@ -45,14 +45,18 @@ static float				cylinder_intersect3(
 		)
 {
 	float	a;
+	float	dist;
+	float	dist1;
 
+	dist = length(origin - obj->pos + obj->props.cylinder.len / 2 * obj->facing);
+	dist1 = length(origin - obj->pos - obj->props.cylinder.len / 2 * obj->facing);
 	a = dot(u, obj->facing) * c + dot(origin - obj->pos, obj->facing);
 	if ((a < 0 - obj->props.cylinder.len / 2 || a > obj->props.cylinder.len
 				/ 2) && obj->props.cylinder.len != -1)
 	{
-		if ((a = cylinder_intersect2(obj, origin, u, 1, face)) != FLT_MAX)
+		if (dist > dist1 && (a = cylinder_intersect2(obj, origin, u, 1, face)) != FLT_MAX)
 			return (a);
-		else if ((a = cylinder_intersect2(obj, origin, u, 0, face)) != FLT_MAX)
+		else if ((a = cylinder_intersect2(obj, origin, u, 2, face)) != FLT_MAX)
 			return (a);
 		return (FLT_MAX);
 	}

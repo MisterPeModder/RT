@@ -49,6 +49,7 @@ static int			raytrace(
 	float			d;
 	float			tmp;
 	int				face;
+	int				face_tmp;
 
 	i = 0;
 	d = FLT_MAX;
@@ -63,10 +64,10 @@ static int			raytrace(
 				tmp = plane_intersect(&objs[i], o, u);
 				break;
 			case OBJ_CONE:
-				tmp = cone_intersect(&objs[i], o, u, &face);
+				tmp = cone_intersect(&objs[i], o, u, &face_tmp);
 				break;
 			case OBJ_CYLINDER:
-				tmp = cylinder_intersect(&objs[i], o, u, &face);
+				tmp = cylinder_intersect(&objs[i], o, u, &face_tmp);
 				break;
 			case OBJ_DISK:
 				tmp = disk_intersect(&objs[i], o, u);
@@ -78,6 +79,7 @@ static int			raytrace(
 		{
 			r->obj = objs + i;
 			d = tmp;
+			face = face_tmp;
 		}
 		++i;
 	}
