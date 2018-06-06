@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/06 01:05:26 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 02:07:20 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ cl_int				render_frame(t_rt *core)
 	cl_int			ret;
 	size_t			offset[3];
 
-	if ((tmp = ocl_set_kernel_arg(core)) == NULL)
+	if (init_kernel_args(&core->ocl, core) != CL_SUCCESS ||
+			!(tmp = ocl_set_kernel_arg(core)))
 		return (!CL_SUCCESS);
 	work_dim[0] = core->sdl.w;
 	work_dim[1] = core->sdl.h;
@@ -123,6 +124,5 @@ cl_int				render_frame(t_rt *core)
 	SDL_UnlockSurface(core->frame);
 	SDL_BlitSurface(core->frame, NULL, core->sdl.screen, NULL);
 	SDL_UpdateWindowSurface(core->sdl.win);
-	release_kernel_arg(tmp);
-	return (ret);
+	return (((int)release_kernel_arg(tmp)) * 0 | ret);
 }

@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 14:01:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 11:10:38 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 02:00:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static cl_int		create_kernel(t_ocl *ocl)
 	return (ret < 0 ? ret : 0);
 }
 
-cl_int				ocl_init(t_ocl *ocl, t_rt *core)
+cl_int				ocl_init(t_ocl *ocl)
 {
 	cl_int			ret;
 
@@ -114,8 +114,7 @@ cl_int				ocl_init(t_ocl *ocl, t_rt *core)
 	ocl->queue = clCreateCommandQueue(ocl->context, ocl->device, 0, &ret);
 	if (ret != CL_SUCCESS)
 		return (ocl_release(ocl, "error while creating a queue.", ret));
-	if ((ret = create_kernel(ocl)) != CL_SUCCESS ||
-			init_kernel_args(ocl, core) != CL_SUCCESS)
+	if ((ret = create_kernel(ocl)) != CL_SUCCESS)
 		return (ocl_release(ocl, NULL, ret));
 	return (0);
 }

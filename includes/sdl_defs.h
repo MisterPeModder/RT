@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 01:01:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 02:10:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,17 @@ typedef struct		s_mv_state
 	float			rotate_speed;
 }					t_mv_state;
 
+struct s_rt;
+
 /*
 ** == EVENTS ==
 */
 
-int					on_key_pressed(int key, void *core);
-int					on_key_released(int key, void *core);
-void				on_key_repeat(int key, t_timer *time, void *core);
-int					on_window_closing(void *core);
-int					on_tick(void *core);
+void				on_key_pressed(int key, struct s_rt *core);
+void				on_key_released(int key, struct s_rt *core);
+void				on_key_repeat(int key, t_timer *time, struct s_rt *core);
+void				on_window_closing(struct s_rt *core);
+void				on_tick(struct s_rt *core);
+void				on_window_event(void *event, struct s_rt *core);
 
 #endif

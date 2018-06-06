@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 18:56:11 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 01:10:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 01:34:02 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void			update_keys(t_rt *c)
 	}
 }
 
-int					on_tick(void *c)
+void				on_tick(t_rt *c)
 {
 	t_rt			*core;
 	t_timer			timer;
@@ -49,7 +49,6 @@ int					on_tick(void *c)
 		timer_end(&timer);
 		timer_display(&timer, "frame time: ");
 	}
-	return (0);
 }
 
 void				event_loop(t_rt *core)
@@ -63,10 +62,12 @@ void				event_loop(t_rt *core)
 		{
 			if (event.type == SDL_QUIT)
 				on_window_closing(core);
-			if (event.type == SDL_KEYDOWN)
+			else if (event.type == SDL_KEYDOWN)
 				on_key_pressed(event.key.keysym.sym, core);
-			if (event.type == SDL_KEYUP)
+			else if (event.type == SDL_KEYUP)
 				on_key_released(event.key.keysym.sym, core);
+			else if (event.type == SDL_WINDOWEVENT)
+				on_window_event(&event.window, core);
 		}
 	}
 	on_window_closing(core);

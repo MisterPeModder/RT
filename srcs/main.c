@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 19:22:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 02:01:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int					main(int ac, char **av)
 		SDL_FreeSurface(core.frame);
 		return (EXIT_FAILURE);
 	}
-	if (ocl_init(&core.ocl, &core) != CL_SUCCESS)
+	if (ocl_init(&core.ocl) != CL_SUCCESS)
 	{
 		SDL_FreeSurface(core.frame);
 		scene_release(&core.scene);
