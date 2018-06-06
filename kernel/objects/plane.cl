@@ -13,25 +13,29 @@
 static float		plane_intersect(
 		constant t_object *obj,
 		float3 origin,
-		float3 u
+		float3 u,
+		int *face
 		)
 {
 	float			l_dot_n;
-	float3			facing;
 
 	if (dot(u, obj->facing) > 0)
-		facing = -obj->facing;
+		*face = 1;
 	else
-		facing = obj->facing;
-	if (fabs(l_dot_n = dot(u, facing)) < 0.000001)
+		*face = 0;
+	if (fabs(l_dot_n = dot(u, obj->facing)) < 0.000001)
 		return (FLT_MAX);
-	return (dot((obj->pos - origin), facing) / l_dot_n);
+	return (dot((obj->pos - origin), obj->facing) / l_dot_n);
 }
 
 static void			plane_normal(
 		constant t_object *o,
-		t_rt_result *r
+		t_rt_result *r,
+		int face
 		)
 {
-	r->normal = o->facing;
+	if (face)
+		r->normal = -o->facing;
+	else
+		r->normal = o->facing;
 }
