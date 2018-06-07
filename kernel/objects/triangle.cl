@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 static float		triangle_intersect(
 		constant t_object *obj,
 		float3 origin,

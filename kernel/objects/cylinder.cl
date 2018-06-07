@@ -122,7 +122,7 @@ static float				cylinder_intersect(
  ** normal = hitpos - ((hitpos - objpos) . axis) * axis [normalized]
  */
 
-void				cylinder_normal(
+static	void				cylinder_normal(
 		constant t_object *o,
 		t_rt_result *r,
 		int face

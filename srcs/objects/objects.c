@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/05 14:38:30 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/07 15:13:53 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int			obj_props(t_object *object, char *str,
 		return (disk_init(object, data));
 	else if (ft_strequ(str, "triangle") && (*type = OBJ_TRIANGLE))
 		return (triangle_init(object, data));
+	else if (ft_strequ(str, "cube") && (*type = OBJ_CUBE))
+		return (cube_init(object, data));
 	return (0);
 }
 
@@ -43,6 +45,14 @@ static int			calc_angle(t_object *object, const t_json_value *v)
 	rotate_x(&object->facing, angle.x);
 	rotate_y(&object->facing, angle.y);
 	rotate_z(&object->facing, angle.z);
+	vec3cl_fill(&object->dir, 0, 0, 1);
+	rotate_x(&object->dir, angle.x);
+	rotate_y(&object->dir, angle.y);
+	rotate_z(&object->dir, angle.z);
+	vec3cl_fill(&object->right, 1, 0, 0);
+	rotate_x(&object->right, angle.x);
+	rotate_y(&object->right, angle.y);
+	rotate_z(&object->right, angle.z);
 	return (1);
 }
 

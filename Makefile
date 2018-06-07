@@ -83,6 +83,7 @@ SRCS_NAMES +=	objects/cone.c		\
 				objects/cylinder.c	\
 				objects/disk.c		\
 				objects/triangle.c		\
+				objects/cube.c		\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 

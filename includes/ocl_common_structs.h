@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/05 14:32:35 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/07 15:13:51 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef enum		e_obj_type
 	OBJ_CONE,
 	OBJ_CYLINDER,
 	OBJ_DISK,
-	OBJ_TRIANGLE
+	OBJ_TRIANGLE,
+	OBJ_CUBE
 }					t_obj_type;
 
 /*
@@ -77,6 +78,10 @@ typedef union		u_properties
 		t_clfloat3	pos1;
 		t_clfloat3	pos2;
 	}				triangle;
+	struct {
+		float		len;
+		t_clfloat3	p[8];
+	}				cube;
 }					t_properties;
 
 /*
@@ -93,6 +98,8 @@ typedef struct		s_object
 	t_obj_type		type;
 	t_clfloat3		pos;
 	t_clfloat3		facing;
+	t_clfloat3		dir;
+	t_clfloat3		right;
 	t_clfloat3		color;
 	t_properties	props;
 }					t_object;

@@ -36,6 +36,7 @@ typedef struct				s_rt_result
 #include "objects/sphere.cl"
 #include "objects/disk.cl"
 #include "objects/triangle.cl"
+#include "objects/cube.cl"
 #include "render.cl"
 
 kernel void	render_frame(
