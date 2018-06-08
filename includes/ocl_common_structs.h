@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/07 15:13:51 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/07 17:25:01 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef enum		e_obj_type
 	OBJ_CYLINDER,
 	OBJ_DISK,
 	OBJ_TRIANGLE,
-	OBJ_CUBE
+	OBJ_CUBE,
+	OBJ_PYRAMID
 }					t_obj_type;
 
 /*
@@ -82,6 +83,11 @@ typedef union		u_properties
 		float		len;
 		t_clfloat3	p[8];
 	}				cube;
+	struct {
+		float		len;
+		float		len_base;
+		t_clfloat3	p[5];
+	}				pyramid;
 }					t_properties;
 
 /*

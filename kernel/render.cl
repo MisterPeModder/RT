@@ -78,6 +78,9 @@ static int			raytrace(
 			case OBJ_CUBE:
 				tmp = cube_intersect(&objs[i], o, u, &face_tmp);
 				break;
+			case OBJ_PYRAMID:
+				tmp = pyramid_intersect(&objs[i], o, u, &face_tmp);
+				break;
 			default:
 				tmp = FLT_MAX;
 		}
@@ -113,6 +116,9 @@ static int			raytrace(
 			break;
 		case OBJ_CUBE:
 			cube_normal(r->obj, r, face);
+			break;
+		case OBJ_PYRAMID:
+			pyramid_normal(r->obj, r, face);
 			break;
 	}
 	return (1);

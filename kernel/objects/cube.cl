@@ -15,8 +15,7 @@ static float		face_intersect(
 		float3 pos2,
 		float3 pos3,
 		float3 origin,
-		float3 u,
-		int *face
+		float3 u
 		)
 {
 	float	det;
@@ -30,10 +29,6 @@ static float		face_intersect(
 	facing = normalize(cross(pos2 - pos1, pos3 - pos1));
 	if (fabs(dot(u, facing)) < 1e-6)
 		return (FLT_MAX);
-	if (dot(u, facing) > 1e-6)
-		*face = 1;
-	else
-		*face = 0;
 	v0v1 = pos2 - pos1;
 	v0v2 = pos3 - pos1;
 	vec1 = cross(u, v0v2);
@@ -63,18 +58,18 @@ static float		cube_intersect(
 	int	face_tmp;
 	int	i;
 
-	faces[0] = (int3)(4, 7, 1);//HAUT
+	faces[0] = (int3)(1, 0, 4);//HAUT
 	faces[1] = (int3)(2, 3, 5);//BAS
 	faces[2] = (int3)(1, 4, 2);//DROITE
-	faces[3] = (int3)(0, 7, 3);//GAUCHE
-	faces[4] = (int3)(4, 7, 5);//DERRIERE
-	faces[5] = (int3)(1, 0, 2);//DEVANT
+	faces[3] = (int3)(7, 0, 6);//GAUCHE
+	faces[4] = (int3)(0, 1, 3);//DERRIERE
+	faces[5] = (int3)(4, 7, 5);//DEVANT
 	i = 0;
 	t = FLT_MAX;
 	while (i < 6)
 	{
-		t_tmp = face_intersect(obj->props.cube.p[faces[i][0]], obj->props.cube.p[faces[i][1]], obj->props.cube.p[faces[i][2]], origin, u, &face_tmp);
-		face_tmp += i * 10;
+		t_tmp = face_intersect(obj->props.cube.p[faces[i][0]], obj->props.cube.p[faces[i][1]], obj->props.cube.p[faces[i][2]], origin, u);
+		face_tmp = i;
 		if (t_tmp < t && t_tmp > 0)
 		{
 			t = t_tmp;
@@ -91,29 +86,16 @@ static void			cube_normal(
 		int face
 		)
 {
-	if (face / 10 == 0 && face % 10 == 0)
+	if (face == 0)
 		r->normal = o->facing;
-	else if (face / 10 == 0 && face % 10 == 1)
+	else if (face == 1)
 		r->normal = -o->facing;
-	else if (face / 10 == 1 && face % 10 == 0)
-		r->normal = -o->facing;
-	else if (face / 10 == 1 && face % 10 == 1)
-		r->normal = o->facing;
-	else if (face / 10 == 2 && face % 10 == 0)
-		r->normal = -o->right;
-	else if (face / 10 == 2 && face % 10 == 1)
+	else if (face == 2)
 		r->normal = o->right;
-	else if (face / 10 == 3 && face % 10 == 0)
+	else if (face == 3)
 		r->normal = -o->right;
-	else if (face / 10 == 3 && face % 10 == 1)
-		r->normal = o->right;
-	else if (face / 10 == 4 && face % 10 == 0)
+	else if (face == 4)
 		r->normal = o->dir;
-	else if (face / 10 == 4 && face % 10 == 1)
+	else if (face == 5)
 		r->normal = -o->dir;
-	else if (face / 10 == 5 && face % 10 == 0)
-		r->normal = o->dir;
-	else if (face / 10 == 5 && face % 10 == 1)
-		r->normal = -o->dir;
-
 }

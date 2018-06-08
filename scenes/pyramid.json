@@ -1,0 +1,22 @@
+{
+	"background_color": [0, 0, 0],
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 90
+	},
+	"objects": [
+		{
+			"type": "pyramid",
+			"pos": [0, 0, -5],
+			"length": 3,
+			"base length": 1,
+			"angle": [180, 0, 0],
+			"color": [92, 244, 66]
+		}
+	],
+	"lights": [
+		{"pos": [-2, -2, -7]},
+		{"pos": [2, -2, -3]},
+		{"pos": [0, 1, -5]}
+	]
+}

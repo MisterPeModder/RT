@@ -17,7 +17,6 @@ static float		disk_intersect(
 		int *face)
 {
 	float			l_dot_n;
-	float3			tmp;
 	float3			p;
 	float			t;
 
