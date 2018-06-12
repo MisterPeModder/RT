@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/08 11:06:46 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/10 20:12:30 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int			obj_props(t_object *object, char *str,
 		return (cube_init(object, data));
 	else if (ft_strequ(str, "pyramid") && (*type = OBJ_PYRAMID))
 		return (pyramid_init(object, data));
+	else if (ft_strequ(str, "paraboloid") && (*type = OBJ_PARABOLOID))
+		return (paraboloid_init(object, data));
 	return (0);
 }
 
@@ -75,5 +77,12 @@ int					obj_make(t_object *object, const t_json_object *data)
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
+	if ((tmp = json_obj_get(data, "negative")))
+	{
+		if (!bool_from_json(tmp, &object->negative))
+			return (0);
+	}
+	else
+		object->negative = 0;
 	return (1);
 }

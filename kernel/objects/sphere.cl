@@ -37,6 +37,35 @@ static float		sphere_intersect(
 	return (c);
 }
 
+static float2		negative_sphere_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
+{
+	float	a;
+	float	b;
+	float	c;
+	float	delta;
+	float3	tmp;
+	float2	ret;
+
+	a = dot(u, u);
+	tmp = origin - obj->pos;
+	b = 2 * dot(u, tmp);
+	c = dot(tmp, tmp) - obj->props.sphere.radius * obj->props.sphere.radius;
+	delta = b * b - 4 * a * c;
+	if (delta < 0)
+		return ((float2)(FLT_MAX, FLT_MAX));
+	else if (delta == 0)
+		return ((float2)(-b / (2 * a), -b / (2 * a)));
+	c = (-b - sqrt(delta)) / (2 * a);
+	a = (-b + sqrt(delta)) / (2 * a);
+	ret[0] = c > a ? a : c;
+	ret[1] = c > a ? c : a;
+	return (ret);
+}
+
 static void			sphere_normal(
 		constant t_object *o,
 		t_rt_result *r

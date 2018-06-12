@@ -27,20 +27,20 @@ static float		face_triangle_intersect(
 	float	v;
 
 	facing = normalize(cross(pos2 - pos1, pos3 - pos1));
-	if (fabs(dot(u, facing)) < 1e-6)
+	if (fabs(dot(u, facing)) < 0)
 		return (FLT_MAX);
 	v0v1 = pos2 - pos1;
 	v0v2 = pos3 - pos1;
 	vec1 = cross(u, v0v2);
 	det = dot(v0v1, vec1);
-	if (fabs(det) < 1e-6)
+	if (fabs(det) < 0)
 		return (FLT_MAX);
 	det = 1 / det;
 	w = dot(origin - pos1, vec1) * det;
-	if (w < 1e-6 || w > 1 + 1e-6)
+	if (w < 0 || w > 1)
 		return (FLT_MAX);
 	v = dot(u, (vec1 = cross(origin - pos1, v0v1))) * det;
-	if (v < 1e-6 || v + w > 1 + 1e-6)
+	if (v < 0 || v + w > 1)
 		return (FLT_MAX);
 	return (dot(v0v2, vec1) * det);
 }
@@ -62,22 +62,59 @@ static float		face_paral_intersect(
 	float	v;
 
 	facing = normalize(cross(pos2 - pos1, pos3 - pos1));
-	if (fabs(dot(u, facing)) < 1e-6)
+	if (fabs(dot(u, facing)) < 0)
 		return (FLT_MAX);
 	v0v1 = pos2 - pos1;
 	v0v2 = pos3 - pos1;
 	vec1 = cross(u, v0v2);
 	det = dot(v0v1, vec1);
-	if (fabs(det) < 1e-6)
+	if (fabs(det) < 0)
 		return (FLT_MAX);
 	det = 1 / det;
 	w = dot(origin - pos1, vec1) * det;
-	if (w < 1e-6 || w > 1 + 1e-6)
+	if (w < 0 || w > 1)
 		return (FLT_MAX);
 	v = dot(u, (vec1 = cross(origin - pos1, v0v1))) * det;
-	if (v < 1e-6 || v > 1 + 1e-6)
+	if (v < 0 || v > 1)
 		return (FLT_MAX);
 	return (dot(v0v2, vec1) * det);
+}
+
+static float2		negative_pyramid_intersect(
+		constant t_object *obj,
+		float3 origin,
+		float3 u
+		)
+{
+	int3	faces[5];
+	float	t;
+	float	tmax;
+	float	t_tmp;
+	int		i;
+
+	faces[0] = (int3)(4, 3, 1);
+	faces[1] = (int3)(0, 1, 4);
+	faces[2] = (int3)(2, 0, 4);
+	faces[3] = (int3)(2, 4, 3);
+	faces[4] = (int3)(1, 0, 3);
+	i = 0;
+	t = FLT_MAX;
+	tmax = 0;
+	while (i < 5)
+	{
+		if (i == 4)
+			t_tmp = face_paral_intersect(obj->props.pyramid.p[faces[i][0]],
+obj->props.pyramid.p[faces[i][1]], obj->props.pyramid.p[faces[i][2]], origin, u);
+		else
+			t_tmp = face_triangle_intersect(obj->props.pyramid.p[faces[i][0]],
+obj->props.pyramid.p[faces[i][1]], obj->props.pyramid.p[faces[i][2]], origin, u);
+		if (t_tmp < t && t_tmp > 0)
+			t = t_tmp;
+		if (t_tmp > tmax && t_tmp > 0 && t_tmp != FLT_MAX)
+			tmax = t_tmp;
+		i++;
+	}
+	return ((float2)(t, tmax));
 }
 
 static float		pyramid_intersect(

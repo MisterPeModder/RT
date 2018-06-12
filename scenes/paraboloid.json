@@ -1,0 +1,21 @@
+{
+	"background_color": [0, 0, 0],
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 90
+	},
+	"objects": [
+		{
+			"type": "paraboloid",
+			"pos": [0, 0, -5],
+			"length": 5,
+			"angle": [0, 0, 0],
+			"color": [92, 244, 66]
+		}
+	],
+	"lights": [
+		{"pos": [0, 100, -20]},
+		{"pos": [0, 0, -10]}
+	//	{"pos": [0, 1, -5]}
+	]
+}

@@ -27,15 +27,15 @@ static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
 }
 
 /*
-** raytrace: Handles the ray tracing operation.
-**
-** -scene: the scene instance.
-** -o: origin of the ray.
-** -u: unit vector (direction) of that ray.
-** -r: where the result will be stored.
-**
-** returns: 1 if an intersection has been found, 0 otherwise.
-*/
+ ** raytrace: Handles the ray tracing operation.
+ **
+ ** -scene: the scene instance.
+ ** -o: origin of the ray.
+ ** -u: unit vector (direction) of that ray.
+ ** -r: where the result will be stored.
+ **
+ ** returns: 1 if an intersection has been found, 0 otherwise.
+ */
 
 static int			raytrace(
 		constant t_object *objs,
@@ -50,6 +50,8 @@ static int			raytrace(
 	float			tmp;
 	int				face;
 	int				face_tmp;
+	float2			t_neg;
+	size_t			n;
 
 	i = 0;
 	d = FLT_MAX;
@@ -81,9 +83,38 @@ static int			raytrace(
 			case OBJ_PYRAMID:
 				tmp = pyramid_intersect(&objs[i], o, u, &face_tmp);
 				break;
+			case OBJ_PARABOLOID:
+				tmp = paraboloid_intersect(&objs[i], o, u);
+				break;
 			default:
 				tmp = FLT_MAX;
 		}
+		n = 0;
+		while (n < objs_num)
+		{
+			if (objs[n].negative)
+			{
+				switch (objs[n].type)
+				{
+					case OBJ_SPHERE:
+						t_neg = negative_sphere_intersect(&objs[n], o, u);
+						break;
+					case OBJ_CUBE:
+						t_neg = negative_cube_intersect(&objs[n], o, u);
+						break;
+					case OBJ_PYRAMID:
+						t_neg = negative_pyramid_intersect(&objs[n], o, u);
+						break;
+					default:
+						t_neg = (float2)(FLT_MAX, FLT_MAX);
+				}
+				if (tmp < t_neg[1] && tmp > t_neg[0])
+					tmp = FLT_MAX;
+			}
+			n++;
+		}
+		if (objs[i].negative)
+			tmp = FLT_MAX;
 		if (tmp > 0 && tmp < d)
 		{
 			r->obj = objs + i;
@@ -120,17 +151,20 @@ static int			raytrace(
 		case OBJ_PYRAMID:
 			pyramid_normal(r->obj, r, face);
 			break;
+		case OBJ_PARABOLOID:
+			paraboloid_normal(r->obj, r);
+			break;
 	}
 	return (1);
 }
 
 /*
-** shading: Handles the shading using the Phong algorithm.
-**
-** -scene: the scene instance.
-** -r: the primary ray's raytrace result.
-** -c: where the color of the pixel will be stored.
-*/
+ ** shading: Handles the shading using the Phong algorithm.
+ **
+ ** -scene: the scene instance.
+ ** -r: the primary ray's raytrace result.
+ ** -c: where the color of the pixel will be stored.
+ */
 
 static float3		shading(
 		constant t_object *objs, size_t objs_num,

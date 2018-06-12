@@ -1,0 +1,30 @@
+{
+	"objects": [
+		{
+			"type": "sphere",
+			"pos": [0, 0, -12],
+			"radius": 1,
+			"color": [255, 255, 0]
+		},
+		{
+			"type": "plane",
+			"pos": [0, 0, -5],
+			"angle": [90, 0, 0],
+			"color": [0, 0, 255]
+		},
+		{
+			"type": "cube",
+			"length": 1,
+			"pos": [0, 0, -5.5],
+			"angle": [45, 45, 45],
+			"negative": true
+		}
+	],
+	"lights": [
+		{"pos": [0, 0, 0]}
+	],
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 45
+	}
+}

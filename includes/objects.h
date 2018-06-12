@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/07 15:34:29 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/08 13:41:01 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ int					disk_init(t_object *object, const t_json_object *data);
 int					triangle_init(t_object *object, const t_json_object *data);
 int					cube_init(t_object *object, const t_json_object *data);
 int					pyramid_init(t_object *object, const t_json_object *data);
+int					paraboloid_init(t_object *object,
+		const t_json_object *data);
 
 #endif
