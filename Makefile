@@ -76,6 +76,7 @@ SRCS_NAMES :=	angle.c			\
 				timer.c			\
 				utils.c			\
 				vec3cl.c		\
+				noise.c			\
 
 SRCS_NAMES +=	objects/cone.c		\
 				objects/objects.c	\

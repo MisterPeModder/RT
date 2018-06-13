@@ -1,0 +1,19 @@
+{
+	"background_color": [0, 0, 0],
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 90
+	},
+	"objects": [
+		{
+			"type": "sphere",
+			"pos": [0, 0, -5],
+			"radius": 1,
+			"color": [150, 70, 70]
+		}
+	],
+	"lights": [
+		{"pos": [3, 4, -3]},
+		{"pos": [-5, -4, -3]}
+	]
+}

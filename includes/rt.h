@@ -13,6 +13,7 @@
 #ifndef RT_H
 # define RT_H
 
+# include <stdio.h>
 # include "image.h"
 # include "scene.h"
 # include "mlx_defs.h"
@@ -87,5 +88,12 @@ t_clfloat3			*vec3cl_normalize(t_clfloat3 *v, t_clfloat3 *d);
 cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
 cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
 cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
+
+
+float 			lin_inter(float x, float y, float s);
+float 			smooth_inter(float x, float y, float s);
+int				noise2(int x, int y);
+float			noise2d(float x, float y);
+float			perlin2d(float x, float y, float freq, int depth);
 
 #endif
