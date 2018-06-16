@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/07 13:27:32 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/16 11:51:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_rt
 	t_img			*frame;
 	t_mv_state		mvs;
 	int				should_update;
+	float			last_time;
 }					t_rt;
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h);

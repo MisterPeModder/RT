@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:16:26 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/13 16:22:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/16 11:32:13 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void				timer_end(t_timer *timer)
 
 	gettimeofday(&end, NULL);
 	tmp = end.tv_sec * 1000000 + end.tv_usec - timer->val;
-	timer->msecs = tmp % 100000;
-	timer->secs = tmp / 100000;
+	timer->msecs = tmp % 1000000;
+	timer->secs = tmp / 1000000;
 }
 
 float				timer_span(t_timer *timer)
 {
-	return ((float)timer->secs + (float)timer->msecs / 100000.f);
+	return ((float)timer->secs + (float)timer->msecs / 1000000.f);
 }
 
 static void			put_microseconds(int nbr)
@@ -64,5 +64,5 @@ void				timer_display(t_timer *timer, const char *msg)
 	ft_putnbr(timer->secs);
 	ft_putchar('.');
 	put_microseconds(timer->msecs);
-	ft_putchar('\n');
+	ft_putstr("s\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 15:26:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/16 12:22:07 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ static int constant		hash[] = {208,34,231,213,32,248,233,56,161,78,24,140,71,48,
 	120,67,87,167,135,176,183,191,253,115,184,21,233,58,129,233,142,39,128,
 	211,118,137,139,255,114,20,218,113,154,27,127,246,250,1,8,198,250,209,
 	92,222,173,21,88,102,219};
+// WTF ??????????? (serieux les gars...)
 
 static float 			lin_inter(float x, float y, float s)
 {
-    return (x + s * (y - x));
+	return (x + s * (y - x));
 }
 
 static float 			smooth_inter(float x, float y, float s)
 {
     //return (lin_inter(x, y, s * s * s * (s * (s * 6 - 15) + 10))); 
-    return (lin_inter(x, y, s * s * (3 - 2 * s)));
+	return (lin_inter(x, y, s * s * (3 - 2 * s)));
 }
 
 static int				noise2(int x, int y)

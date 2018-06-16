@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:07:58 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/31 19:28:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/16 11:51:19 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct		s_timer
 void				timer_start(t_timer *timer);
 
 /*
-** timer_end: end the timer.
+** timer_end: ends the timer.
 **
 ** -timer: a valid pointer to a timer structure, MUST BE A VALID POINTER.
 **
@@ -43,10 +43,13 @@ void				timer_start(t_timer *timer);
 */
 void				timer_end(t_timer *timer);
 
+/*
+** timer_span: Returns the elapsed time into a float.
+*/
 float				timer_span(t_timer *timer);
 
 /*
-** timer_display: Print the elapsed time into standard output.
+** timer_display: Prints the elapsed time into standard output.
 **
 ** -msg: a message string that will be printed before time. can be NULL
 */
