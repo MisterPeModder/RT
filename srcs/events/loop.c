@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 18:56:11 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 01:34:02 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/08 16:30:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,30 @@ void				on_tick(t_rt *c)
 					STDERR_FILENO);
 		core->should_update = 0;
 		timer_end(&timer);
-		timer_display(&timer, "frame time: ");
+		//timer_display(&timer, "frame time: ");
 	}
+}
+
+static void			handle_event(SDL_Event *e, t_rt *core)
+{
+	if (e->type == SDL_QUIT)
+		on_window_closing(core);
+	else if (e->type == SDL_KEYDOWN)
+		on_key_pressed(e->key.keysym.sym, core);
+	else if (e->type == SDL_KEYUP)
+		on_key_released(e->key.keysym.sym, core);
+	else if (e->type == SDL_WINDOWEVENT)
+		on_window_event(&e->window, core);
+	else if (e->type == SDL_CONTROLLERBUTTONDOWN)
+		on_controller_button_pressed(&e->cbutton, core);
+	else if (e->type == SDL_CONTROLLERBUTTONUP)
+		on_controller_button_released(&e->cbutton, core);
+	else if (e->type == SDL_CONTROLLERDEVICEADDED)
+		on_controller_connect(e->cdevice.which, core);
+	else if (e->type == SDL_CONTROLLERDEVICEREMOVED)
+		on_controller_disconnect(e->cdevice.which, core);
+	else if (e->type == SDL_CONTROLLERAXISMOTION)
+		on_controller_axis_motion(&e->caxis, core);
 }
 
 void				event_loop(t_rt *core)
@@ -59,16 +81,7 @@ void				event_loop(t_rt *core)
 	{
 		on_tick(core);
 		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				on_window_closing(core);
-			else if (event.type == SDL_KEYDOWN)
-				on_key_pressed(event.key.keysym.sym, core);
-			else if (event.type == SDL_KEYUP)
-				on_key_released(event.key.keysym.sym, core);
-			else if (event.type == SDL_WINDOWEVENT)
-				on_window_event(&event.window, core);
-		}
+			handle_event(&event, core);
 	}
 	on_window_closing(core);
 }

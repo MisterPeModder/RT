@@ -54,42 +54,50 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-SRCS_NAMES :=	core.c					\
-				img.c					\
-				main.c					\
+SRCS_NAMES :=	core.c							\
+				img.c							\
+				main.c							\
 
-SRCS_NAMES +=	events/events.c			\
-				events/loop.c			\
-				events/move.c			\
-				events/window_events.c	\
+SRCS_NAMES +=	controllers/controller_event.c	\
+				controllers/controller_motion.c	\
+				controllers/controller_update.c	\
+				controllers/mappings_add.c		\
 
-SRCS_NAMES +=	objects/cone.c			\
-				objects/objects.c		\
-				objects/sphere.c		\
-				objects/cylinder.c		\
-				objects/disk.c			\
+SRCS_NAMES +=	events/events.c					\
+				events/loop.c					\
+				events/move.c					\
+				events/window_events.c			\
 
-SRCS_NAMES +=	ocl/ocl_data.c			\
-				ocl/ocl_render.c		\
-				ocl/read_kernel.c		\
+SRCS_NAMES +=	objects/cone.c					\
+				objects/objects.c				\
+				objects/sphere.c				\
+				objects/cylinder.c				\
+				objects/disk.c					\
 
-SRCS_NAMES +=	parsing/cam.c			\
-				parsing/from_json.c		\
-				parsing/lights.c		\
-				parsing/scene.c			\
+SRCS_NAMES +=	ocl/ocl_data.c					\
+				ocl/ocl_render.c				\
+				ocl/read_kernel.c				\
 
-SRCS_NAMES +=	utils/angle.c			\
-				utils/rotate.c			\
-				utils/timer.c			\
-				utils/utils.c			\
-				utils/vec3cl.c			\
+SRCS_NAMES +=	parsing/cam.c					\
+				parsing/from_json.c				\
+				parsing/lights.c				\
+				parsing/options.c				\
+				parsing/read.c					\
+				parsing/scene.c					\
+
+SRCS_NAMES +=	utils/angle.c					\
+				utils/rotate.c					\
+				utils/timer.c					\
+				utils/utils.c					\
+				utils/vec3cl.c					\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
-INCS :=	image.h					\
+INCS :=	controller.h			\
+		image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
 		move.h					\

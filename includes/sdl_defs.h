@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 02:10:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 14:58:36 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct		s_sdl_ctx
 	SDL_Surface		*screen;
 	unsigned int	w;
 	unsigned int	h;
+	int				con_state;
 }					t_sdl_ctx;
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN

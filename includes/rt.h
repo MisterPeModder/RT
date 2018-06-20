@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 01:02:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 14:50:16 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "sdl_defs.h"
 # include "ocl_data.h"
 # include "ocl_types.h"
+# include "controller.h"
 
 /*
 ** t_rt: The central structure.
@@ -29,6 +30,7 @@ typedef struct		s_rt
 	t_ocl			ocl;
 	SDL_Surface		*frame;
 	t_mv_state		mvs;
+	t_controller	controller;
 	int				should_update;
 }					t_rt;
 
@@ -83,5 +85,8 @@ t_clfloat3			*vec3cl_add(t_clfloat3 *rhs, t_clfloat3 *lhs,
 cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
 cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
 cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
+
+t_json_value		*json_file_read(const char *path);
+int					options_parse(t_rt *core, const char *path);
 
 #endif

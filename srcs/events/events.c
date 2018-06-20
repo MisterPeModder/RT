@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 01:31:58 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/08 16:18:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "rt.h"
 #include "move.h"
 
@@ -21,6 +22,7 @@ static void			exit_rt(t_rt *core)
 		ocl_release(&core->ocl, NULL, 0);
 		SDL_DestroyWindow(core->sdl.win);
 		SDL_FreeSurface(core->frame);
+		SDL_GameControllerClose(core->controller.controller);
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -30,6 +32,7 @@ void				on_key_pressed(int key, t_rt *core)
 	t_mv_state		*mvs;
 	unsigned int	i;
 
+	printf("keyboard: %d (\"%s\")\n", key, SDL_GetKeyName(key));
 	if (key == SDLK_ESCAPE)
 		exit_rt(core);
 	mvs = &core->mvs;

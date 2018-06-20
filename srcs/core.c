@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 00:35:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/06 18:34:00 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void			mvs_init(t_mv_state *mvs)
 
 static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 	{
 		ft_putstr("Failed to initialize SDL: ");
 		ft_putendl(SDL_GetError());
@@ -45,6 +45,12 @@ static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 	return (1);
 }
 
+static void			controller_init(t_controller *data)
+{
+	data->controller = NULL;
+	data->extra = NULL;
+}
+
 int					core_init(t_rt *core, unsigned int w, unsigned int h)
 {
 	if (!sdl_win_init(&core->sdl, w, h))
@@ -52,6 +58,7 @@ int					core_init(t_rt *core, unsigned int w, unsigned int h)
 	core->sdl.w = w;
 	core->sdl.h = h;
 	mvs_init(&core->mvs);
+	controller_init(&core->controller);
 	core->should_update = 1;
 	return (1);
 }
