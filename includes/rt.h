@@ -13,7 +13,6 @@
 #ifndef RT_H
 # define RT_H
 
-# include <stdio.h>
 # include "image.h"
 # include "scene.h"
 # include "mlx_defs.h"
