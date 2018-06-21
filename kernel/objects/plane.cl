@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:56:10 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 13:47:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/21 18:02:07 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ static float		plane_intersect(
 {
 	float			l_dot_n;
 
-	if (dot(u, obj->facing) > 0)
-		*face = 1;
-	else
-		*face = 0;
+	*face = dot(u, obj->facing) > 0;
 	if (fabs(l_dot_n = dot(u, obj->facing)) < 0.000001)
 		return (FLT_MAX);
 	return (dot((obj->pos - origin), obj->facing) / l_dot_n);
@@ -34,8 +31,5 @@ static void			plane_normal(
 		int face
 		)
 {
-	if (face)
-		r->normal = -o->facing;
-	else
-		r->normal = o->facing;
+	r->normal = (face ? -o->facing : o->facing);
 }
