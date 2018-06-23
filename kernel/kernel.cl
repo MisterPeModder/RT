@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 15:27:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:14:38 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ kernel void	render_frame(
 		private size_t objs_num,
 		private size_t lights_num,
 		private unsigned int w,
-		private unsigned int h
-		/*,
-		  __private float3 bg_color,
-		  __private unsigned int endian*/
+		private unsigned int h,
+		private char no_negative
 		)
 {
 	unsigned int	x;
@@ -68,26 +66,10 @@ kernel void	render_frame(
 //
 	x = get_global_id(0);
 	y = get_global_id(1);
-//	printf("x: %u, y: %u\n", x, y);
 	unit = compute_pixel_coor(cam, w, h, x, y);
-	if (!raytrace(objs, objs_num, cam->pos, unit, &r))
+	if (!raytrace(objs, objs_num, cam->pos, unit, &r, no_negative))
 		color = bg_color;
 	else
-		color = shading(objs, objs_num, lights, lights_num, &r);
+		color = shading(objs, objs_num, lights, lights_num, &r, no_negative);
 	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 0));//CHECK ENDIAN
 }
-
-
-/*__kernel void a_frame(
-  private unsigned int x_size,
-  private unsigned int y_size,
-  write_only image2d_t output)
-  {
-  private int2 coord;
-
-  coord.x = get_global_id(0);
-  coord.y = get_global_id(1);
-  write_imageui(output, coord, (uint4)(255 * (coord.x / (float)x_size), 0,
-  255 * (coord.y / (float)y_size), 0));
-  }
-*/

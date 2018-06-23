@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/16 12:22:07 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:12:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static int			raytrace(
 		size_t objs_num,
 		float3 o,
 		float3 u,
-		t_rt_result *r
+		t_rt_result *r,
+		char no_negative
 		)
 {
 	size_t			i;
@@ -90,31 +91,34 @@ static int			raytrace(
 				tmp = FLT_MAX;
 		}
 		n = 0;
-		while (n < objs_num)
+		if (!no_negative)
 		{
-			if (objs[n].negative)
+			while (n < objs_num)
 			{
-				switch (objs[n].type)
+				if (objs[n].negative)
 				{
-					case OBJ_SPHERE:
-						t_neg = negative_sphere_intersect(&objs[n], o, u);
-						break;
-					case OBJ_CUBE:
-						t_neg = negative_cube_intersect(&objs[n], o, u);
-						break;
-					case OBJ_PYRAMID:
-						t_neg = negative_pyramid_intersect(&objs[n], o, u);
-						break;
-					default:
-						t_neg = (float2)(FLT_MAX, FLT_MAX);
+					switch (objs[n].type)
+					{
+						case OBJ_SPHERE:
+							t_neg = negative_sphere_intersect(&objs[n], o, u);
+							break;
+						case OBJ_CUBE:
+							t_neg = negative_cube_intersect(&objs[n], o, u);
+							break;
+						case OBJ_PYRAMID:
+							t_neg = negative_pyramid_intersect(&objs[n], o, u);
+							break;
+						default:
+							t_neg = (float2)(FLT_MAX, FLT_MAX);
+					}
+					if (tmp < t_neg[1] && tmp > t_neg[0])
+						tmp = FLT_MAX;
 				}
-				if (tmp < t_neg[1] && tmp > t_neg[0])
-					tmp = FLT_MAX;
+				n++;
 			}
-			n++;
+			if (objs[i].negative)
+				tmp = FLT_MAX;
 		}
-		if (objs[i].negative)
-			tmp = FLT_MAX;
 		if (tmp > 0 && tmp < d)
 		{
 			r->obj = objs + i;
@@ -134,6 +138,7 @@ static int			raytrace(
 			break;
 		case OBJ_PLANE:
 		case OBJ_DISK:
+		case OBJ_TRIANGLE:
 			plane_normal(r->obj, r, face);
 			break;
 		case OBJ_CONE:
@@ -141,9 +146,6 @@ static int			raytrace(
 			break;
 		case OBJ_CYLINDER:
 			cylinder_normal(r->obj, r, face);
-			break;
-		case OBJ_TRIANGLE:
-			triangle_normal(r->obj, r, face);
 			break;
 		case OBJ_CUBE:
 			cube_normal(r->obj, r, face);
@@ -169,7 +171,8 @@ static int			raytrace(
 static float3		shading(
 		constant t_object *objs, size_t objs_num,
 		constant t_light *lights, size_t lights_num,
-		t_rt_result *r
+		t_rt_result *r,
+		char no_negative
 		)
 {
 	size_t			i;
@@ -184,7 +187,7 @@ static float3		shading(
 	{
 		lvec = normalize(lights[i].pos - r->pos);
 		start = r->pos + 0.001f * r->normal;
-		if (!raytrace(objs, objs_num, start, lvec, &sink)
+		if (!raytrace(objs, objs_num, start, lvec, &sink, no_negative)
 				|| length(lights[i].pos - r->pos) < sink.dist)
 			colorize(&lights[i], lvec, r, &result);
 		++i;

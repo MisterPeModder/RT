@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 00:59:12 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:04:53 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ typedef struct		s_scene
 int					scene_parse(t_scene *scene, const char *path);
 int					scene_lights(t_scene *scene, const t_json_array *data);
 void				scene_release(t_scene *scene);
+void				scene_has_neg_objects(t_scene *scene, int *state);
 
 #endif

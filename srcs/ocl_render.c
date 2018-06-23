@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 11:08:19 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:08:02 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ static void			*release_kernel_arg(t_kargs *args)
 	return (NULL);
 }
 
-static t_kargs		*init_kargs(void)
+static t_kargs		*init_kargs(t_rt *core)
 {
 	t_kargs			*result;
+	char			no_negative;
 
 	result = malloc(sizeof(t_kargs));
 	if (result == NULL)
@@ -69,7 +70,9 @@ static t_kargs		*init_kargs(void)
 	result->arg2 = NULL;
 	result->arg3 = NULL;
 	result->arg4 = NULL;
-	return (result);
+	no_negative = core->state_flags & SF_NO_NEGATIVE;
+	return (clSetKernelArg(core->ocl.kernel, 8, sizeof(char), &no_negative)
+			== CL_SUCCESS ? result : NULL);
 }
 
 static t_kargs		*ocl_set_kernel_arg(t_rt *core)
@@ -77,7 +80,7 @@ static t_kargs		*ocl_set_kernel_arg(t_rt *core)
 	cl_int			ret;
 	t_kargs			*tmp;
 
-	if ((tmp = init_kargs()) == NULL)
+	if ((tmp = init_kargs(core)) == NULL)
 		return (NULL);
 	tmp->arg2 = clCreateBuffer(core->ocl.context,
 			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR, sizeof(t_cam),

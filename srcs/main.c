@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 13:26:34 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 17:57:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int					main(int ac, char **av)
 		img_release(&core.mlx, &core.frame);
 		return (EXIT_FAILURE);
 	}
+	scene_has_neg_objects(&core.scene, &core.state_flags);
 	if (ocl_init(&core.ocl, &core) != CL_SUCCESS)
 	{
 		img_release(&core.mlx, &core.frame);
 		scene_release(&core.scene);
 		return (0);
 	}
-	core.should_update = 1;
 	mlx_loop(core.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

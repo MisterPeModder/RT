@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/21 18:01:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 17:05:26 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static float		triangle_intersect(
 	v0v1 = obj->props.triangle.pos1 - obj->pos;
 	v0v2 = obj->props.triangle.pos2 - obj->pos;
 	vec1 = cross(u, v0v2);
-	det = dot(v0v1, vec1);
-	if (fabs(det) < 1e-6)
-		return (FLT_MAX);
-	det = 1 / det;
+	det = 1 / dot(v0v1, vec1);
 	w = dot(origin - obj->pos, vec1) * det;
 	if (w < 1e-6 || w > 1 + 1e-6)
 		return (FLT_MAX);
@@ -41,13 +38,4 @@ static float		triangle_intersect(
 	if (v < 1e-6 || w + v > 1 + 1e-6)
 		return (FLT_MAX);
 	return (dot(v0v2, vec1) * det);
-}
-
-static void			triangle_normal(
-		constant t_object *o,
-		t_rt_result *r,
-		int face
-		)
-{
-	r->normal = (face ? -o->facing : o->facing);
 }

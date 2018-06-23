@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/16 11:51:49 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:03:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int					core_init(t_rt *core, unsigned int w, unsigned int h)
 			core);
 	mlx_loop_hook(core->mlx.mlx_ptr, &on_tick, core);
 	mvs_init(&core->mvs);
-	core->should_update = 1;
+	core->state_flags |= SF_SHOULD_UPDATE;
 	core->last_time = 0;
 	return (1);
 }

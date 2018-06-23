@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:44:23 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/16 11:54:46 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 18:04:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int					on_tick(void *c)
 	timer_start(&timer);
 	core = (t_rt *)c;
 	update_keys(core);
-	if (core->should_update)
+	if (core->state_flags & SF_SHOULD_UPDATE)
 	{
 		if (render_frame(core) != CL_SUCCESS)
 			ft_putendl_fd("\x1b[93mWARNING\x1b[0m: failed to render frame !!",
@@ -68,7 +68,7 @@ int					on_tick(void *c)
 		else
 			mlx_put_image_to_window(core->mlx.mlx_ptr, core->mlx.win_ptr,
 					core->frame->mlx_img, 0, 0);
-		core->should_update = 0;
+		core->state_flags &= ~SF_SHOULD_UPDATE;
 		display_fps(core, &timer, 0);
 	}
 	else

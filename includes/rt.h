@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/16 11:51:45 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 17:38:44 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@
 # include "ocl_types.h"
 
 /*
+** SF*: State Flags.
+*/
+
+/*
+** SF_SHOULD_UPDATE: This bit is set when the frame needs to be recomputed.
+*/
+# define SF_SHOULD_UPDATE 1
+
+/*
+** SF_NO_NEGATIVE: This bit is set when there is no negative object
+**                 currently loaded in the scene, used for optimization.
+*/
+# define SF_NO_NEGATIVE 2
+
+/*
 ** t_rt: The central structure.
 */
 typedef struct		s_rt
@@ -29,7 +44,7 @@ typedef struct		s_rt
 	t_ocl			ocl;
 	t_img			*frame;
 	t_mv_state		mvs;
-	int				should_update;
+	int				state_flags;
 	float			last_time;
 }					t_rt;
 
