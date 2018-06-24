@@ -7,3 +7,19 @@ norm.log
 libs/minilibx_x11/Makefile.gen
 libs/minilibx_x11/test/Makefile.gen
 libs/minilibx_x11/test/mlx-test
+
+#SDL installation files
+*.la
+libs/sdl2/Makefile
+libs/sdl2/Makefile.rules
+libs/sdl2/config.log
+libs/sdl2/config.status
+libs/sdl2/libtool
+libs/sdl2/sdl2-config
+libs/sdl2/sdl2-config.cmake
+libs/sdl2/sdl2.pc
+libs/sdl2/bin
+libs/sdl2/build
+libs/sdl2/include/SDL2
+libs/sdl2/lib
+libs/sdl2/share

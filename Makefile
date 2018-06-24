@@ -147,6 +147,8 @@ $(LIBFT_JSON):
 	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)
 
 $(LIBSDL):
+	@cd $(LIBSDL_PATH) && ./configure --prefix $(LIBSDL_PATH)
+	@make -C $(LIBSDL_PATH)
 	@make -C $(LIBSDL_PATH) install
 
 $(OBJ_DIRS):
@@ -184,8 +186,5 @@ norm:
 	@$(PRINT) "Norm Errors: "
 	@cat $(NORM_LOG) | grep Error | wc -l | bc
 	@$(PRINT) "See $(UNDERLINE)$(NORM_LOG)$(RESET) for details.\n"
-
-sdl_install:
-	cd $(LIBSDL_PATH) && ./configure --prefix $(LIBSDL_PATH)
 
 .PHONY: all clean fclean re sdl_install norm
