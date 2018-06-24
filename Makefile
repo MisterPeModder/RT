@@ -4,7 +4,6 @@ NAME := rt
 ## LIBS
 LIBS := $(CURDIR)/libs
 
-
 # Libft
 LIBFT_PATH := $(LIBS)/libft
 LIBFT_NAME := ft
@@ -15,20 +14,18 @@ LIBFT_JSON_PATH := $(LIBS)/ft_json
 LIBFT_JSON_NAME := ftjson
 LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
-# MLX
+# SDL2
+LIBSDL_PATH := $(LIBS)/sdl2
+LIBSDL_NAME := sdl2
+LIBSDL := $(LIBSDL_PATH)/lib/lib$(LIBSDL_NAME).a
+
 UNAME := $(shell uname -s 2> /dev/null)
 
 ifeq ($(UNAME), Darwin)
-	MLX_PATH := $(LIBS)/minilibx_macos
-	FRAMEWORKS := -framework OpenCL -framework OpenGL -framework AppKit
+	FRAMEWORKS := -framework OpenCL
 else
-	MLX_PATH := $(LIBS)/minilibx_x11
-	FRAMEWORKS := -lXext -lX11
-	EXTRA_FLAGS := -D X11_MLX
+	FRAMEWORKS :=
 endif
-
-MLX_NAME := mlx
-MLX = $(MLX_PATH)/lib$(MLX_NAME).a
 
 # Basic definitions
 SRC_PATH := srcs
@@ -40,15 +37,14 @@ KERNEL_PATH := kernel
 KERNELSRC_PATH := $(KERNEL_PATH)/kernel.cl
 OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
 
-SUBDIRS := $(addprefix $(OBJ_PATH)/, objects)
-
 # Compiler flags
-CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes -isystem$(MLX_PATH)
+CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
 CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
-			-g -O3															\
+			-g -O3 `$(LIBSDL_PATH)/sdl2-config --cflags`					\
 			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
-LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH) -L$(MLX_PATH)	\
-			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -l$(MLX_NAME) -lm
+LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH)						\
+			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -lm	\
+			`$(LIBSDL_PATH)/sdl2-config --libs`
 
 # Commands
 CC := gcc
@@ -58,43 +54,59 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-SRCS_NAMES :=	angle.c			\
-				cam.c			\
-				core.c			\
-				events.c		\
-				events2.c		\
-				from_json.c		\
-				img.c			\
-				lights.c		\
-				main.c			\
-				move.c			\
-				ocl_render.c	\
-				ocl_data.c		\
-				read_kernel.c	\
-				rotate.c		\
-				scene.c			\
-				timer.c			\
-				utils.c			\
-				vec3cl.c		\
 
-SRCS_NAMES +=	objects/cone.c		\
-				objects/objects.c	\
-				objects/sphere.c	\
-				objects/cylinder.c	\
-				objects/disk.c		\
-				objects/triangle.c	\
-				objects/cube.c		\
-				objects/pyramid.c	\
-				objects/paraboloid.c\
+## NEW
+
+SRCS_NAMES :=	core.c							\
+				img.c							\
+				main.c							\
+
+SRCS_NAMES +=	controllers/controller_event.c	\
+				controllers/controller_motion.c	\
+				controllers/controller_update.c	\
+				controllers/mappings_add.c		\
+
+SRCS_NAMES +=	events/events.c					\
+				events/loop.c					\
+				events/move.c					\
+				events/window_events.c			\
+
+SRCS_NAMES +=	objects/cone.c					\
+				objects/cube.c					\
+				objects/cylinder.c				\
+				objects/disk.c					\
+				objects/objects.c				\
+				objects/paraboloid.c			\
+				objects/pyramid.c				\
+				objects/sphere.c				\
+				objects/triangle.c				\
+
+SRCS_NAMES +=	ocl/ocl_data.c					\
+				ocl/ocl_render.c				\
+				ocl/read_kernel.c				\
+
+SRCS_NAMES +=	parsing/cam.c					\
+				parsing/from_json.c				\
+				parsing/lights.c				\
+				parsing/options.c				\
+				parsing/read.c					\
+				parsing/scene.c					\
+
+SRCS_NAMES +=	utils/angle.c					\
+				utils/rotate.c					\
+				utils/timer.c					\
+				utils/utils.c					\
+				utils/vec3cl.c					\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
-
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 
-INCS :=	image.h					\
+OBJ_DIRS := $(sort $(dir $(OBJS)))
+
+INCS :=	controller.h			\
+		image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
-		mlx_defs.h				\
 		move.h					\
 		objects.h				\
 		ocl_common_structs.h	\
@@ -102,6 +114,7 @@ INCS :=	image.h					\
 		ocl_types.h				\
 		rt.h					\
 		scene.h					\
+		sdl_defs.h				\
 		timer.h					\
 
 # THE NORM IS REAL
@@ -117,9 +130,9 @@ YELLOW := \033[93m
 DYELLOW := \033[33m
 UNDERLINE := \033[4m
 
-all: $(LIBFT) $(LIBFT_JSON) $(MLX) $(NAME)
+all: $(LIBFT) $(LIBFT_JSON) $(LIBSDL) $(NAME)
 
-$(NAME): $(OBJ_PATH) $(OBJ_PATH) $(SUBDIRS) $(OBJS)
+$(NAME): $(OBJ_DIRS) $(OBJS)
 ifeq ($(DETAILED), 1)
 	@tput dl; tput el1; tput cub 100; $(PRINT) "$(GREY)Creating object files: $(GREEN)done!$(RESET)"
 endif
@@ -133,12 +146,10 @@ $(LIBFT):
 $(LIBFT_JSON):
 	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)
 
-$(MLX):
-	@printf "\033[90mCompiling \033[0m$(MLX_NAME)\033[90m: \033[0m"
-	@make -C $(MLX_PATH) &> /dev/null
-	@printf "\033[32mdone!\n\n"
+$(LIBSDL):
+	@make -C $(LIBSDL_PATH) install
 
-$(OBJ_PATH) $(SUBDIRS):
+$(OBJ_DIRS):
 	@$(MKDIR) $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(addprefix $(INC_PATH)/,$(INCS))
@@ -151,7 +162,7 @@ clean:
 	@$(RM) $(NORM_LOG)
 	@$(RM) -r *.dSYM
 	@$(RM) $(OBJS) 2> /dev/null || true
-	@$(RMDIR) $(OBJS_DIRS) 2> /dev/null || true
+	@$(RMDIR) $(OBJ_DIRS) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) clean > /dev/null
 	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) clean > /dev/null
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)object files!$(RESET)\n"
@@ -161,7 +172,6 @@ fclean: clean
 	@$(RM) $(TEST_NAME) 2> /dev/null || true
 	@make -C $(LIBFT_PATH) fclean > /dev/null
 	@make -C $(LIBFT_JSON_PATH) LIBFT_PATH=$(LIBFT_PATH) fclean > /dev/null
-	@make -C $(MLX_PATH) clean &> /dev/null || true
 	@$(PRINT) "$(DYELLOW)Removed $(YELLOW)$(NAME) executable!$(RESET)\n\n"
 
 re: fclean all
@@ -175,4 +185,7 @@ norm:
 	@cat $(NORM_LOG) | grep Error | wc -l | bc
 	@$(PRINT) "See $(UNDERLINE)$(NORM_LOG)$(RESET) for details.\n"
 
-.PHONY: all clean fclean re norm
+sdl_install:
+	cd $(LIBSDL_PATH) && ./configure --prefix $(LIBSDL_PATH)
+
+.PHONY: all clean fclean re sdl_install norm
