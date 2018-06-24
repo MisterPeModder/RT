@@ -6,11 +6,10 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/08 16:18:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/24 18:56:13 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "rt.h"
 #include "move.h"
 
@@ -32,7 +31,6 @@ void				on_key_pressed(int key, t_rt *core)
 	t_mv_state		*mvs;
 	unsigned int	i;
 
-	printf("keyboard: %d (\"%s\")\n", key, SDL_GetKeyName(key));
 	if (key == SDLK_ESCAPE)
 		exit_rt(core);
 	mvs = &core->mvs;

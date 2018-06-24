@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/23 20:17:19 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/24 18:54:04 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ kernel void	render_frame(
 		color = bg_color;
 	else
 		color = shading(objs, objs_num, lights, lights_num, &r, no_negative);
-	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 0));
+	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
 }
