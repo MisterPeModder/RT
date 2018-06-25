@@ -6,12 +6,10 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 20:25:49 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 19:31:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft_base/io.h>
-#include <unistd.h>
 #include "rt.h"
 
 static void			quit_release(t_rt *core)
@@ -23,16 +21,16 @@ static void			quit_release(t_rt *core)
 int					main(int ac, char **av)
 {
 	t_rt			core;
+	int				ret;
+	char			*options_path;
 
-	if (ac != 2)
-	{
-		ft_putendl_fd("Wrong number of arguments", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+	if ((ret = parse_args(ac, av, &options_path)))
+		return (ret == 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 	if (!core_init(&core, IMG_W, IMG_H))
 		return (EXIT_FAILURE);
 	if (!(core.frame = img_make(IMG_W, IMG_H)) ||
-			!scene_parse(&core.scene, av[1]) || !options_parse(&core, "./options.json"))
+			!scene_parse(&core.scene, av[ac - 1]) || !options_parse(&core,
+				options_path))
 	{
 		quit_release(&core);
 		return (EXIT_FAILURE);

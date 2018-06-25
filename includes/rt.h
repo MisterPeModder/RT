@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 16:59:38 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 19:41:39 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,18 @@ cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
 cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
 cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
 
-float 			lin_inter(float x, float y, float s);
-float 			smooth_inter(float x, float y, float s);
-int				noise2(int x, int y);
-float			noise2d(float x, float y);
-float			perlin2d(float x, float y, float freq, int depth);
+float				lin_inter(float x, float y, float s);
+float				smooth_inter(float x, float y, float s);
+int					noise2(int x, int y);
+float				noise2d(float x, float y);
+float				perlin2d(float x, float y, float freq, int depth);
+
+int					parse_args(int ac, char **av, char **options_path);
 
 t_json_value		*json_file_read(const char *path);
+
+# define DEFAULT_OPTIONS "./options.json"
+
 int					options_parse(t_rt *core, const char *path);
 
 #endif

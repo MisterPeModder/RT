@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 07:17:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 17:55:31 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 19:31:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int					options_parse(t_rt *core, const char *path)
 {
 	t_json_object	*obj;
 	t_json_value	*tmp;
-	(void)core;
 
 	if (!(obj = &(json_file_read(path)->obj)))
 		return (0);

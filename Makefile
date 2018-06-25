@@ -8,6 +8,7 @@ LIBS := $(CURDIR)/libs
 LIBFT_PATH := $(LIBS)/libft
 LIBFT_NAME := ft
 LIBFT := $(LIBFT_PATH)/lib$(LIBFT_NAME).a
+LIBFT_MODULES := base containers math
 
 # Libftjson
 LIBFT_JSON_PATH := $(LIBS)/ft_json
@@ -85,9 +86,10 @@ SRCS_NAMES +=	ocl/ocl_data.c					\
 				ocl/ocl_render.c				\
 				ocl/read_kernel.c				\
 
-SRCS_NAMES +=	parsing/cam.c					\
+SRCS_NAMES +=	parsing/args.c					\
+				parsing/cam.c					\
 				parsing/from_json.c				\
-				parsing/from_json2.c				\
+				parsing/from_json2.c			\
 				parsing/lights.c				\
 				parsing/options.c				\
 				parsing/read.c					\
@@ -142,7 +144,7 @@ endif
 	@$(PRINT) "$(GREEN)done!$(RESET)\n"
 
 $(LIBFT):
-	@make -C $(LIBFT_PATH) VERBOSE=0
+	@make -C $(LIBFT_PATH) VERBOSE=0 MODULES="$(LIBFT_MODULES)"
 
 $(LIBFT_JSON):
 	@make -C $(LIBFT_JSON_PATH) VERBOSE=0 LIBFT_PATH=$(LIBFT_PATH)

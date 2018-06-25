@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 10:18:30 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 11:38:13 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 19:36:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,37 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <libft_base/io.h>
+#include <libft_base/stringft.h>
 #include "rt.h"
+
+static char			*file_err(char *buf, const char *path, const char *after)
+{
+	ft_strcpy(buf, "Couldn't open file ");
+	ft_strlcat(buf, path, 256);
+	if (after)
+		ft_strlcat(buf, after, 256);
+	return (buf);
+}
 
 static int			json_file_open(const char *path)
 {
 	int				fd;
 	struct stat		infos;
+	char			buf[256];
 
 	if ((fd = open(path, O_RDONLY)) == -1)
 	{
-		perror("Couldn't open file");
+		perror(file_err(buf, path, NULL));
 		return (-1);
 	}
 	if (fstat(fd, &infos))
 	{
-		ft_putendl_fd("Couldn't open file", STDERR_FILENO);
+		ft_putendl_fd(file_err(buf, path, NULL), STDERR_FILENO);
 		return (-1);
 	}
 	if (S_ISDIR(infos.st_mode))
 	{
-		ft_putendl_fd("Couldn't open file: is a directory", STDERR_FILENO);
+		ft_putendl_fd(file_err(buf, path, ": is a directory"), STDERR_FILENO);
 		return (-1);
 	}
 	return (fd);
