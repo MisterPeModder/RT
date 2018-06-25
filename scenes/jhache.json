@@ -1,45 +1,46 @@
 //The corresponding scene file for early jhache's hardcoded scene.
 {
 	"background_color": [0, 0, 10],
+	"depth": 0,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,
-		"angle": [0, 45, 0]
+		"angle": [0, 20, 0]
 	},
 	"objects": [
 		{
 			"type": "sphere",
 			"pos": [0.8, 0, -7],
 			"radius": 2,
-			"brightness": 0.2,
-			"color": [229, 129, 48] //orange
+			"color": [229, 129, 48],//orange
+			"material": {//default: "none", 0, 1
+				"property": "reflective",//"reflective", "refractive", "portal", "none"
+				"coefficient": 0.3,//between 0 and 1
+				"refractive_index": 1.52// >= 1, look for it on internet
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [5, -1, -9],
 			"radius": 5,
-			"brightness": 0.2,
 			"color": [180, 40, 226] //purple
 		},
 		{
 			"type": "sphere",
 			"pos": [-0.2, -2.2, -6.0],
 			"radius": 1,
-			"brightness": 0.2,
 			"color": [153, 153, 153] //gray
 		},
 		{
 			"type": "plane",
 			"pos": [0, -5.0, -10.0],
 			"angle": [0, 0, 0],
-			"brightness": 1,
 			"color": [18, 99, 229] //blue*/
 		},
 		{
 			"type": "plane",
 			"pos": [-20, -5.0, -10.0],
 			"angle": [90, 45, 0],
-			"brightness": 1,
 			"color": [247, 78, 17] //blue
 		},
 		{
@@ -47,7 +48,6 @@
 			"pos": [-6, 2, -3],
 			"angle": [0, 0, 0],//normal = (0, 1, 0)
 			"radius": 3,
-			"brightness": 1,
 			"color": [255, 0, 0]
 		},
 		{
@@ -69,12 +69,12 @@
 	"lights": [
 		{
 			"pos": [3, 10, 3],
-			"color": [255, 0, 0]
+			"color": [255, 255, 255]
 		},
 		{
 			"pos": [5, 5, 0],
 			"power": 1,
-			"color": [255, 255, 0]
+			"color": [255, 255, 255]
 		}
 	]
 }

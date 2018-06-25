@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 17:44:20 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 17:09:56 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 22:18:20 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef union		u_color
 ** IMG_W, IMG_H: The image's default width and height.
 */
 # define IMG_W 1600
-# define IMG_H 900
+# define IMG_H 1000
 
 /*
 ** MIN_IMG_W, MIN_IMG_H: The image's minimal width and height.

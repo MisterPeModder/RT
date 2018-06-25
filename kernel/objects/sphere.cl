@@ -6,14 +6,15 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:58:37 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 11:04:13 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/20 14:34:37 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		sphere_intersect(
 		constant t_object *obj,
 		float3 origin,
-		float3 u
+		float3 u,
+		int *face
 		)
 {
 	float	a;
@@ -22,6 +23,7 @@ static float		sphere_intersect(
 	float	delta;
 	float3	tmp;
 
+	*face = 0;
 	a = dot(u, u);
 	tmp = origin - obj->pos;
 	b = 2 * dot(u, tmp);
@@ -33,8 +35,13 @@ static float		sphere_intersect(
 		return (-b / (2 * a));
 	c = (-b - sqrt(delta)) / (2 * a);
 	a = (-b + sqrt(delta)) / (2 * a);
-	c = c > a ? a : c;
-	return (c);
+	b = c > a ? a : c;
+	c = c > a ? c : a;
+	if (c > 0 && b < 0)
+		*face = 1;
+	if (b < 0)
+		b = c;
+	return ((b < 0) ? FLT_MAX : b);
 }
 
 static float2		negative_sphere_intersect(
@@ -68,8 +75,12 @@ static float2		negative_sphere_intersect(
 
 static void			sphere_normal(
 		constant t_object *o,
-		t_rt_result *r
+		t_rt_result *r,
+		int face
 		)
 {
-	r->normal = normalize(r->pos - o->pos);
+	if (!face)
+		r->normal = normalize(r->pos - o->pos);
+	else
+		r->normal = -normalize(r->pos - o->pos);
 }

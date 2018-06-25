@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/23 18:12:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 17:00:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ static int			raytrace(
 	d = FLT_MAX;
 	while (i < objs_num)
 	{
+		tmp = 0;
 		switch (objs[i].type)
 		{
 			case OBJ_SPHERE:
-				tmp = sphere_intersect(&objs[i], o, u);
+				tmp = sphere_intersect(&objs[i], o, u, &face_tmp);
 				break;
 			case OBJ_PLANE:
 				tmp = plane_intersect(&objs[i], o, u, &face_tmp);
@@ -95,7 +96,7 @@ static int			raytrace(
 		{
 			while (n < objs_num)
 			{
-				if (objs[n].negative)
+				if (objs[n].mat.props == MAT_NEGATIVE)
 				{
 					switch (objs[n].type)
 					{
@@ -116,7 +117,7 @@ static int			raytrace(
 				}
 				n++;
 			}
-			if (objs[i].negative)
+			if (objs[i].mat.props == MAT_NEGATIVE)
 				tmp = FLT_MAX;
 		}
 		if (tmp > 0 && tmp < d)
@@ -134,11 +135,11 @@ static int			raytrace(
 	switch (r->obj->type)
 	{
 		case OBJ_SPHERE:
-			sphere_normal(r->obj, r);
+			sphere_normal(r->obj, r, face);
 			break;
-		case OBJ_PLANE:
 		case OBJ_DISK:
 		case OBJ_TRIANGLE:
+		case OBJ_PLANE:
 			plane_normal(r->obj, r, face);
 			break;
 		case OBJ_CONE:
@@ -161,19 +162,18 @@ static int			raytrace(
 }
 
 /*
- ** shading: Handles the shading using the Phong algorithm.
- **
- ** -scene: the scene instance.
- ** -r: the primary ray's raytrace result.
- ** -c: where the color of the pixel will be stored.
- */
-
-static float3		shading(
-		constant t_object *objs, size_t objs_num,
-		constant t_light *lights, size_t lights_num,
-		t_rt_result *r,
-		char no_negative
-		)
+** shading: Handles the shading using the Phong algorithm.
+**
+** -objs: the chained list for every object in the scene.
+** -lights: the chained list for every lights in the scene.
+** -r: the primary ray's raytrace result.
+** -result: where the color of the pixel will be stored.
+*/
+static float3			shading(
+	constant t_object *objs, size_t objs_num,
+	constant t_light *lights, size_t lights_num, t_rt_result *r,
+	char no_negative
+	)
 {
 	size_t			i;
 	float3			lvec;

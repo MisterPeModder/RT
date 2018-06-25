@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/10 20:12:04 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/25 16:57:47 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,26 @@ typedef union		u_properties
 	}				paraboloid;
 }					t_properties;
 
+typedef enum		e_mat_props
+{
+	MAT_NONE = 0,
+	MAT_REFLECTIVE = 1,
+	MAT_REFRACTIVE,
+	MAT_PORTAL,
+	MAT_NEGATIVE
+}					t_mat_props;
+
+/*
+**
+*/
+typedef struct		s_material
+{
+//	t_clfloat		shininess;//maybe for specular
+	t_mat_props		props;
+	t_clfloat		props_coef;
+	t_clfloat		refractive_index;
+}					t_material;
+
 /*
 ** t_object: Stores all the info about an object instance.
 **
@@ -112,7 +132,25 @@ typedef struct		s_object
 	t_clfloat3		right;
 	t_clfloat3		color;
 	t_properties	props;
-	int				negative;
+	t_material		mat;
 }					t_object;
+
+/*
+** t_ray_stack: One element of the pseudo-stack in the kernel.
+** It stores informations for one reflected or refracted ray.
+**
+** pos: origin of the ray.
+** dir: unit director vector of the ray.
+** clr_contribution: how much are we seeing the result of the ray ?
+** This is expressed by a float, between 0 and 1.
+*/
+
+typedef struct		s_ray
+{
+	t_clfloat3		pos;
+	t_clfloat3		dir;
+	t_clfloat		clr_contrib;
+	t_clchar		depth;
+}					t_ray;
 
 #endif

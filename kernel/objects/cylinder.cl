@@ -6,62 +6,67 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:43:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/01 13:41:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 13:48:30 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static float				cylinder_intersect2(
+static float			cylinder_intersect3(
 		constant t_object *obj,
 		float3 origin,
 		float3 u,
-		int i,
-		int *face
-		)
-{
-	float3			tmp;
-	float3			tmp2;
-	float			a;
-
-	if (i == 1)
-		tmp = obj->pos + obj->props.cylinder.len / 2 * obj->facing;
-	else
-		tmp = obj->pos - obj->props.cylinder.len / 2 * obj->facing;
-	a = dot(tmp - origin, obj->facing) / dot(u, obj->facing);
-	tmp2 = origin + u * a;
-	if (dot(tmp2 - tmp, tmp2 - tmp) <= obj->props.cylinder.radius * obj->props.cylinder.radius && a > 1e-6)
-	{
-		*face = i;
-		return (a);
-	}
-	return (FLT_MAX);
-}
-
-static float				cylinder_intersect3(
-		constant t_object *obj,
-		float3 origin,
-		float3 u,
-		float c,
+		float2 c,
 		int *face
 		)
 {
 	float	a;
-	float	dist;
-	float	dist1;
+	float3	tmp;
+	float3	tmp2;
+	float2	inter;
+	float	result;
+	float	test;
 
-	dist = length(origin - obj->pos + obj->props.cylinder.len / 2 * obj->facing);
-	dist1 = length(origin - obj->pos - obj->props.cylinder.len / 2 * obj->facing);
-	a = dot(u, obj->facing) * c + dot(origin - obj->pos, obj->facing);
-	if ((a < 0 - obj->props.cylinder.len / 2 || a > obj->props.cylinder.len
-				/ 2) && obj->props.cylinder.len != -1)
+	a = dot(u, obj->facing) * c.x + dot(origin - obj->pos, obj->facing);
+	test = dot(obj->pos - origin, obj->facing);
+	if (obj->props.cylinder.len != -1
+		&& ((a < 0 - obj->props.cylinder.len / 2
+				|| a > obj->props.cylinder.len / 2)
+			|| ((test > 0 - obj->props.cylinder.len / 2
+				&& test < obj->props.cylinder.len / 2) && c.x < 0)))
 	{
-		if (dist > dist1 && (a = cylinder_intersect2(obj, origin, u, 1, face)) != FLT_MAX)
-			return (a);
-		else if ((a = cylinder_intersect2(obj, origin, u, 2, face)) != FLT_MAX)
-			return (a);
+		tmp = obj->pos + obj->props.cylinder.len / 2 * obj->facing;
+		tmp2 = obj->pos - obj->props.cylinder.len / 2 * obj->facing;
+		inter.x = dot(tmp - origin, obj->facing) / dot(u, obj->facing);
+		inter.y = dot(tmp2 - origin, obj->facing) / dot(u, obj->facing);
+		if ((inter.x < 0 || inter.y < inter.x) && inter.y > 0)
+		{
+			result = inter.y;
+			tmp = tmp2;
+			*face = 2;
+		}
+		else if (inter.x > 0)
+		{
+			result = inter.x;
+			*face = 1;
+		}
+		else
+			return (FLT_MAX);
+		tmp2 = origin + u * result;
+		if (dot(tmp2 - tmp, tmp2 - tmp) <= obj->props.cylinder.radius
+				* obj->props.cylinder.radius)
+		{
+			if (dot(u, obj->facing) > 0)
+				*face = ((*face == 1) ? 2 : 1);
+			return (result);
+		}
+		if ((test > 0 - obj->props.cylinder.len / 2
+				&& test < obj->props.cylinder.len / 2) && c.x < 0)
+		{
+			*face = 3;
+			return (c.y);
+		}
 		return (FLT_MAX);
 	}
-	else
-		return (c);
+	return (c.x);
 }
 
 /*
@@ -76,7 +81,7 @@ static float				cylinder_intersect3(
  **          Returns FLT_MAX otherwise.
  */
 
-static float				cylinder_intersect(
+static float			cylinder_intersect(
 		constant t_object *obj,
 		float3 origin,
 		float3 u,
@@ -105,9 +110,10 @@ static float				cylinder_intersect(
 		return (-b / (2 * a));
 	c = (-b - sqrt(delta)) / (2 * a);
 	a = (-b + sqrt(delta)) / (2 * a);
-	c = c > a ? a : c;
+	b = c > a ? a : c;
+	c = c > a ? c : a;
 	*face = 0;
-	return (cylinder_intersect3(obj, origin, u, c, face));
+	return (cylinder_intersect3(obj, origin, u, (float2)(b, c), face));
 }
 
 /*
@@ -122,7 +128,7 @@ static float				cylinder_intersect(
  ** normal = hitpos - ((hitpos - objpos) . axis) * axis [normalized]
  */
 
-static	void				cylinder_normal(
+static void				cylinder_normal(
 		constant t_object *o,
 		t_rt_result *r,
 		int face
@@ -130,10 +136,13 @@ static	void				cylinder_normal(
 {
 	float3			h_pos;
 
-	if (face == 0)
+	if (face == 0 || face == 3)
 	{
 		h_pos = o->facing * dot(r->pos - o->pos, o->facing) + o->pos;
-		r->normal = normalize(r->pos - h_pos);
+		if (face == 0)
+			r->normal = normalize(r->pos - h_pos);
+		else
+			r->normal = -normalize(r->pos - h_pos);
 	}
 	else if (face == 2)
 		r->normal = -o->facing;

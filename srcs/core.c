@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 17:11:00 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 22:17:34 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int					core_init(t_rt *core, unsigned int w, unsigned int h)
 {
 	if (!sdl_win_init(&core->sdl, w, h))
 		return (0);
-	core->sdl.w = w;
-	core->sdl.h = h;
+	core->sdl.win_width = w;
+	core->sdl.win_height = h;
 	mvs_init(&core->mvs);
 	core->state_flags |= SF_SHOULD_UPDATE;
 	core->last_time = 0;

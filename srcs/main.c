@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 19:31:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 22:20:27 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int					main(int ac, char **av)
 		return (ret == 1 ? EXIT_FAILURE : EXIT_SUCCESS);
 	if (!core_init(&core, IMG_W, IMG_H))
 		return (EXIT_FAILURE);
-	if (!(core.frame = img_make(IMG_W, IMG_H)) ||
+	if (/*!(core.frame = img_make(IMG_W, IMG_H)) ||*/
 			!scene_parse(&core.scene, av[ac - 1]) || !options_parse(&core,
 				options_path))
 	{
@@ -36,7 +36,8 @@ int					main(int ac, char **av)
 		return (EXIT_FAILURE);
 	}
 	scene_has_neg_objects(&core.scene, &core.state_flags);
-	if (ocl_init(&core.ocl, &core) != CL_SUCCESS)
+	if (ocl_init(&core.ocl, &core) != CL_SUCCESS
+			|| !(core.frame = img_make(IMG_W, IMG_H)))
 	{
 		quit_release(&core);
 		return (0);

@@ -1,7 +1,8 @@
 {
 	"background_color": [0, 0, 0],
 	"camera": {
-		"pos": [0, 0, 0],
+		"pos": [-1, 0, -5],
+		"angle": [0, 45, 0],
 		"fov": 90
 	},
 	"objects": [
@@ -9,25 +10,16 @@
 			"type": "cone",
 			"pos": [0, 0, -5],
 			"simple": false,
-			"length": 4,
+//			"length": 4,
 			"angle": [0, 0, 90],//normal = (0, 1, 0)
 			"opening_angle": 25,//* M_PI / 180
 			"color": [66, 134, 244]
-		},
-		{
-			"type": "cone",
-			"simple": true,
-			"length": 2,
-			"pos": [0, 0, -5],
-			"angle": [0, 0, 180],//normal = (0, 1, 0)
-			"opening_angle": 25,//* M_PI / 180
-			"color": [56, 200, 133]
 		}
 	],
 	"lights": [
-		{"pos": [0, 0, 0]},
-		{"pos": [-5, 0, -5]},
-		{"pos": [5, 0, -5]},
-		{"pos": [0, 8, -5]}
+		{"pos": [0, 0, 0]}
+//		{"pos": [-5, 0, -5]},
+//		{"pos": [5, 0, -5]},
+//		{"pos": [0, 8, -5]}
 	]
 }

@@ -1,20 +1,21 @@
 {
 	"background_color": [0, 0, 0],
 	"camera": {
-		"pos": [0, 0, 7],
+		"pos": [5, 0, -4],
+		"angle": [0, 180, 0],
 		"fov": 90
 	},
 	"objects": [
 		{
 			"type": "sphere",
-			"pos": [0, 0, -5],
-			"radius":2,
-			"color": [255, 0, 0]
+			"pos": [0, -3, -5],
+			"radius": 2,
+			"color": [123, 31, 22]
 		},
 		{
 			"type": "plane",
-			"pos": [0, 0, -9],
-			"angle": [90, 0, 0],
+			"pos": [0, -5, -9],
+			"angle": [0, 0, 0],
 			"color": [0, 0, 255]
 		},
 		{
@@ -22,7 +23,8 @@
 			"pos": [5, 0, -3],
 			"angle": [90, 0, 0],
 			"radius": 1,
-			"color": [123, 123, 123]
+			"length": 6,
+			"color": [54, 125, 50]
 		}/*,
 		{
 			"type": "cone",
@@ -34,7 +36,8 @@
 	],
 	"lights": [
 		{
-			"pos": [3, 2, 7]
+			"pos": [3, 2, 7],
+			"power": 1
 		}
 	]
 }

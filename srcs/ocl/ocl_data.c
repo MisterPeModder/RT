@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 14:01:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/23 20:25:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 16:05:13 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,13 @@ cl_int				ocl_init(t_ocl *ocl, t_rt *core)
 	ocl->queue = clCreateCommandQueue(ocl->context, ocl->device, 0, &ret);
 	if (ret != CL_SUCCESS)
 		return (ocl_release(ocl, "error while creating a queue.", ret));
-	if ((ret = create_kernel(ocl)) != CL_SUCCESS ||
-			init_kernel_args(ocl, core) != CL_SUCCESS)
-		return (ocl_release(ocl, NULL, ret));
+	if ((ret = create_kernel(ocl)) != CL_SUCCESS
+			|| (ret = create_ocl_stack(core, &core->mem_info)) != CL_SUCCESS)
+		return (ocl_release(ocl,
+					"error while creating the openCL stack.", ret));
+	if ((ret = compute_work_size(&core->mem_info, core)) != CL_SUCCESS
+		|| (ret = init_kernel_args(ocl, core)) != CL_SUCCESS)
+		return (ocl_release(ocl,
+					"error while loading fixed kernel arguments.", ret));
 	return (0);
 }

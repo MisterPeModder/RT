@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/24 18:54:04 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 15:56:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct				s_rt_result
 #include "objects/pyramid.cl"
 #include "objects/paraboloid.cl"
 #include "render.cl"
+#include "stack_functions.cl"
+#include "secondary_rays.cl"
 
 kernel void	render_frame(
 		write_only image2d_t output,
@@ -50,26 +52,49 @@ kernel void	render_frame(
 		private size_t lights_num,
 		private unsigned int w,
 		private unsigned int h,
-		private char no_negative
+		local t_ray *stack,
+		private t_clint depth,
+		private char no_negative/*,
+		private float3 bg_color,
+		private unsigned int endian*/
 		)
 {
 	unsigned int	x;
 	unsigned int	y;
-	float3			color;
 	float3			unit;
 	t_rt_result		r;
+	t_cluint		stack_size;
+	t_cluint		offset;
+	t_ray			curr_ray;
+	float3			color;
 //
 	float3			bg_color;
-	bg_color.x = 0;
-	bg_color.y = 0;
-	bg_color.z = 0;
+	set_to_zero(&bg_color);
 //
 	x = get_global_id(0);
 	y = get_global_id(1);
 	unit = compute_pixel_coor(cam, w, h, x, y);
-	if (!raytrace(objs, objs_num, cam->pos, unit, &r, no_negative))
-		color = bg_color;
-	else
-		color = shading(objs, objs_num, lights, lights_num, &r, no_negative);
+	stack_size = 0;
+	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))
+		* (depth + 1);
+	curr_ray.pos = cam->pos;
+	curr_ray.dir = unit;
+	curr_ray.clr_contrib = 1.f;
+	curr_ray.depth = depth;
+	stack_push(stack, curr_ray, &stack_size, offset);
+	set_to_zero(&color);
+	while (stack_size != 0)
+	{
+		curr_ray = stack_pop(stack, &stack_size, offset);
+		if (!raytrace(objs, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative)/* && curr_ray.depth == depth*/)
+			color += bg_color * curr_ray.clr_contrib;
+		else
+		{
+			color += shading(objs, objs_num, lights, lights_num, &r, no_negative)
+				* curr_ray.clr_contrib;
+			if (r.obj->mat.props != MAT_NONE)
+				compute_secondary_rays(curr_ray, &r, stack, &stack_size, offset);
+		}
+	}
 	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
 }

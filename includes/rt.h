@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 19:41:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 22:20:35 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_rt
 	t_sdl_ctx		sdl;
 	t_ocl			ocl;
 	SDL_Surface		*frame;
+	t_mem_info		mem_info;
 	t_mv_state		mvs;
 	int				state_flags;
 	float			last_time;
@@ -90,6 +91,7 @@ int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
 
 cl_int				render_frame(t_rt *core);
+int					print_frame(t_rt *core);
 
 /*
 ** vec3cl_fill: fills the openCL float3 vector with the given coordinates.

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 18:04:53 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 13:47:24 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_scene
 	size_t			objs_num;
 	size_t			lights_num;
 	cl_float3		bg_color;
+	t_clint			depth;
 }					t_scene;
 
 /*

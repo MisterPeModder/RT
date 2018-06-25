@@ -6,9 +6,25 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:09:46 by jhache            #+#    #+#             */
-/*   Updated: 2018/05/29 11:05:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 12:52:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+static inline void	set_to_zero(float3 *vec)
+{
+	(*vec).x = 0;
+	(*vec).y = 0;
+	(*vec).z = 0;
+}
+
+static void			add_color(float3 *source, float3 addition)
+{
+	addition += *source;
+	addition.x = addition.x > 1.f ? 1.f : addition.x;
+	addition.y = addition.y > 1.f ? 1.f : addition.y;
+	addition.z = addition.z > 1.f ? 1.f : addition.z;
+	*source = addition;
+}
 
 /*
 ** colorize: Compute the Diffuse and the Specular components of the color.
@@ -30,21 +46,17 @@ static void			colorize(
 	float			comp[2];
 	float3			tmp;
 
-	tmp = *c;
 	comp[1] = dot(r->normal, lvec);
-	comp[0] = light->power * comp[1];
+	comp[0] = light->power * (comp[1] < 0 ? -comp[1] : comp[1]) * (1.f - r->obj->mat.props_coef);//pas verifie mais le ternaire a l'air good
 	if (comp[1] < 0)
 		comp[1] = 0;
 	else
 		comp[1] = pow(dot((r->normal * (2 * comp[1])) - r->normal,
-					lvec), 40) * light->power;
+					lvec), 42) * light->power;
 	comp[0] = comp[0] < 0 ? 0 : comp[0];
 	comp[1] = comp[1] < 0 ? 0 : comp[1];
-	tmp.x += (r->obj->color.x * comp[0] + comp[1]) * light->color.x;
-	tmp.y += (r->obj->color.y * comp[0] + comp[1]) * light->color.y;
-	tmp.z += (r->obj->color.z * comp[0] + comp[1]) * light->color.z;
-	tmp.x = tmp.x > 1.f ? 1.f : tmp.x;
-	tmp.y = tmp.y > 1.f ? 1.f : tmp.y;
-	tmp.z = tmp.z > 1.f ? 1.f : tmp.z;
-	*c = tmp;
+	tmp.x = (r->obj->color.x * comp[0] + comp[1]) * light->color.x;
+	tmp.y = (r->obj->color.y * comp[0] + comp[1]) * light->color.y;
+	tmp.z = (r->obj->color.z * comp[0] + comp[1]) * light->color.z;
+	add_color(c, tmp);
 }

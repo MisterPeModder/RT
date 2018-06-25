@@ -14,8 +14,8 @@
 		{
 			"type": "sphere",
 			"pos": [0, 0.7, -5],
-			"radius": 1,
-			"color": [255, 0, 0]
+			"radius": 1/*,
+			"color": [255, 0, 0]*/
 		},
 		{
 			"type": "cylinder",
@@ -27,11 +27,11 @@
 		},
 		{
 			"type": "cone",
-			"pos": [1.5, 1, -5],
+			"pos": [1.5, 11, -5],
 			"simple": false,
-			"angle": [0, 0, 30],
+			"angle": [0, 0, 0],
 			"color": [255, 255, 0],
-			"opening_angle": 40,
+			"opening_angle": 45,
 			"length": 10
 		},
 		{
@@ -44,9 +44,13 @@
 	"lights": [
 		{
 			"pos": [3, 1.2, 0]
+		},
+		{
+			"pos": [-6, 20, 0]
 		}
 	],
 	"camera": {
-		"pos": [0, 1, 0]
+		"pos": [0, 5, -5],
+		"angle": [15, 40, 0]
 	}
 }

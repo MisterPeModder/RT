@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 14:58:36 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 13:58:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ typedef struct		s_sdl_ctx
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
-	unsigned int	w;
-	unsigned int	h;
+	unsigned int	win_width;
+	unsigned int	win_height;
+	unsigned int	frame_width;
+	unsigned int	frame_height;
+//	unsigned int	w;
+//	unsigned int	h;
 	int				con_state;
 }					t_sdl_ctx;
 

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/10 20:12:30 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/25 13:38:44 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,39 @@ static int			calc_angle(t_object *object, const t_json_value *v)
 	return (1);
 }
 
+static t_mat_props	mat_props(char *str)
+{
+	if (ft_strequ(str, "reflective"))
+		return (MAT_REFLECTIVE);
+	else if (ft_strequ(str, "refractive"))
+		return (MAT_REFLECTIVE);
+	else if (ft_strequ(str, "portal"))
+		return (MAT_PORTAL);
+	else if (ft_strequ(str, "negative"))
+		return (MAT_NEGATIVE);
+	else
+		return (MAT_NONE);
+}
+
+static int			parse_material(t_object *object, const t_json_object *data)
+{
+	t_json_value	*tmp;
+
+	if ((tmp = json_obj_get(data, "property")) && tmp->obj.type == JSON_STRING)
+		object->mat.props = mat_props(tmp->str.value);
+	else
+		object->mat.props = MAT_NONE;
+	if (!(float_from_json(json_obj_get(data, "coefficient"),
+					&object->mat.props_coef)))
+		object->mat.props_coef = 0.f;
+	if (object->mat.props_coef < 0.f || object->mat.props_coef > 1.f)
+		object->mat.props_coef = ((object->mat.props_coef < 0.f) ? 0.f : 1.f);
+	if (!(float_from_json(json_obj_get(data, "refractive_index"),
+					&object->mat.refractive_index)))
+		object->mat.refractive_index = 1.f;
+	return (1);
+}
+
 int					obj_make(t_object *object, const t_json_object *data)
 {
 	t_json_value	*tmp;
@@ -77,12 +110,14 @@ int					obj_make(t_object *object, const t_json_object *data)
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
-	if ((tmp = json_obj_get(data, "negative")))
-	{
-		if (!bool_from_json(tmp, &object->negative))
-			return (0);
-	}
+	if ((tmp = json_obj_get(data, "material"))
+		&& tmp->obj.type == JSON_OBJECT)
+		parse_material(object, &tmp->obj);
 	else
-		object->negative = 0;
+	{
+		object->mat.props = MAT_NONE;
+		object->mat.props_coef = 0.f;
+		object->mat.refractive_index = 1.f;
+	}
 	return (1);
 }
