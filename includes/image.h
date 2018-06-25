@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 17:44:20 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 00:57:25 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 17:09:56 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef union		u_color
 */
 # define IMG_W 1600
 # define IMG_H 900
+
+/*
+** MIN_IMG_W, MIN_IMG_H: The image's minimal width and height.
+*/
+# define MIN_IMG_W 100
+# define MIN_IMG_H 100
 
 /*
 ** color_make: Creates a color from the passed red, green and blue values.

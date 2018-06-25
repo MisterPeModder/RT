@@ -87,6 +87,7 @@ SRCS_NAMES +=	ocl/ocl_data.c					\
 
 SRCS_NAMES +=	parsing/cam.c					\
 				parsing/from_json.c				\
+				parsing/from_json2.c				\
 				parsing/lights.c				\
 				parsing/options.c				\
 				parsing/read.c					\

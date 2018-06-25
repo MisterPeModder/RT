@@ -6,13 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/01 15:12:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 16:58:44 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "rt.h"
-#include <libft_base/stringft.h>
 
 int					float_from_json(const t_json_value *val, t_clfloat *f)
 {
@@ -32,11 +30,11 @@ int					float_from_json(const t_json_value *val, t_clfloat *f)
 		return (0);
 }
 
-int					bool_from_json(const t_json_value *val, int *f)
+int					bool_from_json(const t_json_value *val, int *b)
 {
 	if (val && val->bol.type == JSON_BOOL)
 	{
-		*f = val->bol.value == 1;
+		*b = val->bol.value == 1;
 		return (1);
 	}
 	return (0);

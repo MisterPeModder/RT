@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 20:18:06 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 17:11:00 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 		ft_putendl(SDL_GetError());
 		return (0);
 	}
+	SDL_SetWindowMinimumSize(sdl->win, MIN_IMG_W, MIN_IMG_H);
 	sdl->screen = SDL_GetWindowSurface(sdl->win);
 	return (1);
 }

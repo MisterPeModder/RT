@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 20:23:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/25 17:08:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void				on_window_event(void *event, t_rt *core)
 
 	if (((SDL_WindowEvent *)event)->event == SDL_WINDOWEVENT_SIZE_CHANGED)
 	{
-		SDL_GetWindowSize(core->sdl.win, &w,
-				&h);
+		SDL_GetWindowSize(core->sdl.win, &w, &h);
 		core->sdl.w = (unsigned int)w;
 		core->sdl.h = (unsigned int)h;
 		SDL_FreeSurface(core->frame);
