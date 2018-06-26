@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 18:06:32 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 19:40:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/26 21:53:50 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int			parse_options(int ac, char **av, char **options_path)
 		else if (handle_scene_arg(&sc, i, ac))
 			return (3);
 	}
-	return (0);
+	return (sc ? 0 : 1);
 }
 
 int					parse_args(int ac, char **av, char **options_path)
