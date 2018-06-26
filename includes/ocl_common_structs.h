@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 16:57:47 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/26 22:02:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ typedef enum		e_mat_props
 }					t_mat_props;
 
 /*
-** Noise structure.
-** -has_noise 1 if an object has a noise, 0 if it hasn't.
+** Noise struct.
 ** -c1, c2 and c3 are colors for material perturbation.
 ** -amp is amplitude used by noise function.
 ** -fin is incremented in noise function by the noise value.
@@ -168,9 +167,6 @@ typedef struct	s_noise
 	float		z_frac;
 }				t_noise;
 
-/*
-**
-*/
 typedef struct		s_material
 {
 //	t_clfloat		shininess;//maybe for specular
@@ -188,6 +184,9 @@ typedef struct		s_material
 ** -facing: its orientation.
 ** -color: are you really asking ?
 ** -props: the properties of this object.
+** -p_out: the portal output coordinates (set if material
+**         property is MAT_PORTAL)
+** -p_out_facing: the portal output direction.
 */
 typedef struct		s_object
 {
@@ -199,6 +198,8 @@ typedef struct		s_object
 	t_clfloat3		color;
 	t_properties	props;
 	t_material		mat;
+	t_clfloat3		p_out;
+	t_clfloat3		p_out_facing;
 }					t_object;
 
 /*

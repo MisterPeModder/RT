@@ -55,34 +55,6 @@ MKDIR := mkdir -p
 PRINT := printf
 NORM := norminette
 
-#SRCS_NAMES :=	angle.c				\
-#				cam.c				\
-#				core.c				\
-#				events.c			\
-#				events2.c			\
-#				from_json.c			\
-#				img.c				\
-#				lights.c			\
-#				main.c				\
-#				move.c				\
-#				ocl_render.c		\
-#				ocl_data.c			\
-#
-#				read_kernel.c		\
-#				rotate.c			\
-#				scene.c				\
-#				timer.c				\
-#				utils.c				\
-#				vec3cl.c			\
-#
-#SRCS_NAMES +=	objects/cone.c		\
-#				objects/objects.c	\
-#				objects/sphere.c	\
-#				objects/cylinder.c	\
-#				objects/disk.c		\
-
-## NEW
-
 SRCS_NAMES :=	core.c							\
 				img.c							\
 				main.c							\
@@ -101,6 +73,7 @@ SRCS_NAMES +=	objects/cone.c					\
 				objects/cube.c					\
 				objects/cylinder.c				\
 				objects/disk.c					\
+				objects/material.c				\
 				objects/objects.c				\
 				objects/paraboloid.c			\
 				objects/pyramid.c				\

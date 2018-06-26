@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 22:20:35 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/26 21:48:37 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,6 @@ int					rel_error(const char *msg, t_json_object **obj);
 ** make_cam: Handles the parsing of the camera properties.
 */
 int					make_cam(t_cam *cam, const t_json_object *data);
-
-int					obj_make(t_object *object, const t_json_object *data);
-int					obj_release(t_object *obj);
-int					objs_release(t_object *objs, size_t num);
 
 cl_int				render_frame(t_rt *core);
 int					print_frame(t_rt *core);
