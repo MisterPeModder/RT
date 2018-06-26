@@ -176,9 +176,9 @@ typedef struct		s_ray
 
 typedef struct	s_noise
 {
-	float3		c1;
-	float3		c2;
-	float3		c3;
+	t_clfloat3	c1;
+	t_clfloat3	c2;
+	t_clfloat3	c3;
 	float		amp;
 	float		fin;
 	float		div;
@@ -187,7 +187,7 @@ typedef struct	s_noise
 	int			lines;
 	double		value;
 	double		value1;
-	float3		result;
+	t_clfloat3	result;
 	double		threshold;
 	double		perturbation;
 	int			a;
