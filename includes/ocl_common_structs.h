@@ -104,6 +104,71 @@ typedef enum		e_mat_props
 }					t_mat_props;
 
 /*
+** Noise structure.
+** -has_noise 1 if an object has a noise, 0 if it hasn't.
+** -c1, c2 and c3 are colors for material perturbation.
+** -amp is amplitude used by noise function.
+** -fin is incremented in noise function by the noise value.
+** -div divide fin at the end of all noise depth.
+** -freq is the frequence used by the noise function.
+** -depth of the noise.
+** -lines of marble perturbation method.
+** -value and value1 for intermediate sin/cos and material perturbations.
+** -result to store material perturbations.
+** -threshold for wood material method.
+** -perturbation for marble perturbation method.
+** -a to d for lerp the noise.
+** -i to increment the depth of the noise.
+** -s to z for noise transformation of x, y and z.
+** -xa, ya, za, x_int, y_int, z_int, x_frac, y_frac and z_frac diverse
+** var to manipulate x, y and z through different types, etc..
+** -low and high to smooth the shape of the function by his mix and max values.
+*/
+typedef struct	s_noise
+{
+	int			has_noise;
+	char		*type;
+	t_clfloat3	c1;
+	t_clfloat3	c2;
+	t_clfloat3	c3;
+	float		amp;
+	float		fin;
+	float		div;
+	float		freq;
+	float		depth;
+	int			lines;
+	double		value;
+	double		value1;
+	t_clfloat3	result;
+	double		threshold;
+	double		perturbation;
+	int			a;
+	int			b;
+	int			c;
+	int			d;
+	int			i;
+	int			s;
+	int			t;
+	int			u;
+	int			v;
+	int			w;
+	int			x;
+	int			y;
+	int			z;
+	float		xa;
+	float		ya;
+	float		za;
+	float		low;
+	float		high;
+	int			x_int;
+	int			y_int;
+	int			z_int;
+	float		x_frac;
+	float		y_frac;
+	float		z_frac;
+}				t_noise;
+
+/*
 **
 */
 typedef struct		s_material
@@ -112,6 +177,7 @@ typedef struct		s_material
 	t_mat_props		props;
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
+	t_noise			*noise;
 }					t_material;
 
 /*
@@ -152,68 +218,5 @@ typedef struct		s_ray
 	t_clfloat		clr_contrib;
 	t_clchar		depth;
 }					t_ray;
-
-/*
-** Noise struct.
-** -c1, c2 and c3 are colors for material perturbation.
-** -amp is amplitude used by noise function.
-** -fin is incremented in noise function by the noise value.
-** -div divide fin at the end of all noise depth.
-** -freq is the frequence used by the noise function.
-** -depth of the noise.
-** -lines of marble perturbation method.
-** -value and value1 for intermediate sin/cos and material perturbations.
-** -result to store material perturbations.
-** -threshold for wood material method.
-** -perturbation for marble perturbation method.
-** -a to d for lerp the noise.
-** -i to increment the depth of the noise.
-** -s to z for noise transformation of x, y and z.
-** -xa, ya, za, x_int, y_int, z_int, x_frac, y_frac and z_frac diverse
-** var to manipulate x, y and z through different types, etc..
-** -low and high to smooth the shape of the function by his mix and max values.
-*/
-
-typedef struct	s_noise
-{
-	t_clfloat3	c1;
-	t_clfloat3	c2;
-	t_clfloat3	c3;
-	float		amp;
-	float		fin;
-	float		div;
-	float		freq;
-	float		depth;
-	int			lines;
-	double		value;
-	double		value1;
-	t_clfloat3	result;
-	double		threshold;
-	double		perturbation;
-	int			a;
-	int			b;
-	int			c;
-	int			d;
-	int			i;
-	int			s;
-	int			t;
-	int			u;
-	int			v;
-	int			w;
-	int			x;
-	int			y;
-	int			z;
-	float		xa;
-	float		ya;
-	float		za;
-	float		low;
-	float		high;
-	int			x_int;
-	int			y_int;
-	int			z_int;
-	float		x_frac;
-	float		y_frac;
-	float		z_frac;
-}				t_noise;
 
 #endif

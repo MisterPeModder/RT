@@ -74,6 +74,32 @@ static t_mat_props	mat_props(char *str)
 		return (MAT_NONE);
 }
 
+/*
+** Activate it while noise will be ready. Same for lines in parse_material.
+*/
+/*static t_noise		*parse_noise(const t_json_value *data, t_noise *noise)
+{
+	t_json_value	*tmp;
+
+	if ((tmp = json_arr_get(&data->arr, 0)) && tmp->n_i.value == 1)
+		noise->has_noise = tmp->n_i.value;
+	else
+	{
+		noise->has_noise = 0;
+		return (noise);
+	}
+	if ((tmp = json_arr_get(&data->arr, 1)) && tmp->n_d.value > 0)
+		noise->freq = tmp->n_d.value;
+	if ((tmp = json_arr_get(&data->arr, 2)) && tmp->n_i.value > 0)
+		noise->depth = tmp->n_i.value;
+	if ((tmp = json_arr_get(&data->arr, 3))
+		&& ft_strcmp(tmp->str.value, "wood") == 0
+		&& ft_strcmp(tmp->str.value, "sin_marble") == 0
+		&& ft_strcmp(tmp->str.value, "line_marble") == 0)
+		noise->type = tmp->str.value;
+	return (noise);
+}*/
+
 static int			parse_material(t_object *object, const t_json_object *data)
 {
 	t_json_value	*tmp;
@@ -90,6 +116,10 @@ static int			parse_material(t_object *object, const t_json_object *data)
 	if (!(float_from_json(json_obj_get(data, "refractive_index"),
 					&object->mat.refractive_index)))
 		object->mat.refractive_index = 1.f;
+	/*if ((tmp = json_obj_get(data, "noise")) && tmp->obj.type == JSON_ARRAY)
+		object->mat.noise = parse_noise(tmp, object->mat.noise);
+	else
+		object->mat.noise->has_noise = 0;*/
 	return (1);
 }
 
