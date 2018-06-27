@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 15:56:45 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 03:17:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct				s_rt_result
 	t_clfloat3				pos;
 	t_clfloat3				normal;
 	float					dist;
+	float3					shadow_amount;
 }							t_rt_result;
 
 #include "rotate.cl"
@@ -39,6 +40,7 @@ typedef struct				s_rt_result
 #include "objects/cube.cl"
 #include "objects/pyramid.cl"
 #include "objects/paraboloid.cl"
+#include "shadow_ray.cl"
 #include "render.cl"
 #include "stack_functions.cl"
 #include "secondary_rays.cl"
@@ -61,7 +63,6 @@ kernel void	render_frame(
 {
 	unsigned int	x;
 	unsigned int	y;
-	float3			unit;
 	t_rt_result		r;
 	t_cluint		stack_size;
 	t_cluint		offset;
@@ -73,12 +74,11 @@ kernel void	render_frame(
 //
 	x = get_global_id(0);
 	y = get_global_id(1);
-	unit = compute_pixel_coor(cam, w, h, x, y);
 	stack_size = 0;
 	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))
 		* (depth + 1);
 	curr_ray.pos = cam->pos;
-	curr_ray.dir = unit;
+	curr_ray.dir = compute_pixel_coor(cam, w, h, x, y);
 	curr_ray.clr_contrib = 1.f;
 	curr_ray.depth = depth;
 	stack_push(stack, curr_ray, &stack_size, offset);
@@ -86,13 +86,14 @@ kernel void	render_frame(
 	while (stack_size != 0)
 	{
 		curr_ray = stack_pop(stack, &stack_size, offset);
-		if (!raytrace(objs, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative)/* && curr_ray.depth == depth*/)
+		if (!raytrace(objs, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
 			color += bg_color * curr_ray.clr_contrib;
 		else
 		{
 			color += shading(objs, objs_num, lights, lights_num, &r, no_negative)
 				* curr_ray.clr_contrib;
-			if (r.obj->mat.props != MAT_NONE)
+			if (r.obj->mat.props == MAT_REFLECTIVE
+				|| r.obj->mat.props == MAT_REFRACTIVE)
 				compute_secondary_rays(curr_ray, &r, stack, &stack_size, offset);
 		}
 	}

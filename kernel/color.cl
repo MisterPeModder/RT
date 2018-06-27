@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:09:46 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 12:52:48 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 02:32:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ static void			colorize(
 		constant t_light *light,
 		float3 lvec,
 		t_rt_result *r,
-		float3 *c)
+		float3 *c,
+		float3 transparency_coef)
 {
 	float			comp[2];
 	float3			tmp;
 
 	comp[1] = dot(r->normal, lvec);
-	comp[0] = light->power * (comp[1] < 0 ? -comp[1] : comp[1]) * (1.f - r->obj->mat.props_coef);//pas verifie mais le ternaire a l'air good
+	comp[0] = light->power * comp[1] * (1.f - r->obj->mat.props_coef);
 	if (comp[1] < 0)
 		comp[1] = 0;
 	else
@@ -58,5 +59,6 @@ static void			colorize(
 	tmp.x = (r->obj->color.x * comp[0] + comp[1]) * light->color.x;
 	tmp.y = (r->obj->color.y * comp[0] + comp[1]) * light->color.y;
 	tmp.z = (r->obj->color.z * comp[0] + comp[1]) * light->color.z;
+	tmp *= transparency_coef;
 	add_color(c, tmp);
 }
