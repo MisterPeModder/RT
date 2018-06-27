@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 02:54:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 11:23:40 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ static int			obj_props(t_object *object, char *str,
 		return (disk_init(object, data));
 	else if (ft_strequ(str, "triangle") && (*type = OBJ_TRIANGLE))
 		return (triangle_init(object, data));
-	else if (ft_strequ(str, "cube") && (*type = OBJ_CUBE))
-		return (cube_init(object, data));
-	else if (ft_strequ(str, "pyramid") && (*type = OBJ_PYRAMID))
-		return (pyramid_init(object, data));
 	else if (ft_strequ(str, "paraboloid") && (*type = OBJ_PARABOLOID))
 		return (paraboloid_init(object, data));
+	else if (ft_strequ(str, "meshes") && (*type = OBJ_MESHES))
+		return (1);
 	return (0);
 }
 
@@ -49,7 +47,7 @@ static int			calc_angle(t_object *object, const t_json_value *v)
 	rotate_x(&object->facing, angle.x);
 	rotate_y(&object->facing, angle.y);
 	rotate_z(&object->facing, angle.z);
-	vec3cl_fill(&object->dir, 0, 0, -1);
+	vec3cl_fill(&object->dir, 0, 0, 1);
 	rotate_x(&object->dir, angle.x);
 	rotate_y(&object->dir, angle.y);
 	rotate_z(&object->dir, angle.z);
@@ -67,7 +65,8 @@ static void			obj_default_material(t_object *object)
 	object->mat.refractive_index = 1.f;
 }
 
-int					obj_make(t_object *object, const t_json_object *data)
+int					obj_make(t_scene *scene, t_object *object,
+		const t_json_object *data)
 {
 	t_json_value	*tmp;
 
@@ -83,6 +82,8 @@ int					obj_make(t_object *object, const t_json_object *data)
 		vec3cl_fill(&object->color, 1, 1, 1);
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
+		return (0);
+	if (object->type == OBJ_MESHES && !mesh_parse(scene, object, data))
 		return (0);
 	if ((tmp = json_obj_get(data, "material")) && tmp->obj.type == JSON_OBJECT)
 	{

@@ -1,7 +1,7 @@
 //The corresponding scene file for early jhache's hardcoded scene.
 {
 	"background_color": [0, 0, 10],
-	"depth": 6,
+	"depth": 4,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,
@@ -24,6 +24,7 @@
 			"pos": [5, -1, -9],
 			"radius": 5,
 			"color": [180, 40, 226],//purple
+			"cut": "x axis",
 			"material": {
 				"property": "refractive",
 				"coefficient": 0.8,

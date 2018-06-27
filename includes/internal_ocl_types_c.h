@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:58:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/05/29 02:36:48 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 16:10:34 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ typedef cl_long			t_cllong;
 typedef cl_ulong		t_clulong;
 typedef cl_float		t_clfloat;
 typedef cl_float3		t_clfloat3;
-
+typedef cl_int3			t_clint3;
 #endif

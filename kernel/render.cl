@@ -27,18 +27,19 @@ static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
 }
 
 /*
- ** raytrace: Handles the ray tracing operation.
- **
- ** -scene: the scene instance.
- ** -o: origin of the ray.
- ** -u: unit vector (direction) of that ray.
- ** -r: where the result will be stored.
- **
- ** returns: 1 if an intersection has been found, 0 otherwise.
- */
+** raytrace: Handles the ray tracing operation.
+**
+** -scene: the scene instance.
+** -o: origin of the ray.
+** -u: unit vector (direction) of that ray.
+** -r: where the result will be stored.
+**
+** returns: 1 if an intersection has been found, 0 otherwise.
+*/
 
 static int			raytrace(
 		constant t_object *objs,
+		constant t_mesh_triangle *triangles,
 		size_t objs_num,
 		float3 o,
 		float3 u,
@@ -53,9 +54,12 @@ static int			raytrace(
 	int				face_tmp;
 	float2			t_neg;
 	size_t			n;
+	size_t			index_tri;
 
+	index_tri = 0;
 	i = 0;
 	d = FLT_MAX;
+	face_tmp = 0;
 	while (i < objs_num)
 	{
 		tmp = 0;
@@ -79,14 +83,11 @@ static int			raytrace(
 			case OBJ_TRIANGLE:
 				tmp = triangle_intersect(&objs[i], o, u, &face_tmp);
 				break;
-			case OBJ_CUBE:
-				tmp = cube_intersect(&objs[i], o, u, &face_tmp);
-				break;
-			case OBJ_PYRAMID:
-				tmp = pyramid_intersect(&objs[i], o, u, &face_tmp);
-				break;
 			case OBJ_PARABOLOID:
 				tmp = paraboloid_intersect(&objs[i], o, u);
+				break;
+			case OBJ_MESHES:
+				tmp = meshes_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
 				break;
 			default:
 				tmp = FLT_MAX;
@@ -102,12 +103,6 @@ static int			raytrace(
 					{
 						case OBJ_SPHERE:
 							t_neg = negative_sphere_intersect(&objs[n], o, u);
-							break;
-						case OBJ_CUBE:
-							t_neg = negative_cube_intersect(&objs[n], o, u);
-							break;
-						case OBJ_PYRAMID:
-							t_neg = negative_pyramid_intersect(&objs[n], o, u);
 							break;
 						default:
 							t_neg = (float2)(FLT_MAX, FLT_MAX);
@@ -148,14 +143,11 @@ static int			raytrace(
 		case OBJ_CYLINDER:
 			cylinder_normal(r->obj, r, face);
 			break;
-		case OBJ_CUBE:
-			cube_normal(r->obj, r, face);
-			break;
-		case OBJ_PYRAMID:
-			pyramid_normal(r->obj, r, face);
-			break;
 		case OBJ_PARABOLOID:
 			paraboloid_normal(r->obj, r);
+			break;
+		case OBJ_MESHES:
+			meshes_normal(triangles, r, face);
 			break;
 	}
 	return (1);
@@ -172,6 +164,7 @@ static int			raytrace(
 static float3			shading(
 	constant t_object *objs, size_t objs_num,
 	constant t_light *lights, size_t lights_num, t_rt_result *r,
+	constant t_mesh_triangle *triangles,
 	char no_negative
 	)
 {
@@ -190,7 +183,7 @@ static float3			shading(
 		light_dist = length(lvec);
 		lvec = normalize(lvec);
 		start = r->pos + 0.001f * r->normal;
-		if (!shadow_raytrace(objs, objs_num, start, lvec, &sink, no_negative, light_dist))
+		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec, &sink, no_negative, light_dist))
 			colorize(&lights[i], lvec, r, &result, (float3)(1.f, 1.f, 1.f));
 		else if (sink.shadow_amount.x >= 0.f)
 			colorize(&lights[i], lvec, r, &result, sink.shadow_amount);

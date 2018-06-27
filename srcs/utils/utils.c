@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 21:36:47 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 10:49:04 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void				scene_release(t_scene *scene)
 	scene->objs = NULL;
 	free(scene->lights);
 	scene->lights = NULL;
+	if (scene->mesh_triangle != NULL)
+	{
+		free(scene->mesh_triangle);
+		scene->mesh_triangle = NULL;
+	}
 }
 
 void				scene_has_neg_objects(t_scene *scene, int *state)

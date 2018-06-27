@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/26 21:48:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 11:35:38 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RT_H
 
 # include "image.h"
+# include "objects.h"
 # include "scene.h"
 # include "sdl_defs.h"
 # include "ocl_data.h"
@@ -72,7 +73,7 @@ int					float_from_json(const t_json_value *val, t_clfloat *f);
 int					vec3f_from_json(const t_json_value *arr, cl_float3 *vec);
 int					color_from_json(const t_json_value *arr, cl_float3 *color);
 int					angle_from_json(const t_json_value *arr, cl_float3 *vec);
-int					bool_from_json(const t_json_value *val, int *f);
+int					bool_from_json(const t_json_value *val, int *b);
 int					int_from_json(const t_json_value *val, int *i);
 
 /*
@@ -106,6 +107,8 @@ t_clfloat3			*vec3cl_normalize(t_clfloat3 *v, t_clfloat3 *d);
 cl_float3			*rotate_x(cl_float3 *vec, t_clfloat rx);
 cl_float3			*rotate_y(cl_float3 *vec, t_clfloat ry);
 cl_float3			*rotate_z(cl_float3 *vec, t_clfloat rz);
+float				vec3cl_dot_product(const t_clfloat3 *r,
+		const t_clfloat3 *l);
 
 float				lin_inter(float x, float y, float s);
 float				smooth_inter(float x, float y, float s);

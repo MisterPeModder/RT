@@ -6,11 +6,11 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:43:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 13:48:30 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/20 17:56:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static float			cylinder_intersect3(
+static float				cylinder_intersect3(
 		constant t_object *obj,
 		float3 origin,
 		float3 u,
@@ -66,6 +66,11 @@ static float			cylinder_intersect3(
 		}
 		return (FLT_MAX);
 	}
+	else if (obj->props.cylinder.len == -1 && c.x < 0 && c.y > 0)
+	{
+		*face = 3;
+		return (c.y);
+	}
 	return (c.x);
 }
 
@@ -104,7 +109,7 @@ static float			cylinder_intersect(
 		- pow(dot(tmp, obj->facing), 2)
 		- obj->props.cylinder.radius * obj->props.cylinder.radius;
 	delta = b * b - 4 * a * c;
-	if (delta < 0)
+	if (delta < 1e-6)
 		return (FLT_MAX);
 	else if (delta == 0)
 		return (-b / (2 * a));

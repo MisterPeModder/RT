@@ -6,12 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 03:00:12 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 10:50:31 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <libft_base/io.h>
+#include <libft_base/memory.h>
 #include "rt.h"
 
 static int			scene_objs(t_scene *scene, const t_json_array *data)
@@ -20,13 +21,14 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 	t_json_value	*tmp;
 
 	scene->objs_num = data->values_num;
+	scene->triangle_total_num = 0;
 	if (!(scene->objs = malloc(sizeof(t_object) * scene->objs_num)))
 		return (0);
 	i = 0;
 	while (i < scene->objs_num)
 	{
 		if (!(tmp = json_arr_get(data, i)) || tmp->obj.type != JSON_OBJECT ||
-				!obj_make(&scene->objs[i], &tmp->obj))
+				!obj_make(scene, &scene->objs[i], &tmp->obj))
 		{
 			ft_putstr_fd("Invalid format for object #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
@@ -36,6 +38,13 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 			return (0);
 		}
 		++i;
+	}
+	if (scene->triangle_total_num == 0)
+	{
+		scene->triangle_total_num = 1;
+		scene->mesh_triangle = (t_mesh_triangle*)malloc(
+				sizeof(t_mesh_triangle));
+		ft_bzero((void*)scene->mesh_triangle, sizeof(t_mesh_triangle));
 	}
 	return (1);
 }
@@ -64,6 +73,7 @@ static int			scene_parse2(t_scene *scene, t_json_object *obj)
 	}
 	else
 		vec3cl_fill(&scene->bg_color, 0, 0, 0);
+	json_release((t_json_value **)&obj);
 	return (1);
 }
 
@@ -89,6 +99,5 @@ int					scene_parse(t_scene *scene, const char *path)
 		return (rel_error(NULL, &obj));
 	if (!scene_parse2(scene, obj))
 		return (0);
-	json_release((t_json_value **)&obj);
 	return (1);
 }

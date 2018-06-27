@@ -70,13 +70,11 @@ SRCS_NAMES +=	events/events.c					\
 				events/window_events.c			\
 
 SRCS_NAMES +=	objects/cone.c					\
-				objects/cube.c					\
 				objects/cylinder.c				\
 				objects/disk.c					\
 				objects/material.c				\
 				objects/objects.c				\
 				objects/paraboloid.c			\
-				objects/pyramid.c				\
 				objects/sphere.c				\
 				objects/triangle.c				\
 
@@ -93,6 +91,8 @@ SRCS_NAMES +=	parsing/args.c					\
 				parsing/options.c				\
 				parsing/read.c					\
 				parsing/scene.c					\
+				parsing/meshes.c				\
+				parsing/meshes_utils.c			\
 
 SRCS_NAMES +=	utils/angle.c					\
 				utils/rotate.c					\

@@ -27,8 +27,8 @@
 			"type": "cylinder",
 			"pos": [2, 5, 0],
 			"angle": [90, 0, 0],
+			"length": 5,
 			"radius": 1,
-			"length": 6,
 			"color": [54, 255, 50],
 			"material": {
 				"property": "refractive",

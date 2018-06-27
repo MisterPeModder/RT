@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 06:02:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 11:16:32 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ typedef enum		e_obj_type
 	OBJ_CYLINDER,
 	OBJ_DISK,
 	OBJ_TRIANGLE,
-	OBJ_CUBE,
-	OBJ_PYRAMID,
-	OBJ_PARABOLOID
+	OBJ_PARABOLOID,
+	OBJ_MESHES
 }					t_obj_type;
 
 /*
@@ -66,6 +65,7 @@ typedef union		u_properties
 {
 	struct {
 		float		radius;
+		int			axis;
 	}				sphere;
 	struct {
 		float		opening_angle;
@@ -82,16 +82,10 @@ typedef union		u_properties
 	}				triangle;
 	struct {
 		float		len;
-		t_clfloat3	p[8];
-	}				cube;
-	struct {
-		float		len;
-		float		len_base;
-		t_clfloat3	p[5];
-	}				pyramid;
-	struct {
-		float		len;
 	}				paraboloid;
+	struct {
+		size_t		num_triangles;
+	}				meshes;
 }					t_properties;
 
 typedef enum		e_mat_props
@@ -180,6 +174,14 @@ typedef struct		s_material
 	t_noise			*noise;
 	t_clfloat3		p_out;
 }					t_material;
+
+typedef struct		s_mesh_triangle
+{
+	t_clfloat3		p1;
+	t_clfloat3		p2;
+	t_clfloat3		p3;
+	t_clfloat3		facing;
+}					t_mesh_triangle;
 
 /*
 ** t_object: Stores all the info about an object instance.

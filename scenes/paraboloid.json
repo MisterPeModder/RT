@@ -8,7 +8,7 @@
 		{
 			"type": "paraboloid",
 			"pos": [0, 0, -5],
-			"length": 5,
+			"length": 10,
 			"angle": [0, 0, 0],
 			"color": [92, 244, 66]
 		}

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 01:36:02 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/07 13:37:27 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/26 21:48:47 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_clfloat3			*vec3cl_cross(t_clfloat3 *v1, t_clfloat3 *v2,
 		t_clfloat3 *dst)
 {
 	dst->x = v1->y * v2->z - v1->z * v2->y;
-	dst->y = v1->z * v2->x - v2->z * v1->x;
-	dst->z = v1->x * v2->y - v1->y * v1->x;
+	dst->y = v1->z * v2->x - v1->x * v2->z;
+	dst->z = v1->x * v2->y - v1->y * v2->x;
 	return (dst);
 }
 
@@ -73,4 +73,9 @@ t_clfloat3			*vec3cl_normalize(t_clfloat3 *v, t_clfloat3 *d)
 	d->y = v->y / norm;
 	d->z = v->z / norm;
 	return (d);
+}
+
+float			vec3cl_dot_product(const t_clfloat3 *r, const t_clfloat3 *l)
+{
+	return (r->x * l->x + r->y * l->y + l->z * r->z);
 }

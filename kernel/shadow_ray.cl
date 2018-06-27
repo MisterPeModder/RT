@@ -23,6 +23,7 @@
 
 static int			shadow_raytrace(
 		constant t_object *objs,
+		constant t_mesh_triangle *triangles,
 		size_t objs_num,
 		float3 o,
 		float3 u,
@@ -38,7 +39,9 @@ static int			shadow_raytrace(
 	int				face_tmp;
 	float2			t_neg;
 	size_t			n;
+	size_t			index_tri;
 
+	index_tri = 0;
 	i = 0;
 	d = dist_max;
 	r->shadow_amount = (float3)(1.f, 1.f, 1.f);
@@ -67,14 +70,11 @@ static int			shadow_raytrace(
 			case OBJ_TRIANGLE:
 				tmp = triangle_intersect(&objs[i], o, u, &face_tmp);
 				break;
-			case OBJ_CUBE:
-				tmp = cube_intersect(&objs[i], o, u, &face_tmp);
-				break;
-			case OBJ_PYRAMID:
-				tmp = pyramid_intersect(&objs[i], o, u, &face_tmp);
-				break;
 			case OBJ_PARABOLOID:
 				tmp = paraboloid_intersect(&objs[i], o, u);
+				break;
+			case OBJ_MESHES:
+				tmp = meshes_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
 				break;
 			default:
 				tmp = FLT_MAX;
@@ -90,12 +90,6 @@ static int			shadow_raytrace(
 					{
 						case OBJ_SPHERE:
 							t_neg = negative_sphere_intersect(&objs[n], o, u);
-							break;
-						case OBJ_CUBE:
-							t_neg = negative_cube_intersect(&objs[n], o, u);
-							break;
-						case OBJ_PYRAMID:
-							t_neg = negative_pyramid_intersect(&objs[n], o, u);
 							break;
 						default:
 							t_neg = (float2)(FLT_MAX, FLT_MAX);

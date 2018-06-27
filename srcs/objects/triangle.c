@@ -6,13 +6,11 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:27:00 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/21 17:42:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/23 17:39:38 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-#include <stdio.h>
 
 int					triangle_init(t_object *object, const t_json_object *data)
 {

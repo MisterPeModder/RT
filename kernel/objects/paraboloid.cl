@@ -25,9 +25,9 @@ static float		paraboloid_intersect(
 	x = origin - obj->pos;
 	a = dot(u, u) - pow(dot(u, obj->facing), 2);
 	b = 2 * (dot(u, x) - dot (u, obj->facing) *
-			(dot(x, obj->facing) + 2 * obj->props.paraboloid.len));
-	c = 2 * (dot(x, x) - dot (x, obj->facing) *
-			(dot(x, obj->facing) + 4 * obj->props.paraboloid.len));
+			(dot(x, obj->facing) + 2 * 0.5));
+	c = dot(x, x) - dot (x, obj->facing) *
+			(dot(x, obj->facing) + 4 * 0.5);
 	delta = b * b - 4 * a * c;
 	if (delta < 0)
 		return (FLT_MAX);

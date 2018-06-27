@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 04:50:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/24 17:41:21 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ typedef struct				s_rt_result
 #include "objects/sphere.cl"
 #include "objects/disk.cl"
 #include "objects/triangle.cl"
-#include "objects/cube.cl"
-#include "objects/pyramid.cl"
 #include "objects/paraboloid.cl"
+#include "objects/meshes.cl"
 #include "shadow_ray.cl"
 #include "render.cl"
 #include "stack_functions.cl"
@@ -57,9 +56,10 @@ kernel void	render_frame(
 		private unsigned int h,
 		local t_ray *stack,
 		private t_clint depth,
-		private char no_negative/*,
+		private char no_negative,/*,
 								  private float3 bg_color,
 								  private unsigned int endian*/
+		constant t_mesh_triangle *triangles
 		)
 {
 	unsigned int	x;
@@ -87,12 +87,12 @@ kernel void	render_frame(
 	while (stack_size != 0)
 	{
 		curr_ray = stack_pop(stack, &stack_size, offset);
-		if (!raytrace(objs, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
+		if (!raytrace(objs, triangles,  objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
 			color += bg_color * curr_ray.clr_contrib;
 		else
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
-				color += shading(objs, objs_num, lights, lights_num, &r, no_negative)
+				color += shading(objs, objs_num, lights, lights_num, &r, triangles,  no_negative)
 					* curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);
