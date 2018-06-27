@@ -17,7 +17,9 @@
 			"length": 1,
 			"pos": [0, 0, -5.5],
 			"angle": [45, 45, 45],
-			"negative": true
+			"material": {
+				"property": "negative"
+			}
 		}
 	],
 	"lights": [

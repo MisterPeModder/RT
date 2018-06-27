@@ -1,4 +1,5 @@
 {
+	"depth": 4,
 	"camera": {
 		"pos": [0, 4, 3.5],
 		"fov": 80
@@ -18,114 +19,209 @@
 			"type": "plane",
 			"pos": [0, 0, 12],
 			"color": [150, 150, 150],
-			"angle": [-90, 0, 0]
+			"angle": [-90, 0, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [12, 0, 0],
 			"color": [150, 150, 150],
-			"angle": [90, -90, 0]
+			"angle": [90, -90, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [-12, 0, 0],
 			"color": [150, 150, 150],
-			"angle": [90, 90, 0]
+			"angle": [90, 90, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [0, 0, 0],
-			"color": [150, 150, 150]
+			"color": [150, 150, 150],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [0, 8, 0],
 			"color": [50, 50, 50],
-			"angle": [180, 0, 0]
+			"angle": [180, 0, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [0, 0, -20],
 			"color": [9, 65, 155],
-			"angle": [90, 0, 0]
+			"angle": [90, 0, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 0.8,
+				"refractive_index": 1
+			}
 		},
 		{
 			"type": "cylinder",
 			"pos": [-5, 0, -5],
 			"color": [100, 100, 100],
-			"radius": 1
+			"radius": 1,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [-5, 0, -5],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [-5, 8, -5],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "cylinder",
 			"pos": [-5, 0, -15],
 			"color": [100, 100, 100],
-			"radius": 1
+			"radius": 1,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [-5, 0, -15],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [-5, 8, -15],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "cylinder",
 			"pos": [5, 0, -5],
 			"color": [100, 100, 100],
-			"radius": 1
+			"radius": 1,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [5, 0, -5],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [5, 8, -5],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "cylinder",
 			"pos": [5, 0, -15],
 			"color": [100, 100, 100],
-			"radius": 1
+			"radius": 1,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [5, 0, -15],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [5, 8, -15],
 			"color": [100, 100, 100],
-			"radius": 1.5
+			"radius": 1.5,
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		},
 		{
 			"type": "sphere",
 			"pos": [0, 0.8, -5],
 			"radius": 0.5,
-			"color": [255, 0, 0]
+			"color": [255, 0, 0],
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"refractive_index": 1.52
+			}
 		}
 	]
 }
