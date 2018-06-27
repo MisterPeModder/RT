@@ -6,11 +6,12 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 21:46:57 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/26 22:03:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 06:53:09 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft_base/stringft.h>
+#include <libft_base/io.h>
 #include "rt.h"
 
 static t_mat_props	mat_props(char *str)
@@ -18,7 +19,7 @@ static t_mat_props	mat_props(char *str)
 	if (ft_strequ(str, "reflective"))
 		return (MAT_REFLECTIVE);
 	else if (ft_strequ(str, "refractive"))
-		return (MAT_REFLECTIVE);
+		return (MAT_REFRACTIVE);
 	else if (ft_strequ(str, "portal"))
 		return (MAT_PORTAL);
 	else if (ft_strequ(str, "negative"))
@@ -53,6 +54,16 @@ static t_mat_props	mat_props(char *str)
   return (noise);
   }*/
 
+static int			obj_parse_portal(t_object *obj, const t_json_object *data)
+{
+	if (!vec3f_from_json(json_obj_get(data, "output_pos"), &obj->mat.p_out))
+	{
+		ft_putendl_fd("Invalid portal output position", STDERR_FILENO);
+		return (0);
+	}
+	return (1);
+}
+
 int					parse_material(t_object *object, const t_json_object *data)
 {
 	t_json_value	*tmp;
@@ -69,6 +80,8 @@ int					parse_material(t_object *object, const t_json_object *data)
 	if (!(float_from_json(json_obj_get(data, "refractive_index"),
 					&object->mat.refractive_index)))
 		object->mat.refractive_index = 1.f;
+	if (object->mat.props == MAT_PORTAL && !obj_parse_portal(object, data))
+		return (0);
 	/*if ((tmp = json_obj_get(data, "noise")) && tmp->obj.type == JSON_ARRAY)
 	  object->mat.noise = parse_noise(tmp, object->mat.noise);
 	  else

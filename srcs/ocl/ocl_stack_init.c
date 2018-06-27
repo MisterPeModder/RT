@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 21:08:42 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 03:19:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 #include <libft_base/io.h>
 #include <libft_base/memory.h>
 #include "rt.h"
-#include "ocl_data.h"
-#include "ocl_common_structs.h"
-#include <stdio.h>
+
 void				update_frame_size(t_rt *core, t_mem_info *mem_info)
 {
 	core->sdl.frame_width = core->sdl.win_width
 		- core->sdl.win_width % mem_info->dim[0];
 	core->sdl.frame_height = core->sdl.win_height
 		- core->sdl.win_height % mem_info->dim[1];
-	printf("%zd x %zd\n", mem_info->dim[0], mem_info->dim[1]);
 }
 
 cl_int				compute_work_size(t_mem_info *mem_info, t_rt *core)
@@ -57,14 +54,13 @@ static cl_int		stack_to_kernel(t_rt *core, t_mem_info *mem_info)
 	while (i < 4 && ret != CL_SUCCESS)
 	{
 		ret = clSetKernelArg(core->ocl.kernel, 8,
-		sizeof(t_ray) * mem_info->buffer_size, NULL);
+				sizeof(t_ray) * mem_info->buffer_size, NULL);
 		if (ret == CL_SUCCESS)
 			break ;
 		mem_info->buffer_size = (size_t)((float)mem_info->buffer_size / 2);
 		mem_info->buffer_size -= mem_info->buffer_size % mem_info->wg_mult;
 		++i;
 	}
-	printf("i = %d\nnb d'elem dans la stack: %zd\n", i, mem_info->buffer_size);
 	return (ret);
 }
 
@@ -72,12 +68,7 @@ cl_int				create_ocl_stack(t_rt *core, t_mem_info *mem_info)
 {
 	size_t			max_wg_size;
 	cl_int			ret;
-//
-	cl_uint	tmp;
-	ft_bzero(mem_info->dim, sizeof(size_t) * 3);
-	clGetDeviceInfo(core->ocl.device, CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(cl_uint), &tmp, NULL);
-	printf("max compute units: %u\n", tmp);
-//
+
 	ret = clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
 			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &max_wg_size, NULL);
 	ret |= clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,

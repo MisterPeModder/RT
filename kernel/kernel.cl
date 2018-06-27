@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 03:17:26 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 04:50:54 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct				s_rt_result
 #include "shadow_ray.cl"
 #include "render.cl"
 #include "stack_functions.cl"
+#include "teleport_ray.cl"
 #include "secondary_rays.cl"
 
 kernel void	render_frame(
@@ -57,8 +58,8 @@ kernel void	render_frame(
 		local t_ray *stack,
 		private t_clint depth,
 		private char no_negative/*,
-		private float3 bg_color,
-		private unsigned int endian*/
+								  private float3 bg_color,
+								  private unsigned int endian*/
 		)
 {
 	unsigned int	x;
@@ -90,10 +91,13 @@ kernel void	render_frame(
 			color += bg_color * curr_ray.clr_contrib;
 		else
 		{
-			color += shading(objs, objs_num, lights, lights_num, &r, no_negative)
-				* curr_ray.clr_contrib;
+			if (r.obj->mat.props != MAT_PORTAL)
+				color += shading(objs, objs_num, lights, lights_num, &r, no_negative)
+					* curr_ray.clr_contrib;
+			else
+				teleport_ray(curr_ray, &r, stack, &stack_size, offset);
 			if (r.obj->mat.props == MAT_REFLECTIVE
-				|| r.obj->mat.props == MAT_REFRACTIVE)
+					|| r.obj->mat.props == MAT_REFRACTIVE)
 				compute_secondary_rays(curr_ray, &r, stack, &stack_size, offset);
 		}
 	}

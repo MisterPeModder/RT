@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/26 22:02:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 06:02:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,10 @@ typedef struct	s_noise
 	float		z_frac;
 }				t_noise;
 
+/*
+** -p_out: the portal output coordinates (set if material
+**         property is MAT_PORTAL)
+*/
 typedef struct		s_material
 {
 //	t_clfloat		shininess;//maybe for specular
@@ -174,6 +178,7 @@ typedef struct		s_material
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
 	t_noise			*noise;
+	t_clfloat3		p_out;
 }					t_material;
 
 /*
@@ -184,9 +189,6 @@ typedef struct		s_material
 ** -facing: its orientation.
 ** -color: are you really asking ?
 ** -props: the properties of this object.
-** -p_out: the portal output coordinates (set if material
-**         property is MAT_PORTAL)
-** -p_out_facing: the portal output direction.
 */
 typedef struct		s_object
 {
@@ -198,8 +200,6 @@ typedef struct		s_object
 	t_clfloat3		color;
 	t_properties	props;
 	t_material		mat;
-	t_clfloat3		p_out;
-	t_clfloat3		p_out_facing;
 }					t_object;
 
 /*

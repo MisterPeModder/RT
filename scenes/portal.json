@@ -1,0 +1,72 @@
+{
+	"depth": 3,
+	"objects": [
+		{
+			"type": "cone",
+			"pos": [0, 0, -5],
+			"opening_angle": 40,
+			"material": {
+				"property": "portal",
+				"output_pos": [0, 0, 5]
+			}
+		},
+		{
+			"type": "cone",
+			"pos": [0, 0, -5],
+			"color": [244, 212, 66],
+			"opening_angle": 41,
+			"material": {
+				"property": "refractive",
+				"coefficient": 42,
+				"refractive_index": 1
+			}
+		},
+		{
+			"type": "plane",
+			"pos": [0, -1, -5],
+			"color": [238, 65, 244]
+		},
+		{
+			"type": "sphere",
+			"radius": 1.01,
+			"pos": [5, 0, 2],
+			"angle": [90, 0, 0],
+			"material": {
+				"property": "refractive",
+				"coefficient": 42,
+				"refractive_index": 1.1
+			},
+			"color": [45, 79, 255]
+		},
+		{
+			"type": "sphere",
+			"radius": 1,
+			"pos": [5, 0, 2],
+			"angle": [90, 0, 0],
+			"material": {
+				"property": "portal",
+				"output_pos": [0, 1, -9]
+			}
+		},
+		{
+			"type": "pyramid",
+			"length": 3,
+			"base length": 2,
+			"pos": [5, -1, -8],
+			"angle": [0, 0, 0],
+			"material": {
+				"property": "portal",
+				"output_pos": [5, 0, 2]
+			}
+		}
+	],
+	"lights": [
+		{
+			"pos": [2, 0, 1],
+			"power": 0.8
+		}
+	],
+	"camera": {
+		"pos": [0, 0, 5]
+	}
+}

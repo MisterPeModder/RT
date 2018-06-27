@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/26 22:03:57 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 02:54:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ static int			calc_angle(t_object *object, const t_json_value *v)
 	return (1);
 }
 
+static void			obj_default_material(t_object *object)
+{
+	object->mat.props = MAT_NONE;
+	object->mat.props_coef = 0.f;
+	object->mat.refractive_index = 1.f;
+}
+
 int					obj_make(t_object *object, const t_json_object *data)
 {
 	t_json_value	*tmp;
@@ -77,14 +84,12 @@ int					obj_make(t_object *object, const t_json_object *data)
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
-	if ((tmp = json_obj_get(data, "material"))
-			&& tmp->obj.type == JSON_OBJECT)
-		parse_material(object, &tmp->obj);
-	else
+	if ((tmp = json_obj_get(data, "material")) && tmp->obj.type == JSON_OBJECT)
 	{
-		object->mat.props = MAT_NONE;
-		object->mat.props_coef = 0.f;
-		object->mat.refractive_index = 1.f;
+		if (!parse_material(object, &tmp->obj))
+			return (0);
 	}
+	else
+		obj_default_material(object);
 	return (1);
 }

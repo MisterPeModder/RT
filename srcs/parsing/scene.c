@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 13:32:20 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/27 03:00:12 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
 			free(scene->objs);
+			scene->objs = NULL;
 			return (0);
 		}
 		++i;
