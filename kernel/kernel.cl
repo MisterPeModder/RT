@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/24 17:41:21 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 16:34:49 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ kernel void	render_frame(
 	while (stack_size != 0)
 	{
 		curr_ray = stack_pop(stack, &stack_size, offset);
-		if (!raytrace(objs, triangles,  objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
+		if (!raytrace(objs, triangles, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
 			color += bg_color * curr_ray.clr_contrib;
 		else
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
-				color += shading(objs, objs_num, lights, lights_num, &r, triangles,  no_negative)
+				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative)
 					* curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);

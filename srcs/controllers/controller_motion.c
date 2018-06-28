@@ -6,14 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 19:01:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 19:02:26 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/28 16:27:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <SDL_events.h>
 #include "rt.h"
 
-static int			getKeyFromAxis(Uint8 axis, Sint16 value, int *key)
+static int			get_key_from_axis(Uint8 axis, Sint16 value, int *key)
 {
 	if (value == 0)
 		return (0);
@@ -42,7 +42,7 @@ void				on_controller_axis_motion(void *event, t_rt *core)
 	int							key;
 
 	e = (SDL_ControllerAxisEvent *)event;
-	if (getKeyFromAxis(e->axis, e->value, &key))
+	if (get_key_from_axis(e->axis, e->value, &key))
 		on_key_pressed(key, core);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 14:01:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 15:03:12 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/28 17:02:50 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ cl_int				ocl_init(t_ocl *ocl)
 		return (ocl_release(ocl, "error while creating a queue.", ret));
 	if ((ret = create_kernel(ocl)) != CL_SUCCESS)
 		return (ocl_release(ocl, NULL, ret));
-	return (0);
+	return (CL_SUCCESS);
 }

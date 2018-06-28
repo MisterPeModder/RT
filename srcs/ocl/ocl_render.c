@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 16:19:15 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/28 16:30:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static t_kargs		*ocl_set_kernel_arg2(t_rt *core, t_kargs *tmp)
 	cl_int			ret;
 
 	tmp->arg11 = clCreateBuffer(core->ocl.context,
-			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR, sizeof(t_mesh_triangle) * core->scene.triangle_total_num,
+			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
+			sizeof(t_mesh_triangle) * core->scene.triangle_total_num,
 			core->scene.mesh_triangle, &ret);
 	if (ret != CL_SUCCESS)
 		return (release_kernel_arg(tmp));
@@ -74,9 +75,8 @@ static t_kargs		*ocl_set_kernel_arg(t_rt *core, cl_int *ret)
 
 	if ((tmp = init_kargs(core)) == NULL)
 		return (NULL);
-	tmp->arg2 = clCreateBuffer(core->ocl.context,
-			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR, sizeof(t_cam),
-			&core->scene.cam, ret);
+	tmp->arg2 = clCreateBuffer(core->ocl.context, CL_MEM_READ_WRITE
+			| CL_MEM_COPY_HOST_PTR, sizeof(t_cam), &core->scene.cam, ret);
 	if (*ret != CL_SUCCESS)
 		return (release_kernel_arg(tmp));
 	tmp->arg3 = clCreateBuffer(core->ocl.context,
