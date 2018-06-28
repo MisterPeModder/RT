@@ -6,7 +6,7 @@
 		"fov": 90
 	},
 	"objects": [
-/*		{
+		{
 			"type": "plane",
 			"pos": [0, 0, 12],
 			"color": [150, 150, 150],
@@ -40,7 +40,7 @@
 			"pos": [0, 0, -20],
 			"color": [9, 65, 155],
 			"angle": [90, 0, 0]
-		},*/
+		},
 		{
 			"type": "meshes",
 			"vertices": [
@@ -63,12 +63,12 @@
 			],
 			"pos": [-1, 0, -5],
 			"angle": [0, 0, 0],
-			"color": [214, 59, 215]/*,
+			"color": [214, 59, 215],
 			"material": {
 				"property": "refractive",
 				"coefficient": 0.8,
 				"refractive_index": 1.0
-			}*/
+			}
 		}
 	],
 	"lights": [

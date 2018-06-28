@@ -1,7 +1,8 @@
 //The corresponding scene file for early jhache's hardcoded scene.
 {
+//	"filter": "black and white",
 	"background_color": [0, 0, 10],
-	"depth": 4,
+	"depth": 6,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,

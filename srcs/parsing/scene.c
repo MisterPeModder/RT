@@ -6,13 +6,14 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 10:50:31 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 19:17:22 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <libft_base/io.h>
 #include <libft_base/memory.h>
+#include <libft_base/stringft.h>
 #include "rt.h"
 
 static int			scene_objs(t_scene *scene, const t_json_array *data)
@@ -88,6 +89,23 @@ int					scene_parse(t_scene *scene, const char *path)
 			!make_cam(&scene->cam, &tmp->obj))
 		return (rel_error("No camera or invalid format", &obj));
 	scene->depth = 0;
+	if ((tmp = json_obj_get(obj, "filter")))
+	{
+		if (tmp->str.type != JSON_STRING)
+			return (0);
+		else if (ft_strequ(tmp->str.value, "grey"))
+			scene->filter = 0;
+		else if (ft_strequ(tmp->str.value, "black and white"))
+			scene->filter = 1;
+		else if (ft_strequ(tmp->str.value, "green"))
+			scene->filter = 2;
+		else if (ft_strequ(tmp->str.value, "red"))
+			scene->filter = 4;
+		else if (ft_strequ(tmp->str.value, "blue"))
+			scene->filter = 3;
+		else
+			return (0);
+	}
 	if ((tmp = json_obj_get(obj, "depth")))
 	{
 		if (tmp->n_i.type != JSON_INT || (scene->depth = tmp->n_i.value) < 0)

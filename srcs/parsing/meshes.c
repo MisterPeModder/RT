@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:01:16 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/28 10:41:22 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 19:12:42 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static int			mesh_faces(t_object *object, t_scene *scene,
 	scene->triangle_total_num += object->props.meshes.num_triangles;
 	if (!create_triangle(scene, triangles, faces, len))
 		return (0);
-	mesh_face_free(faces, len[0] - 1);
+	mesh_face_free(faces, len[0]);
 	free(len);
 	return (1);
 }
