@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:01:16 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/27 22:12:11 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 10:41:22 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int			mesh_faces2(t_arrlst *triangles,
 		while (j < tmp->arr.values_num)
 		{
 			if (!int_from_json(json_arr_get(&tmp->arr, j), &faces[i][j])
-					|| faces[i][j] < 0 || faces[i][j] > (int)len[len[0] + 2])
+					|| faces[i][j] < 0 || faces[i][j] >= (int)len[len[0] + 2])
 				return (mesh_fail(triangles, faces, i, 0));
 			++j;
 		}
@@ -95,6 +95,7 @@ static int			mesh_faces(t_object *object, t_scene *scene,
 	len[0] = data->values_num;
 	if (!(faces = (int **)malloc(sizeof(int *) * len[0])))
 		return (0);
+	len[len[0] + 2] = scene->num_vertex;
 	if (!mesh_faces2(triangles, data, len, faces))
 		return (0);
 	i = 0;
@@ -105,7 +106,6 @@ static int			mesh_faces(t_object *object, t_scene *scene,
 		i++;
 	}
 	len[len[0] + 1] = object->props.meshes.num_triangles;
-	len[len[0] + 2] = scene->num_vertex;
 	scene->triangle_total_num += object->props.meshes.num_triangles;
 	if (!create_triangle(scene, triangles, faces, len))
 		return (0);
