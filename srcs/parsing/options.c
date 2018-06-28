@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 07:17:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 19:31:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/28 16:00:57 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ static int			options_window(t_rt *core, const t_json_object *data)
 	if ((tmp = json_obj_get(data, "fullscreen")) && !bool_from_json(tmp, &fs))
 		return (options_error("\"fullscreen\" property must be a boolean"));
 	SDL_SetWindowSize(core->sdl.win, nw, nh);
+	core->sdl.win_width = (unsigned int)nw;
+	core->sdl.win_height = (unsigned int)nh;
 	if (fs)
 		SDL_SetWindowFullscreen(core->sdl.win, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	return (1);

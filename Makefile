@@ -81,6 +81,7 @@ SRCS_NAMES +=	objects/cone.c					\
 SRCS_NAMES +=	ocl/ocl_data.c					\
 				ocl/ocl_render.c				\
 				ocl/ocl_stack_init.c			\
+				ocl/load_first_args.c			\
 				ocl/read_kernel.c				\
 
 SRCS_NAMES +=	parsing/args.c					\

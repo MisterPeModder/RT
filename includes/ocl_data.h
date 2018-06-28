@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 11:15:47 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 15:03:52 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,13 @@ typedef struct				s_mem_info
 /*
 ** OpenCL creation and destruction functions :
 */
-cl_int					ocl_init(t_ocl *ocl, struct s_rt *core);
+cl_int					ocl_init(t_ocl *ocl);
 cl_int					init_kernel_args(t_ocl *ocl, struct s_rt *core);
 cl_int					create_ocl_stack(struct s_rt *core, t_mem_info *mem_info);
 cl_int					compute_work_size(t_mem_info *mem_info,
 		struct s_rt *core);
 void					update_frame_size(struct s_rt *core, t_mem_info *mem_info);
+cl_int					load_first_kernel_args(struct s_rt *core);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 		cl_int ret);

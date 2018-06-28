@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 12:02:57 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/28 16:19:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,6 @@
 #include "rt.h"
 #include "image.h"
 #include "ocl_data.h"
-#include <stdio.h>
-
-cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
-{
-	cl_int			ret;
-	cl_image_format	form;
-	cl_image_desc	des;
-
-	form = (cl_image_format){.image_channel_order = CL_RGBA,
-		.image_channel_data_type = CL_UNSIGNED_INT8};
-	des = (cl_image_desc){.image_type = CL_MEM_OBJECT_IMAGE2D,
-		.image_width = core->sdl.frame_width,
-		.image_height = core->sdl.frame_height, .image_depth = 1,
-		.image_array_size = 1, .image_row_pitch = 0, .image_slice_pitch = 0,
-		.num_mip_levels = 0, .num_samples = 0, .buffer = NULL};
-	ocl->ocl_img = clCreateImage(core->ocl.context,
-			CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, &form, &des, NULL, &ret);
-	if (ret != CL_SUCCESS)
-		return (ret);
-	ret = clSetKernelArg(ocl->kernel, 4, sizeof(size_t), &core->scene.objs_num);
-	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(size_t),
-			&core->scene.lights_num);
-	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
-			&core->sdl.frame_width);
-	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
-			&core->sdl.frame_height);
-	ret |= clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
-	return (ret);
-}
 
 static void			*release_kernel_arg(t_kargs *args)
 {
@@ -150,6 +121,5 @@ cl_int				render_frame(t_rt *core)
 			offset, glob_dim, 0, 0, core->frame->pixels, 0, NULL, NULL);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	else
-		return (print_frame(core) + (int)release_kernel_arg(tmp) * 0);
+	return (print_frame(core) + (int)release_kernel_arg(tmp) * 0);
 }
