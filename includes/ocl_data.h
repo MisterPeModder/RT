@@ -59,6 +59,7 @@ typedef struct			s_kargs
 	cl_mem				arg2;
 	cl_mem				arg3;
 	cl_mem				arg4;
+	cl_mem				arg5;
 	cl_mem				arg9;
 	cl_mem				arg11;
 }						t_kargs;

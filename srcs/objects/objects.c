@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 11:34:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/28 14:02:34 by achaussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void			obj_default_material(t_object *object)
 }
 
 int					obj_make(t_scene *scene, t_object *object,
-		const t_json_object *data)
+	const t_json_object *data)
 {
 	t_json_value	*tmp;
 

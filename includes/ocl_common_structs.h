@@ -97,6 +97,16 @@ typedef enum		e_mat_props
 	MAT_NEGATIVE
 }					t_mat_props;
 
+typedef enum		e_type_mat
+{
+	WOOD = 1,
+	WATER = 2,
+	PERLIN = 3,
+	SIN_MARBLE = 4,
+	LINE_MARBLE = 5,
+	NONE = 6
+}					t_type_mat;
+
 /*
 ** Noise struct.
 ** -c1, c2 and c3 are colors for material perturbation.
@@ -119,46 +129,48 @@ typedef enum		e_mat_props
 */
 typedef struct	s_noise
 {
-	int			has_noise;
-	char		*type;
+	t_clint		has_noise;
+	t_clfloat	freq;
+	t_clint		depth;
+	t_clint		seed;
+	t_type_mat	type;
+	t_clint		hash[256];
 	t_clfloat3	c1;
 	t_clfloat3	c2;
 	t_clfloat3	c3;
-	float		amp;
-	float		fin;
-	float		div;
-	float		freq;
-	float		depth;
-	int			lines;
-	double		value;
-	double		value1;
+	t_clfloat	amp;
+	t_clfloat	fin;
+	t_clfloat	div;
+	t_clint		lines;
+	t_clfloat	value;
+	t_clfloat	value1;
 	t_clfloat3	result;
-	double		threshold;
-	double		perturbation;
-	int			a;
-	int			b;
-	int			c;
-	int			d;
-	int			i;
-	int			s;
-	int			t;
-	int			u;
-	int			v;
-	int			w;
-	int			x;
-	int			y;
-	int			z;
-	float		xa;
-	float		ya;
-	float		za;
-	float		low;
-	float		high;
-	int			x_int;
-	int			y_int;
-	int			z_int;
-	float		x_frac;
-	float		y_frac;
-	float		z_frac;
+	t_clfloat	threshold;
+	t_clfloat	perturbation;
+	t_clint		a;
+	t_clint		b;
+	t_clint		c;
+	t_clint		d;
+	t_clint		i;
+	t_clint		s;
+	t_clint		t;
+	t_clint		u;
+	t_clint		v;
+	t_clint		w;
+	t_clint		x;
+	t_clint		y;
+	t_clint		z;
+	t_clfloat	xa;
+	t_clfloat	ya;
+	t_clfloat	za;
+	t_clfloat	low;
+	t_clfloat	high;
+	t_clint		x_int;
+	t_clint		y_int;
+	t_clint		z_int;
+	t_clfloat	x_frac;
+	t_clfloat	y_frac;
+	t_clfloat	z_frac;
 }				t_noise;
 
 /*

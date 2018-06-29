@@ -22,6 +22,7 @@ int					obj_make(t_scene *scene, t_object *object,
 int					obj_release(t_object *obj);
 int					objs_release(t_object *objs, size_t num);
 int					parse_material(t_object *object, const t_json_object *data);
+void				parse_type_noise(t_json_value *tmp, t_noise *noise);
 
 /*
 ** OBJECT INITIALIZATION FUNCTIONS:

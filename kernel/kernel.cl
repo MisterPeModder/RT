@@ -40,6 +40,7 @@ typedef struct				s_rt_result
 #include "objects/paraboloid.cl"
 #include "objects/meshes.cl"
 #include "shadow_ray.cl"
+#include "noise.cl"
 #include "render.cl"
 #include "stack_functions.cl"
 #include "teleport_ray.cl"
@@ -56,7 +57,8 @@ kernel void	render_frame(
 		private unsigned int h,
 		local t_ray *stack,
 		private t_clint depth,
-		private char no_negative,/*,
+		private char no_negative,
+		global t_clint *hash,/*,
 								  private float3 bg_color,
 								  private unsigned int endian*/
 		constant t_mesh_triangle *triangles,
@@ -70,10 +72,9 @@ kernel void	render_frame(
 	t_cluint		offset;
 	t_ray			curr_ray;
 	float3			color;
-//
 	float3			bg_color;
 	set_to_zero(&bg_color);
-//
+
 	x = get_global_id(0);
 	y = get_global_id(1);
 	stack_size = 0;
@@ -93,7 +94,7 @@ kernel void	render_frame(
 		else
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
-				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative)
+				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative, hash)
 					* curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);

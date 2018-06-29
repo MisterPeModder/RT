@@ -41,7 +41,7 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	ret = clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
 			&core->sdl.frame_height);
 	ret = clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
-	ret |= clSetKernelArg(ocl->kernel, 12, sizeof(int),
+	ret |= clSetKernelArg(ocl->kernel, 13, sizeof(int),
 			&core->scene.filter);
 	return (ret);
 }
