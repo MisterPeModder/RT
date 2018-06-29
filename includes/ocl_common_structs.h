@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 11:16:32 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/29 11:21:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct		s_material
 	t_clfloat		refractive_index;
 	t_noise			*noise;
 	t_clfloat3		p_out;
+	int				has_shadow;
 }					t_material;
 
 typedef struct		s_mesh_triangle

@@ -47,6 +47,17 @@
 				"property": "portal",
 				"output_pos": [0, 1, -9]
 			}
+		},
+		{
+			"type": "pyramid",
+			"length": 3,
+			"base length": 2,
+			"pos": [5, -1, -8],
+			"angle": [0, 0, 0],
+			"material": {
+				"property": "portal",
+				"output_pos": [5, 0, 2]
+			}
 		}
 	],
 	"lights": [

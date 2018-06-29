@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 20:42:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 04:59:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 07:29:10 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ static int			shadow_raytrace(
 	while (i < objs_num)
 	{
 		tmp = 0;
-		if (objs[i++].mat.props == MAT_PORTAL)
+		if (objs[i].mat.props == MAT_PORTAL || !objs[i].mat.has_shadow)
+		{
+			++i;
 			continue ;
-		switch (objs[--i].type)
+		}
+		switch (objs[i].type)
 		{
 			case OBJ_SPHERE:
 				tmp = sphere_intersect(&objs[i], o, u, &face_tmp);

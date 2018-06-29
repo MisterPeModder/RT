@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 21:46:57 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 06:53:09 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/27 07:29:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ int					parse_material(t_object *object, const t_json_object *data)
 		object->mat.refractive_index = 1.f;
 	if (object->mat.props == MAT_PORTAL && !obj_parse_portal(object, data))
 		return (0);
+	object->mat.has_shadow = 1;
+	if ((tmp = json_obj_get(data, "has_shadow")))
+	{
+		if (tmp->bol.type != JSON_BOOL)
+		{
+			ft_putendl_fd("\"has_shadow\" should be a boolean", STDERR_FILENO);
+			return (0);
+		}
+		object->mat.has_shadow = tmp->bol.value;
+	}
 	/*if ((tmp = json_obj_get(data, "noise")) && tmp->obj.type == JSON_ARRAY)
 	  object->mat.noise = parse_noise(tmp, object->mat.noise);
 	  else
