@@ -17,8 +17,13 @@ LIBFT_JSON := $(LIBFT_JSON_PATH)/lib$(LIBFT_JSON_NAME).a
 
 # SDL2
 LIBSDL_PATH := $(LIBS)/sdl2
-LIBSDL_NAME := sdl2
+LIBSDL_NAME := SDL2
 LIBSDL := $(LIBSDL_PATH)/lib/lib$(LIBSDL_NAME).a
+
+# SDL2_TTF
+LIBSDL_TTF_PATH := $(LIBS)/sdl2_ttf
+LIBSDL_TTF_NAME := SDL2_ttf
+LIBSDL_TTF := $(LIBSDL_PATH)/lib/lib$(LIBSDL_TTF_NAME).a
 
 UNAME := $(shell uname -s 2> /dev/null)
 
@@ -45,7 +50,7 @@ CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
 			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH)						\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -lm	\
-			`$(LIBSDL_PATH)/sdl2-config --libs`
+			`$(LIBSDL_PATH)/sdl2-config --libs` -l$(LIBSDL_TTF_NAME)
 
 # Commands
 CC := gcc
@@ -58,6 +63,7 @@ NORM := norminette
 SRCS_NAMES :=	core.c							\
 				img.c							\
 				main.c							\
+				sdl_render.c					\
 
 SRCS_NAMES +=	controllers/controller_event.c	\
 				controllers/controller_motion.c	\
@@ -78,11 +84,11 @@ SRCS_NAMES +=	objects/cone.c					\
 				objects/sphere.c				\
 				objects/triangle.c				\
 
-SRCS_NAMES +=	ocl/ocl_data.c					\
+SRCS_NAMES +=	ocl/kernel_args.c				\
+				ocl/load_first_args.c			\
+				ocl/ocl_data.c					\
 				ocl/ocl_render.c				\
 				ocl/ocl_stack_init.c			\
-				ocl/load_first_args.c			\
-				ocl/kernel_args.c				\
 				ocl/read_kernel.c				\
 
 SRCS_NAMES +=	parsing/args.c					\
@@ -90,11 +96,11 @@ SRCS_NAMES +=	parsing/args.c					\
 				parsing/from_json.c				\
 				parsing/from_json2.c			\
 				parsing/lights.c				\
+				parsing/meshes.c				\
+				parsing/meshes_utils.c			\
 				parsing/options.c				\
 				parsing/read.c					\
 				parsing/scene.c					\
-				parsing/meshes.c				\
-				parsing/meshes_utils.c			\
 
 SRCS_NAMES +=	utils/angle.c					\
 				utils/rotate.c					\
@@ -134,7 +140,7 @@ YELLOW := \033[93m
 DYELLOW := \033[33m
 UNDERLINE := \033[4m
 
-all: $(LIBFT) $(LIBFT_JSON) $(LIBSDL) $(NAME)
+all: $(LIBFT) $(LIBFT_JSON) $(LIBSDL) $(LIBSDL_TTF) $(NAME)
 
 $(NAME): $(OBJ_DIRS) $(OBJS)
 ifeq ($(DETAILED), 1)
@@ -154,6 +160,11 @@ $(LIBSDL):
 	@cd $(LIBSDL_PATH) && ./configure --prefix $(LIBSDL_PATH)
 	@make -C $(LIBSDL_PATH)
 	@make -C $(LIBSDL_PATH) install
+
+$(LIBSDL_TTF):
+	@cd $(LIBSDL_TTF_PATH) && ./configure --prefix $(LIBSDL_PATH)
+	@make -C $(LIBSDL_TTF_PATH)
+	@make -C $(LIBSDL_TTF_PATH) install
 
 $(OBJ_DIRS):
 	@$(MKDIR) $@

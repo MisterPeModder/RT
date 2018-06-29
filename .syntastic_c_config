@@ -1,5 +1,6 @@
 -I libs/libft/includes
 -I libs/sdl2/include
+-I libs/sdl2/include/SDL2
 -I libs/ft_json/includes
 -D KERNEL_PATH='"kernel"'
 -D OPENCL_BUILD_FLAGS='"-Wall"'

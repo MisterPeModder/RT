@@ -6,12 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:44:23 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 20:22:50 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/29 18:11:22 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <SDL_events.h>
 #include <libft_base/io.h>
+#include <libft_base/memory.h>
 #include <libft_base/stringft.h>
 #include "rt.h"
 
@@ -32,26 +33,7 @@ static void			update_keys(t_rt *c)
 	}
 }
 
-static void			display_fps(t_rt *core, t_timer *t, int last)
-{
-	char			*fps;
 
-	timer_end(t);
-	if (!last)
-		core->last_time = timer_span(t);
-	if ((fps = ft_dtoa((core->last_time ? 1 / core->last_time : 0), 2)))
-	{
-		ft_putstr(fps);
-		ft_putstr("fps - ");
-		free(fps);
-	}
-	if ((fps = ft_dtoa(core->last_time, 2)))
-	{
-		ft_putstr(fps);
-		ft_putendl("s");
-		free(fps);
-	}
-}
 
 void				on_tick(t_rt *core)
 {
@@ -61,11 +43,10 @@ void				on_tick(t_rt *core)
 	update_keys(core);
 	if (core->state_flags & SF_SHOULD_UPDATE)
 	{
-		if (render_frame(core) != CL_SUCCESS)
+		if (render_frame(core, &timer) != CL_SUCCESS)
 			ft_putendl_fd("\x1b[93mWARNING\x1b[0m: failed to render frame !!",
 					STDERR_FILENO);
 		core->state_flags &= ~SF_SHOULD_UPDATE;
-		display_fps(core, &timer, 0);
 	}
 }
 
@@ -97,9 +78,9 @@ void				event_loop(t_rt *core)
 
 	while (1)
 	{
-		on_tick(core);
 		while (SDL_PollEvent(&event))
 			handle_event(&event, core);
+		on_tick(core);
 	}
 	on_window_closing(core);
 }

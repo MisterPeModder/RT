@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 13:58:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/29 22:50:30 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ typedef struct		s_sdl_ctx
 {
 	SDL_Window		*win;
 	SDL_Surface		*screen;
+	SDL_Surface		*ui;
 	unsigned int	win_width;
 	unsigned int	win_height;
 	unsigned int	frame_width;
 	unsigned int	frame_height;
-//	unsigned int	w;
-//	unsigned int	h;
 	int				con_state;
+	void			*font;
 }					t_sdl_ctx;
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -40,6 +40,7 @@ typedef struct		s_sdl_ctx
 # endif
 
 # define MAX_KEYS 8
+# define TXT_BOX_PADDING 10
 
 typedef struct		s_key
 {
@@ -56,6 +57,9 @@ typedef struct		s_mv_state
 }					t_mv_state;
 
 struct s_rt;
+
+void				draw_text_box(struct s_rt *core,
+		const char *str, int x, int y);
 
 /*
 ** == EVENTS ==

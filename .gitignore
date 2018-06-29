@@ -23,3 +23,15 @@ libs/sdl2/build
 libs/sdl2/include/SDL2
 libs/sdl2/lib
 libs/sdl2/share
+
+#SDL TTF installation files
+libs/sdl2_ttf/.deps
+libs/sdl2_ttf/.libs
+libs/sdl2_ttf/Makefile
+libs/sdl2_ttf/SDL2_ttf.pc
+libs/sdl2_ttf/SDL_ttf.lo
+libs/sdl2_ttf/config.log
+libs/sdl2_ttf/config.status
+libs/sdl2_ttf/glfont
+libs/sdl2_ttf/libtool
+libs/sdl2_ttf/showfont

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 18:45:20 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/29 22:55:49 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "image.h"
 #include "ocl_data.h"
 
+//TODO CHANGE IT !!!!!!
 static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
 {
 	unsigned int	i;
@@ -44,7 +45,7 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
 	return (CL_SUCCESS);
 }
 
-cl_int				render_frame(t_rt *core)
+cl_int				render_frame(t_rt *core, t_timer *t)
 {
 	t_kargs			*tmp;
 	size_t			glob_dim[3];
@@ -65,5 +66,5 @@ cl_int				render_frame(t_rt *core)
 			offset, glob_dim, 0, 0, core->frame->pixels, 0, NULL, NULL);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	return (print_frame(core) + (int)release_kernel_arg(tmp) * 0);
+	return (print_frame(core, t) + (int)release_kernel_arg(tmp) * 0);
 }
