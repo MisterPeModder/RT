@@ -49,11 +49,22 @@
 			}
 		},
 		{
-			"type": "pyramid",
-			"length": 3,
-			"base length": 2,
+			"type": "meshes",
+			"vertices":[
+				[0, 3, 0],
+				[-1, 0, -1],
+				[1, 0, -1],
+				[1, 0, 1],
+				[-1, 0, 1]
+			],
+			"faces": [
+				[4, 3, 0],
+				[3, 2, 0],
+				[2, 1, 0],
+				[4, 1, 0],
+				[1, 2, 3, 4]
+			],
 			"pos": [5, -1, -8],
-			"angle": [0, 0, 0],
 			"material": {
 				"property": "portal",
 				"output_pos": [5, 0, 2]
