@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:21:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/29 11:34:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef enum		e_obj_type
 	OBJ_DISK,
 	OBJ_TRIANGLE,
 	OBJ_PARABOLOID,
-	OBJ_MESHES
+	OBJ_MESH
 }					t_obj_type;
 
 /*
@@ -85,7 +85,7 @@ typedef union		u_properties
 	}				paraboloid;
 	struct {
 		size_t		num_triangles;
-	}				meshes;
+	}				mesh;
 }					t_properties;
 
 typedef enum		e_mat_props

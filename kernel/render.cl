@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 03:14:54 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/29 11:35:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static int			raytrace(
 			case OBJ_PARABOLOID:
 				tmp = paraboloid_intersect(&objs[i], o, u);
 				break;
-			case OBJ_MESHES:
-				tmp = meshes_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
+			case OBJ_MESH:
+				tmp = mesh_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
 				break;
 			default:
 				tmp = FLT_MAX;
@@ -146,8 +146,8 @@ static int			raytrace(
 		case OBJ_PARABOLOID:
 			paraboloid_normal(r->obj, r);
 			break;
-		case OBJ_MESHES:
-			meshes_normal(triangles, r, face);
+		case OBJ_MESH:
+			mesh_normal(triangles, r, face);
 			break;
 	}
 	return (1);
@@ -162,11 +162,11 @@ static int			raytrace(
 ** -result: where the color of the pixel will be stored.
 */
 static float3			shading(
-	constant t_object *objs, size_t objs_num,
-	constant t_light *lights, size_t lights_num, t_rt_result *r,
-	constant t_mesh_triangle *triangles,
-	char no_negative
-	)
+		constant t_object *objs, size_t objs_num,
+		constant t_light *lights, size_t lights_num, t_rt_result *r,
+		constant t_mesh_triangle *triangles,
+		char no_negative
+		)
 {
 	size_t			i;
 	float3			lvec;

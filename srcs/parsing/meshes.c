@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:01:16 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/28 19:12:42 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/29 11:29:57 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int					multiple_mesh(t_scene *scene, size_t *len)
 	t_mesh_triangle	*temp;
 
 	if (!(temp = ft_memdup((void*)scene->mesh_triangle,
-			sizeof(t_mesh_triangle) *
-			(scene->triangle_total_num - len[len[0] + 1]))))
+					sizeof(t_mesh_triangle) *
+					(scene->triangle_total_num - len[len[0] + 1]))))
 		return (0);
 	free(scene->mesh_triangle);
 	if (!(scene->mesh_triangle = (t_mesh_triangle*)malloc(
-			sizeof(t_mesh_triangle) * scene->triangle_total_num)))
+					sizeof(t_mesh_triangle) * scene->triangle_total_num)))
 		return (0);
 	ft_memcpy((void*)scene->mesh_triangle, (void*)temp,
 			sizeof(t_mesh_triangle) *
@@ -99,14 +99,14 @@ static int			mesh_faces(t_object *object, t_scene *scene,
 	if (!mesh_faces2(triangles, data, len, faces))
 		return (0);
 	i = 0;
-	object->props.meshes.num_triangles = 0;
+	object->props.mesh.num_triangles = 0;
 	while (i < len[0])
 	{
-		object->props.meshes.num_triangles += len[1 + i] - 2;
+		object->props.mesh.num_triangles += len[1 + i] - 2;
 		i++;
 	}
-	len[len[0] + 1] = object->props.meshes.num_triangles;
-	scene->triangle_total_num += object->props.meshes.num_triangles;
+	len[len[0] + 1] = object->props.mesh.num_triangles;
+	scene->triangle_total_num += object->props.mesh.num_triangles;
 	if (!create_triangle(scene, triangles, faces, len))
 		return (0);
 	mesh_face_free(faces, len[0]);

@@ -42,7 +42,7 @@
 			"angle": [90, 0, 0]
 		},
 		{
-			"type": "meshes",
+			"type": "mesh",
 			"vertices": [
 				[-1, -1, -1],
 				[1, -1, -1],

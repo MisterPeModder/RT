@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   polygon.cl                                         :+:      :+:    :+:   */
+/*   meshes.cl                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/05 14:23:50 by jloro            ###   ########.fr       */
+/*   Updated: 2018/06/29 11:31:43 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static float	face_triangle_intersect(
 	return (dot(v0v2, vec1) * det);
 }
 
-static float		meshes_intersect(
+static float		mesh_intersect(
 		constant t_object *obj,
 		constant t_mesh_triangle *triangles,
 		float3 origin,
@@ -60,7 +60,7 @@ static float		meshes_intersect(
 	i = *index;
 	t = FLT_MAX;
 	tmin = FLT_MAX;
-	while (i < obj->props.meshes.num_triangles + *index)
+	while (i < obj->props.mesh.num_triangles + *index)
 	{
 		t_tmp = face_triangle_intersect(triangles[i].p1, triangles[i].p2, triangles[i].p3,
 				triangles[i].facing, origin, u);
@@ -76,11 +76,11 @@ static float		meshes_intersect(
 	}
 	if (tmin < 0)
 		*face *= -1;
-	*index += obj->props.meshes.num_triangles;
+	*index += obj->props.mesh.num_triangles;
 	return (t);
 }
 
-static void			meshes_normal(
+static void			mesh_normal(
 		constant t_mesh_triangle *triangles,
 		t_rt_result *r,
 		int face

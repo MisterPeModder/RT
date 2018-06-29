@@ -6,7 +6,7 @@
 	},
 	"objects": [
 		{
-			"type": "meshes",
+			"type": "mesh",
 			"vertices":[
 				[0, 4, 0],//SOMMET
 				[-1, 0, -1],

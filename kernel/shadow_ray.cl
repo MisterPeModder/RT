@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 20:42:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 07:29:10 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/29 11:34:18 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static int			shadow_raytrace(
 			case OBJ_PARABOLOID:
 				tmp = paraboloid_intersect(&objs[i], o, u);
 				break;
-			case OBJ_MESHES:
-				tmp = meshes_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
+			case OBJ_MESH:
+				tmp = mesh_intersect(&objs[i], triangles, o, u, &face_tmp, &index_tri);
 				break;
 			default:
 				tmp = FLT_MAX;
