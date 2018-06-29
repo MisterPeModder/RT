@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 15:03:52 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/29 18:28:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,6 @@ typedef struct			s_kargs
 }						t_kargs;
 
 /*
-typedef struct			s_ocl_stack
-{
-	size_t				wg_size[2];
-}						t_ocl_stack;
-*/
-
-/*
 ** definition of the t_mem_info struct,
 ** which store data about the memory available on the device
 ** for the creation of the opencl pseudo-stack.
@@ -78,8 +71,10 @@ typedef struct			s_ocl_stack
 */
 typedef struct				s_mem_info
 {
-	size_t					dim[3];
+	size_t					wg_dim[3];
+	size_t					wg_nb[2];
 	size_t					wg_mult;
+	cl_uint					compute_units;
 	cl_ulong				buffer_size;
 }							t_mem_info;
 
@@ -88,6 +83,8 @@ typedef struct				s_mem_info
 */
 cl_int					ocl_init(t_ocl *ocl);
 cl_int					init_kernel_args(t_ocl *ocl, struct s_rt *core);
+t_kargs					*ocl_set_kernel_arg(struct s_rt *core, cl_int *ret);
+void					*release_kernel_arg(t_kargs *args);
 cl_int					create_ocl_stack(struct s_rt *core, t_mem_info *mem_info);
 cl_int					compute_work_size(t_mem_info *mem_info,
 		struct s_rt *core);

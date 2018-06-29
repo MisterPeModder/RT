@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 03:19:32 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/29 17:36:46 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,31 @@
 void				update_frame_size(t_rt *core, t_mem_info *mem_info)
 {
 	core->sdl.frame_width = core->sdl.win_width
-		- core->sdl.win_width % mem_info->dim[0];
+		- core->sdl.win_width % mem_info->wg_dim[0];
 	core->sdl.frame_height = core->sdl.win_height
-		- core->sdl.win_height % mem_info->dim[1];
+		- core->sdl.win_height % mem_info->wg_dim[1];
+	mem_info->wg_nb[0] = core->sdl.frame_width / mem_info->wg_dim[0];
+	mem_info->wg_nb[1] = core->sdl.frame_height / mem_info->wg_dim[1];
 }
 
 cl_int				compute_work_size(t_mem_info *mem_info, t_rt *core)
 {
-	mem_info->dim[0] = mem_info->buffer_size / (size_t)(core->scene.depth + 1);
-	mem_info->dim[0] -= mem_info->dim[0] % mem_info->wg_mult;
-	mem_info->dim[1] = 1;
-	if (mem_info->dim[0] == 0)
+	mem_info->wg_dim[0] = mem_info->buffer_size / (size_t)(core->scene.depth + 1);
+	mem_info->wg_dim[0] -= mem_info->wg_dim[0] % mem_info->wg_mult;
+	mem_info->wg_dim[1] = 1;
+	if (mem_info->wg_dim[0] == 0)
 	{
 		ft_putendl("error: the work group size is too small.");
 		return (!CL_SUCCESS);
 	}
-	while (mem_info->dim[0] > mem_info->dim[1])
+	while (mem_info->wg_dim[0] > mem_info->wg_dim[1])
 	{
-		if (mem_info->dim[0] % 2 == 1)
+		if (mem_info->wg_dim[0] % 2 == 1)
 			break ;
-		mem_info->dim[0] >>= 1;
-		mem_info->dim[1] <<= 1;
+		mem_info->wg_dim[0] >>= 1;
+		mem_info->wg_dim[1] <<= 1;
 	}
+	printf("%zd x %zd\n", mem_info->wg_dim[0], mem_info->wg_dim[1]);
 	update_frame_size(core, mem_info);
 	return (CL_SUCCESS);
 }
@@ -69,6 +72,9 @@ cl_int				create_ocl_stack(t_rt *core, t_mem_info *mem_info)
 	size_t			max_wg_size;
 	cl_int			ret;
 
+	ft_bzero(mem_info->wg_dim, sizeof(size_t) * 3);
+	clGetDeviceInfo(core->ocl.device, CL_DEVICE_MAX_COMPUTE_UNITS,
+			sizeof(cl_uint), &mem_info->compute_units, NULL);
 	ret = clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
 			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &max_wg_size, NULL);
 	ret |= clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
