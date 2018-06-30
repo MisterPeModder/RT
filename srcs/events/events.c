@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 16:45:54 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/30 18:30:39 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void				on_key_pressed(int key, t_rt *core)
 
 	if (key == SDLK_ESCAPE)
 		exit_rt(core);
+	else if (key == SDLK_h)
+	{
+		core->sdl.show_ui = !core->sdl.show_ui;
+		core->state_flags |= SF_SHOULD_UPDATE;
+	}
 	mvs = &core->mvs;
 	i = 0;
 	while (i < MAX_KEYS)

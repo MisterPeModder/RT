@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 17:41:49 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/30 18:19:37 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_sdl_ctx
 	int				con_state;
 	void			*font;
 	char			font_name[MAX_FONT_NAME];
+	int				show_ui;
 }					t_sdl_ctx;
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
