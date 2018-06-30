@@ -6,11 +6,13 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 07:17:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/28 16:00:57 by jhache           ###   ########.fr       */
+/*   Updated: 2018/06/30 17:50:01 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <SDL_ttf.h>
 #include <libft_base/io.h>
+#include <libft_base/stringft.h>
 #include "rt.h"
 /*
    static int			no_schemes(t_controller *c)
@@ -62,28 +64,32 @@
 			else
 			s->buttons_len = 0;
 			if ((tmp = json_obj_get(o, "axis")) && tmp->obj.type == JSON_OBJECT)
-			{
+			{3r5p9
+atal:
+3r5p9
 
-			}
-			}
+}
+}
 
-			static int			get_schemes(t_controller *c, const t_json_object *schemes,
-			const t_json_object *data)
-			{
-			t_hmiterator	it;
+static int			get_schemes(t_controller *c, const t_json_object *schemes,
+const t_json_object *data)
+{
+t_hmiterator	it;
 
-			if (!schemes->data || !schemes->data->size)
-			return (no_schemes(c));
-			if (!(c->schemes = malloc(sizeof(t_scheme) * schemes->data->size)))
-			return (0);
-			hm_iter_init(schemes->data, &it);
-			while (hm_iter_next(&it))
-			{
-			if (!it.value || ((t_json_value *)it.value)->obj.type != JSON_OBJECT ||
-			!get_scheme(&c->schemes[it.i], it.key, &it.value->obj))
-			{
-			free(c->schemes);
+if (!schemes->data || !schemes->data->size)
+return (no_schemes(c));
+if (!(c->schemes = malloc(sizeof(t_scheme) * schemes->data->size)))
 return (0);
+hm_iter_init(schemes->data, &it);
+while (hm_iter_next(&it))
+{3r5p9
+atal:
+3r5p9
+if (!it.value || ((t_json_value *)it.value)->obj.type != JSON_OBJECT ||
+		!get_scheme(&c->schemes[it.i], it.key, &it.value->obj))
+{
+	free(c->schemes);
+	return (0);
 }
 }
 }
@@ -142,12 +148,30 @@ static int			options_window(t_rt *core, const t_json_object *data)
 	return (1);
 }
 
+static int			options_font(t_sdl_ctx *sdl, const t_json_value *data)
+{
+	if (!data)
+		ft_strncpy(sdl->font_name, "assets/Arcon-Regular.otf", MAX_FONT_NAME);
+	else if (data->str.type != JSON_STRING)
+		return (options_error("\"font\" property must be a string"));
+	else
+		ft_strncpy(sdl->font_name, data->str.value, MAX_FONT_NAME);
+	if (TTF_Init() < 0)
+	{
+		ft_putstr("Failed to initialize SDL TTF: ");
+		ft_putendl(TTF_GetError());
+		return (0);
+	}
+	return (1);
+}
+
 int					options_parse(t_rt *core, const char *path)
 {
 	t_json_object	*obj;
 	t_json_value	*tmp;
 
-	if (!(obj = &(json_file_read(path)->obj)))
+	if (!(obj = &(json_file_read(path)->obj)) ||
+			!options_font(&core->sdl, json_obj_get(obj, "font")))
 		return (0);
 	if ((tmp = json_obj_get(obj, "window")))
 	{

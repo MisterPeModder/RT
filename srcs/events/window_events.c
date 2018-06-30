@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 22:41:04 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/30 17:53:39 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int			remake_surfaces(t_rt *core)
 {
 	SDL_FreeSurface(core->frame);
 	SDL_FreeSurface(core->sdl.ui);
+	TTF_CloseFont(core->sdl.font);
 	if (!(core->frame = img_make(core->sdl.frame_width,
 					core->sdl.frame_height)))
 	{
@@ -30,9 +31,8 @@ static int			remake_surfaces(t_rt *core)
 	{
 		ft_putendl_fd("could not create UI buffer", STDERR_FILENO);
 	}
-	else if (!(core->sdl.font = TTF_OpenFont(
-					"./assets/Arcon-Regular.otf",
-					(int)core->sdl.win_width / 100 * 1 + 8)))
+	else if (!(core->sdl.font = TTF_OpenFont(core->sdl.font_name,
+					(int)core->sdl.win_width / 100 + 8)))
 	{
 
 		ft_putstr("Failed to load font: ");

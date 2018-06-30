@@ -6,12 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 22:16:48 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/30 17:29:24 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <libft_base/io.h>
 #include "rt.h"
 
@@ -24,24 +23,6 @@ static void			mvs_init(t_mv_state *mvs)
 		mvs->keys[i++].set = 0;
 	mvs->move_speed = 6.0f;
 	mvs->rotate_speed = 1.5f;
-}
-
-static int			ttf_win_init(t_sdl_ctx *sdl)
-{
-	if (TTF_Init() < 0)
-	{
-		ft_putstr("Failed to initialize SDL TTF: ");
-		ft_putendl(TTF_GetError());
-		return (0);
-	}
-	if (!(sdl->font = TTF_OpenFont("./assets/LibreBaskerville-Regular.ttf", 16)))
-	{
-
-		ft_putstr("Failed to load font: ");
-		ft_putendl(TTF_GetError());
-		return (0);
-	}
-	return (1);
 }
 
 static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
@@ -62,7 +43,7 @@ static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 	}
 	SDL_SetWindowMinimumSize(sdl->win, MIN_IMG_W, MIN_IMG_H);
 	sdl->screen = SDL_GetWindowSurface(sdl->win);
-	return (ttf_win_init(sdl));
+	return (1);
 }
 
 static void			controller_init(t_controller *data)

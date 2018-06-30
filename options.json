@@ -4,6 +4,7 @@
 		"height": 450,
 		"fullscreen": false
 	},
+	"font": "assets/ubuntu.regular.ttf",
 	"controllers": {
 		"mappings": [
 			//SDL2 controller mappings

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 22:50:30 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/06/30 17:41:49 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <SDL_video.h>
 # include <SDL_endian.h>
 # include "timer.h"
+
+# define MAX_FONT_NAME 256
 
 /*
 ** t_sdl_ctx: contains info about the sdl window.
@@ -31,6 +33,7 @@ typedef struct		s_sdl_ctx
 	unsigned int	frame_height;
 	int				con_state;
 	void			*font;
+	char			font_name[MAX_FONT_NAME];
 }					t_sdl_ctx;
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
