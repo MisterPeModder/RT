@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 11:18:56 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/25 11:40:58 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 00:32:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static void			compute_secondary_rays(
 		tmp = cast_refraction(incident_ray, r);
 		tmp.clr_contrib = (1.f - reflection_coef) * r->obj->mat.props_coef
 			* incident_ray.clr_contrib;
-		if (tmp.depth >= 0 && tmp.clr_contrib > 0.01f)
+		if (tmp.depth >= 0 && tmp.clr_contrib > 0.025f)
 			stack_push(stack, tmp, stack_size, offset);
 	}
 	tmp = cast_reflection(incident_ray, r);
@@ -119,6 +119,6 @@ static void			compute_secondary_rays(
 		tmp.clr_contrib = (1 - r->obj->mat.props_coef) * reflection_coef
 			+ r->obj->mat.props_coef;
 	tmp.clr_contrib *= incident_ray.clr_contrib;
-	if (tmp.depth >= 0 && tmp.clr_contrib > 0.01f)
+	if (tmp.depth >= 0 && tmp.clr_contrib > 0.025f)
 		stack_push(stack, tmp, stack_size, offset);
 }
