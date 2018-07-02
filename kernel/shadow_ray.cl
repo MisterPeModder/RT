@@ -6,20 +6,20 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 20:42:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:34:18 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 00:01:34 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
- ** shadow_raytrace: Handles the shadow ray tracing operation.
- **
- ** -scene: the scene instance.
- ** -o: origin of the ray.
+** shadow_raytrace: Handles the shadow ray tracing operation.
+**
+** -scene: the scene instance.
+** -o: origin of the ray.
  ** -u: unit vector (direction) of that ray.
- ** -r: where the result will be stored.
- **
- ** returns: 1 if an intersection has been found, 0 otherwise.
- */
+** -r: where the result will be stored.
+**
+** returns: 1 if an intersection has been found, 0 otherwise.
+*/
 
 static int			shadow_raytrace(
 		constant t_object *objs,
@@ -27,7 +27,7 @@ static int			shadow_raytrace(
 		size_t objs_num,
 		float3 o,
 		float3 u,
-		t_rt_result *r,
+		float3 *shadow_amount,
 		char no_negative,
 		float dist_max
 		)
@@ -35,7 +35,6 @@ static int			shadow_raytrace(
 	size_t			i;
 	float			d;
 	float			tmp;
-	int				face;
 	int				face_tmp;
 	float2			t_neg;
 	size_t			n;
@@ -44,7 +43,7 @@ static int			shadow_raytrace(
 	index_tri = 0;
 	i = 0;
 	d = dist_max;
-	r->shadow_amount = (float3)(1.f, 1.f, 1.f);
+	*shadow_amount = (float3)(1.f, 1.f, 1.f);
 	while (i < objs_num)
 	{
 		tmp = 0;
@@ -108,21 +107,15 @@ static int			shadow_raytrace(
 		if (tmp == FLT_MAX)
 			tmp = dist_max;
 		else if (tmp < dist_max && tmp > 0.f)
-			r->shadow_amount *= ((objs[i].mat.props == MAT_REFRACTIVE)
+			*shadow_amount *= ((objs[i].mat.props == MAT_REFRACTIVE)
 					? objs[i].color * objs[i].mat.props_coef * 0.6f : -1.f);
-		if (r->shadow_amount.x < 0.f)
+		if ((*shadow_amount).x < 0.f)
 			return (1);
 		if (tmp > 0 && tmp < d)
-		{
-			r->obj = objs + i;
 			d = tmp;
-			face = face_tmp;
-		}
 		++i;
 	}
 	if (d == dist_max)
 		return (0);
-	r->dist = d;
-	r->pos = u * d + o;
 	return (1);
 }

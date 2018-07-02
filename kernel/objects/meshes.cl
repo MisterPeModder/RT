@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/29 11:31:43 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 00:01:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void			mesh_normal(
 		int face
 		)
 {
-	if (abs(face) == face)
+	if (face >= 0)
 		r->normal = triangles[abs(face)].facing;
 	else
 		r->normal = -triangles[abs(face)].facing;

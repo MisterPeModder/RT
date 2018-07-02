@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:35:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/02 23:57:39 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ static float3			shading(
 {
 	size_t			i;
 	float3			lvec;
-	t_rt_result		sink;
+	float3			shadow_amount;
 	float3			start;
 	float3			result;
 	float			light_dist;
@@ -183,10 +183,10 @@ static float3			shading(
 		light_dist = length(lvec);
 		lvec = normalize(lvec);
 		start = r->pos + 0.001f * r->normal;
-		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec, &sink, no_negative, light_dist))
+		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec, &shadow_amount, no_negative, light_dist))
 			colorize(&lights[i], lvec, r, &result, (float3)(1.f, 1.f, 1.f));
-		else if (sink.shadow_amount.x >= 0.f)
-			colorize(&lights[i], lvec, r, &result, sink.shadow_amount);
+		else if (shadow_amount.x >= 0.f)
+			colorize(&lights[i], lvec, r, &result, shadow_amount);
 		++i;
 	}
 	return (result);
