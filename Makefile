@@ -162,6 +162,7 @@ $(LIBSDL):
 	@make -C $(LIBSDL_PATH) install
 
 $(LIBSDL_TTF):
+	@HOMEBREW_NO_AUTO_UPDATE=1 brew install freetype &> /dev/null || true
 	@cd $(LIBSDL_TTF_PATH) && ./configure --prefix $(LIBSDL_PATH)
 	@make -C $(LIBSDL_TTF_PATH)
 	@make -C $(LIBSDL_TTF_PATH) install
