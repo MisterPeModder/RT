@@ -6,7 +6,7 @@
 /*   By: jhache <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 14:01:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 17:02:50 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 02:46:28 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void			print_build_log(t_ocl *ocl)
 		ft_putendl("couldn't fetch openCL kernel build log.");
 	else
 		write(STDERR_FILENO, log, size);
+	free(log);
 }
 
 static cl_int		create_kernel(t_ocl *ocl)

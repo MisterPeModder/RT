@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 14:50:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 19:19:57 by jloro            ###   ########.fr       */
+/*   Updated: 2018/07/03 02:34:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 			CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, &form, &des, NULL, &ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	ret = clSetKernelArg(ocl->kernel, 4, sizeof(size_t), &core->scene.objs_num);
-	ret = clSetKernelArg(ocl->kernel, 5, sizeof(size_t),
+	ret = clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int), &core->scene.objs_num);
+	ret = clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
 			&core->scene.lights_num);
 	ret = clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
 			&core->sdl.frame_width);

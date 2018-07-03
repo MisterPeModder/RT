@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/28 16:34:49 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 02:33:07 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 typedef struct				s_rt_result
 {
 	constant t_object		*obj;
-	t_clfloat3				pos;
-	t_clfloat3				normal;
+	float3					pos;
+	float3					normal;
 	float					dist;
 	float3					shadow_amount;
 }							t_rt_result;
@@ -50,15 +50,15 @@ kernel void	render_frame(
 		constant t_cam *cam,
 		constant t_object *objs,
 		constant t_light *lights,
-		private size_t objs_num,
-		private size_t lights_num,
+		private unsigned int objs_num,
+		private unsigned int lights_num,
 		private unsigned int w,
 		private unsigned int h,
 		local t_ray *stack,
 		private t_clint depth,
 		private char no_negative,/*,
-								  private float3 bg_color,
-								  private unsigned int endian*/
+		private float3 bg_color,
+		private unsigned int endian*/
 		constant t_mesh_triangle *triangles,
 		private int filter
 		)

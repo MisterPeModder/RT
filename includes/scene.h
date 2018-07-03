@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/28 19:19:51 by jloro            ###   ########.fr       */
+/*   Updated: 2018/07/03 02:35:47 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct		s_scene
 	t_mesh_triangle	*mesh_triangle;
 	size_t			triangle_total_num;
 	size_t			num_vertex;
-	size_t			objs_num;
-	size_t			lights_num;
+	t_cluint		objs_num;
+	t_cluint		lights_num;
 	cl_float3		bg_color;
 	t_clint			depth;
 	int				filter;

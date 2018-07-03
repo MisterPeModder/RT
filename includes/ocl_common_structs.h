@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:34:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 02:35:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef union		u_properties
 	}				sphere;
 	struct {
 		float		opening_angle;
-		int			simple;
 		float		len;
+		int			simple;
 	}				cone;
 	struct {
 		float		radius;
@@ -84,7 +84,7 @@ typedef union		u_properties
 		float		len;
 	}				paraboloid;
 	struct {
-		size_t		num_triangles;
+		t_cluint	num_triangles;
 	}				mesh;
 }					t_properties;
 
@@ -119,46 +119,46 @@ typedef enum		e_mat_props
 */
 typedef struct	s_noise
 {
-	int			has_noise;
-	char		*type;
+	t_clint		has_noise;
+	t_clchar	*type;
 	t_clfloat3	c1;
 	t_clfloat3	c2;
 	t_clfloat3	c3;
-	float		amp;
-	float		fin;
-	float		div;
-	float		freq;
-	float		depth;
-	int			lines;
-	double		value;
-	double		value1;
+	t_clfloat	amp;
+	t_clfloat	fin;
+	t_clfloat	div;
+	t_clfloat	freq;
+	t_clfloat	depth;
+	t_clint		lines;
+	t_clfloat	value;
+	t_clfloat	value1;
 	t_clfloat3	result;
-	double		threshold;
-	double		perturbation;
-	int			a;
-	int			b;
-	int			c;
-	int			d;
-	int			i;
-	int			s;
-	int			t;
-	int			u;
-	int			v;
-	int			w;
-	int			x;
-	int			y;
-	int			z;
-	float		xa;
-	float		ya;
-	float		za;
-	float		low;
-	float		high;
-	int			x_int;
-	int			y_int;
-	int			z_int;
-	float		x_frac;
-	float		y_frac;
-	float		z_frac;
+	t_clfloat	threshold;
+	t_clfloat	perturbation;
+	t_clint		a;
+	t_clint		b;
+	t_clint		c;
+	t_clint		d;
+	t_clint		i;
+	t_clint		s;
+	t_clint		t;
+	t_clint		u;
+	t_clint		v;
+	t_clint		w;
+	t_clint		x;
+	t_clint		y;
+	t_clint		z;
+	t_clfloat	xa;
+	t_clfloat	ya;
+	t_clfloat	za;
+	t_clfloat	low;
+	t_clfloat	high;
+	t_clint		x_int;
+	t_clint		y_int;
+	t_clint		z_int;
+	t_clfloat	x_frac;
+	t_clfloat	y_frac;
+	t_clfloat	z_frac;
 }				t_noise;
 
 /*
@@ -167,13 +167,13 @@ typedef struct	s_noise
 */
 typedef struct		s_material
 {
+	t_clfloat3		p_out;
 //	t_clfloat		shininess;//maybe for specular
-	t_mat_props		props;
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
-	t_noise			*noise;
-	t_clfloat3		p_out;
-	int				has_shadow;
+//	t_noise			*noise;
+	t_mat_props		props;
+	t_clint			has_shadow;
 }					t_material;
 
 typedef struct		s_mesh_triangle
@@ -195,14 +195,14 @@ typedef struct		s_mesh_triangle
 */
 typedef struct		s_object
 {
-	t_obj_type		type;
+	t_material		mat;
+	t_properties	props;
 	t_clfloat3		pos;
 	t_clfloat3		facing;
 	t_clfloat3		dir;
 	t_clfloat3		right;
 	t_clfloat3		color;
-	t_properties	props;
-	t_material		mat;
+	t_obj_type		type;
 }					t_object;
 
 /*

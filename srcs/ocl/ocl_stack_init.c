@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 17:36:46 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 02:28:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ void				update_frame_size(t_rt *core, t_mem_info *mem_info)
 
 cl_int				compute_work_size(t_mem_info *mem_info, t_rt *core)
 {
+	size_t			tmp;
+
 	mem_info->wg_dim[0] = mem_info->buffer_size / (size_t)(core->scene.depth + 1);
-	mem_info->wg_dim[0] -= mem_info->wg_dim[0] % mem_info->wg_mult;
-	mem_info->wg_dim[1] = 1;
+	tmp = mem_info->wg_dim[0] % mem_info->wg_mult;
 	if (mem_info->wg_dim[0] == 0)
 	{
 		ft_putendl("error: the work group size is too small.");
 		return (!CL_SUCCESS);
 	}
+	else if (tmp < mem_info->wg_dim[0])
+		mem_info->wg_dim[0] -= tmp;
+	mem_info->wg_dim[1] = 1;
 	while (mem_info->wg_dim[0] > mem_info->wg_dim[1])
 	{
 		if (mem_info->wg_dim[0] % 2 == 1)
