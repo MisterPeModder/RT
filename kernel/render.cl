@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 08:20:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 23:40:49 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
 {
 	float3			vec;
 	float			fov;
-	float			dir;
+	float2			dir;
 
-	dir = choose_ray_dir(seed + x + y * x);
+	dir.x = ((seed == 0) ? 0.5f : choose_ray_dir(seed + x + y * x));
+	dir.y = ((seed == 0) ? 0.5f : choose_ray_dir(~seed + x + y * x));
 	fov = tan(cam->fov / 2);
-	vec.x = (2 * ((x + dir) / w) - 1) * w / (float)h * fov;
-	vec.y = (1 - 2 * ((y + dir) / h)) * fov;
+	vec.x = (2 * ((x + dir.x) / w) - 1) * w / (float)h * fov;
+	vec.y = (1 - 2 * ((y + dir.y) / h)) * fov;
 	vec.z = -1;
 	rotate_x(&vec, cam->angle.x);
 	rotate_y(&vec, cam->angle.y);

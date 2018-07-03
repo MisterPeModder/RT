@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 18:28:15 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 21:47:42 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct			s_kargs
 */
 typedef struct				s_mem_info
 {
-	size_t					wg_dim[3];
+	size_t					wg_dim[2];
 	size_t					wg_nb[2];
 	size_t					wg_mult;
 	cl_uint					compute_units;

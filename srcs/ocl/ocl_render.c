@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 15:10:12 by jloro            ###   ########.fr       */
+/*   Updated: 2018/07/04 00:32:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static size_t		ft_min(size_t arg1, size_t arg2)
 }
 
 //TODO CHANGE IT !!!!!!
-static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
+static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
+		unsigned int *sample_seed)
 {
 	unsigned int	i;
 	cl_int			ret;
@@ -32,8 +33,9 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
 	glob_dim[2] = 1;
 	ft_bzero(offset, sizeof(size_t) * 3);
 	i = 0;
-	clSetKernelArg(core->ocl.kernel, 12, sizeof(unsigned int),
-			&core->sample_count);
+	if (clSetKernelArg(core->ocl.kernel, 12, sizeof(unsigned int), sample_seed)
+		!= CL_SUCCESS)
+		return (!CL_SUCCESS);
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])
 	{
 		glob_dim[0] = core->mem_info.wg_dim[0] * ft_min((core->mem_info.wg_nb[0]
@@ -56,11 +58,14 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	size_t			glob_dim[3];
 	cl_int			ret;
 	size_t			offset[3];
+	unsigned int	sample_seed;
 
+	sample_seed = ((core->sample_count == (core->sample_nb - 1)) ? 0 :
+			(core->sample_count + 1) * (((unsigned int *)core->frame->pixels)[42] + 1));
 	if ((tmp = ocl_set_kernel_arg(core, &ret)) == NULL)
 		return (ret);
 	update_frame_size(core, &core->mem_info);
-	if ((ret = compute_le_frame(core, tmp)) != CL_SUCCESS)
+	if ((ret = compute_le_frame(core, tmp, &sample_seed)) != CL_SUCCESS)
 		return (ret);
 	ft_bzero(offset, sizeof(size_t) * 3);
 	SDL_LockSurface(core->frame);

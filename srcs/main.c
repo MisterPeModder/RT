@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 08:34:29 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/04 00:35:38 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int					main(int ac, char **av)
 		quit_release(&core);
 		return (EXIT_FAILURE);
 	}
-	core.sample_nb = 12;
+	core.sample_nb = 6;//should be parsed
 	core.sample_count = core.sample_nb;
 	scene_has_neg_objects(&core.scene, &core.state_flags);
 	controller_update(&core.controller);
