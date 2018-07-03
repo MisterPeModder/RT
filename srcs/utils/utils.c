@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 11:50:30 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 08:04:56 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,31 @@ void				scene_has_neg_objects(t_scene *scene, int *state)
 			return ;
 		}
 	*state |= SF_NO_NEGATIVE;
+}
+
+void				average_sample(t_rt *core)
+{
+	int				i;
+	unsigned char	*frame;
+
+	i = 0;
+	frame = (unsigned char *)core->frame->pixels;
+	if (core->sample_nb - core->sample_count == 1)
+	{
+		while (i < core->frame->w * core->frame->h * 4)
+		{
+			core->sample_sum[i] = frame[i];
+			++i;
+		}
+	}
+	else
+	{
+		while (i < core->frame->w * core->frame->h * 4)
+		{
+			core->sample_sum[i] += frame[i];
+			frame[i] = core->sample_sum[i] /
+				(int)(core->sample_nb - core->sample_count);
+			++i;
+		}
+	}
 }

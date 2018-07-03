@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 02:33:07 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 07:52:33 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ kernel void	render_frame(
 		private float3 bg_color,
 		private unsigned int endian*/
 		constant t_mesh_triangle *triangles,
-		private int filter
+		private int filter,
+		private unsigned int seed
 		)
 {
 	unsigned int	x;
@@ -80,7 +81,7 @@ kernel void	render_frame(
 	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))
 		* (depth + 1);
 	curr_ray.pos = cam->pos;
-	curr_ray.dir = compute_pixel_coor(cam, w, h, x, y);
+	curr_ray.dir = compute_pixel_coor(cam, w, h, x, y, seed);
 	curr_ray.clr_contrib = 1.f;
 	curr_ray.depth = depth;
 	stack_push(stack, curr_ray, &stack_size, offset);

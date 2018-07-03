@@ -6,19 +6,27 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/02 23:57:39 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 08:20:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+static float		choose_ray_dir(unsigned int seed)
+{
+	seed = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
+	return (fabs(native_cos((float)(seed >> 16))));
+}
+
 static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
-		unsigned int h, unsigned int x, unsigned int y)
+		unsigned int h, unsigned int x, unsigned int y, unsigned long seed)
 {
 	float3			vec;
 	float			fov;
+	float			dir;
 
+	dir = choose_ray_dir(seed + x + y * x);
 	fov = tan(cam->fov / 2);
-	vec.x = (2 * ((x + 0.5) / w) - 1) * w / (float)h * fov;
-	vec.y = (1 - 2 * ((y + 0.5) / h)) * fov;
+	vec.x = (2 * ((x + dir) / w) - 1) * w / (float)h * fov;
+	vec.y = (1 - 2 * ((y + dir) / h)) * fov;
 	vec.z = -1;
 	rotate_x(&vec, cam->angle.x);
 	rotate_y(&vec, cam->angle.y);

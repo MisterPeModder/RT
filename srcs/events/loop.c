@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:44:23 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 18:11:22 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 06:58:38 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static void			update_keys(t_rt *c)
 	}
 }
 
-
-
 void				on_tick(t_rt *core)
 {
 	t_timer			timer;
@@ -43,10 +41,15 @@ void				on_tick(t_rt *core)
 	update_keys(core);
 	if (core->state_flags & SF_SHOULD_UPDATE)
 	{
+		--core->sample_count;
 		if (render_frame(core, &timer) != CL_SUCCESS)
+		{
 			ft_putendl_fd("\x1b[93mWARNING\x1b[0m: failed to render frame !!",
 					STDERR_FILENO);
-		core->state_flags &= ~SF_SHOULD_UPDATE;
+			core->sample_count = 0;
+		}
+		if (core->sample_count == 0)
+			core->state_flags &= ~SF_SHOULD_UPDATE;
 	}
 }
 

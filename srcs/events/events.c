@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 18:30:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 06:23:33 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void			exit_rt(t_rt *core)
 		SDL_FreeSurface(core->frame);
 		SDL_GameControllerClose(core->controller.controller);
 		TTF_CloseFont(core->sdl.font);
+		free(core->sample_sum);
 	}
 	TTF_Quit();
 	SDL_Quit();

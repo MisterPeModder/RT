@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 17:53:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 08:37:37 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include <SDL_ttf.h>
 #include <SDL_events.h>
 #include <libft_base/io.h>
+#include <libft_base/memory.h>
 #include "rt.h"
 
 static int			remake_surfaces(t_rt *core)
 {
+	free(core->sample_sum);
 	SDL_FreeSurface(core->frame);
 	SDL_FreeSurface(core->sdl.ui);
 	TTF_CloseFont(core->sdl.font);
@@ -39,6 +41,10 @@ static int			remake_surfaces(t_rt *core)
 		ft_putendl(TTF_GetError());
 		return (0);
 	}
+	else if ((core->sample_sum = (int *)ft_memalloc(sizeof(int)
+					* core->sdl.frame_width
+					* core->sdl.frame_height * 4)) == NULL)
+		ft_putendl_fd("could not create Sample buffer", STDERR_FILENO);
 	else
 		return (1);
 	SDL_SetSurfaceBlendMode(core->sdl.ui, SDL_BLENDMODE_BLEND);
@@ -61,5 +67,6 @@ void				on_window_event(void *event, t_rt *core)
 			on_window_closing(core);
 		core->sdl.screen = SDL_GetWindowSurface(core->sdl.win);
 		core->state_flags |= SF_SHOULD_UPDATE;
+		core->sample_count = core->sample_nb;
 	}
 }

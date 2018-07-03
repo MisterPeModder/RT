@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/23 20:20:48 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 06:48:21 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void				move_cam(t_rt *core, int key, t_timer *time)
 	rotate_z(&move_vec, core->scene.cam.angle.z);
 	vec3cl_add(&core->scene.cam.pos, &move_vec, &core->scene.cam.pos);
 	core->state_flags |= SF_SHOULD_UPDATE;
+	core->sample_count = core->sample_nb;
 }
 
 void				rotate_cam(t_rt *core, int key, t_timer *time)
@@ -58,4 +59,5 @@ void				rotate_cam(t_rt *core, int key, t_timer *time)
 	else
 		angle->z = fmod(angle->z - increment, M_PI * 2);
 	core->state_flags |= SF_SHOULD_UPDATE;
+	core->sample_count = core->sample_nb;
 }
