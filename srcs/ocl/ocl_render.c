@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 22:55:49 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 03:11:50 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "rt.h"
 #include "image.h"
 #include "ocl_data.h"
+
+static size_t		ft_min(size_t arg1, size_t arg2)
+{
+	return (arg1 > arg2 ? arg2 : arg1);
+}
 
 //TODO CHANGE IT !!!!!!
 static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
@@ -29,11 +34,9 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
 	i = 0;
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])
 	{
-		if (core->mem_info.wg_nb[0] - (i % core->mem_info.wg_nb[0])
-				< core->mem_info.compute_units)
-			glob_dim[0] = core->mem_info.wg_dim[0];
-		else
-			glob_dim[0] = core->mem_info.wg_dim[0] * core->mem_info.compute_units;
+		glob_dim[0] = core->mem_info.wg_dim[0] * ft_min((core->mem_info.wg_nb[0]
+					- (i % core->mem_info.wg_nb[0])),
+					core->mem_info.compute_units);
 		offset[0] = core->mem_info.wg_dim[0] * (size_t)(i % core->mem_info.wg_nb[0]);
 		offset[1] = glob_dim[1] * (size_t)(i / core->mem_info.wg_nb[0]);
 		ret = clEnqueueNDRangeKernel(core->ocl.queue, core->ocl.kernel, 2,
