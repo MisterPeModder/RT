@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 07:10:10 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 11:48:42 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int					make_cam(t_cam *cam, const t_json_object *data);
 cl_int				render_frame(t_rt *core, t_timer *t);
 int					print_frame(t_rt *core, t_timer *t);
 void				average_sample(t_rt *core);
+void				apply_filter(t_rt *core);
 
 /*
 ** vec3cl_fill: fills the openCL float3 vector with the given coordinates.

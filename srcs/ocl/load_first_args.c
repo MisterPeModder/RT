@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 14:50:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 02:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 15:09:15 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	ret = clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
 			&core->sdl.frame_height);
 	ret = clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
-	ret |= clSetKernelArg(ocl->kernel, 12, sizeof(int),
-			&core->scene.filter);
 	return (ret);
 }
 

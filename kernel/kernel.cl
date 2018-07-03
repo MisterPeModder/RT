@@ -60,7 +60,6 @@ kernel void	render_frame(
 		private float3 bg_color,
 		private unsigned int endian*/
 		constant t_mesh_triangle *triangles,
-		private int filter,
 		private unsigned int seed
 		)
 {
@@ -103,24 +102,5 @@ kernel void	render_frame(
 				compute_secondary_rays(curr_ray, &r, stack, &stack_size, offset);
 		}
 	}
-	if (filter == -1)
-		write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
-	else if (!filter)
-	{
-		color.x = color.x * 58.395 + color.y * 149.685 + color.z * 29.07;
-		write_imageui(output, (int2)(x, y), (uint4)(color.x, color.x, color.x, 255));
-	}
-	else if (filter == 1)
-	{
-		if (color.x * 54.213 + color.y * 182.376 + color.z * 18.411 > 100)//calcul brightness 100 a confirmer
-			write_imageui(output, (int2)(x, y), (uint4)(255, 255, 255, 255));
-		else
-			write_imageui(output, (int2)(x, y), (uint4)(0, 0, 0, 255));
-	}
-	if (filter == 2)
-		write_imageui(output, (int2)(x, y), (uint4)(0, color.y * 255, 0, 255));
-	if (filter == 3)
-		write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, 0, 0, 255));
-	if (filter == 4)
-		write_imageui(output, (int2)(x, y), (uint4)(0, 0, color.x * 255, 255));
+	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
 }

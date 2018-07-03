@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 07:41:07 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 15:10:12 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp)
 	glob_dim[2] = 1;
 	ft_bzero(offset, sizeof(size_t) * 3);
 	i = 0;
-	clSetKernelArg(core->ocl.kernel, 13, sizeof(unsigned int),
+	clSetKernelArg(core->ocl.kernel, 12, sizeof(unsigned int),
 			&core->sample_count);
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])
 	{

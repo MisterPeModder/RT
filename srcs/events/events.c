@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 06:23:33 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/03 15:06:56 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,30 @@ static void			exit_rt(t_rt *core)
 	exit(EXIT_SUCCESS);
 }
 
+void				change_filter(int key, t_rt *core)
+{
+	int				update;
+
+	update = 0;
+	if (key == SDLK_1 && core->scene.filter != 1 && (update = 1))
+		core->scene.filter = 1;
+	else if (key == SDLK_2 && core->scene.filter != 2 && (update = 1))
+		core->scene.filter = 2;
+	else if (key == SDLK_3 && core->scene.filter != 3 && (update = 1))
+		core->scene.filter = 3;
+	else if (key == SDLK_4 && core->scene.filter != 4 && (update = 1))
+		core->scene.filter = 4;
+	else if (key == SDLK_5 && core->scene.filter != 5 && (update = 1))
+		core->scene.filter = 5;
+	else if (key == SDLK_0 && core->scene.filter != -1 && (update = 1))
+		core->scene.filter = -1;
+	if (update)
+	{
+		core->state_flags |= SF_SHOULD_UPDATE;
+		core->sample_count = core->sample_nb;
+	}
+}
+
 void				on_key_pressed(int key, t_rt *core)
 {
 	t_mv_state		*mvs;
@@ -43,6 +67,9 @@ void				on_key_pressed(int key, t_rt *core)
 		core->sdl.show_ui = !core->sdl.show_ui;
 		core->state_flags |= SF_SHOULD_UPDATE;
 	}
+	else if (key == SDLK_1 || key == SDLK_2 || key == SDLK_3 ||
+	key == SDLK_4 || key == SDLK_5 || key == SDLK_0)
+		change_filter(key, core);
 	mvs = &core->mvs;
 	i = 0;
 	while (i < MAX_KEYS)

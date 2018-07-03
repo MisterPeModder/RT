@@ -7,41 +7,6 @@
 	},
 	"objects": [
 		{
-			"type": "plane",
-			"pos": [0, 0, 12],
-			"color": [150, 150, 150],
-			"angle": [-90, 0, 0]
-		},
-		{
-			"type": "plane",
-			"pos": [12, 0, 0],
-			"color": [150, 150, 150],
-			"angle": [90, -90, 0]
-		},
-		{
-			"type": "plane",
-			"pos": [-12, 0, 0],
-			"color": [150, 150, 150],
-			"angle": [90, 90, 0]
-		},
-		{
-			"type": "plane",
-			"pos": [0, -6, 0],
-			"color": [150, 150, 150]
-		},
-		{
-			"type": "plane",
-			"pos": [0, 8, 0],
-			"color": [50, 50, 50],
-			"angle": [180, 0, 0]
-		},
-		{
-			"type": "plane",
-			"pos": [0, 0, -20],
-			"color": [9, 65, 155],
-			"angle": [90, 0, 0]
-		},
-		{
 			"type": "mesh",
 			"vertices": [
 				[-1, -1, -1],
@@ -62,17 +27,12 @@
 				[5, 1, 0, 4]
 			],
 			"pos": [-1, 0, -5],
-			"angle": [0, 0, 0],
-			"color": [214, 59, 215],
-			"material": {
-				"property": "refractive",
-				"coefficient": 0.8,
-				"refractive_index": 1.0
-			}
+			"angle": [45, 45, 45],
+			"color": [214, 59, 215]
 		}
 	],
 	"lights": [
-		{"pos": [3, 4, -10]},
+		{"pos": [3, 4, -3]},
 		{"pos": [-5, -4, -3]}
 	]
 }

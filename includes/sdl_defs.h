@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 18:19:37 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/03 12:14:17 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void				on_key_repeat(int key, t_timer *time, struct s_rt *core);
 void				on_window_closing(struct s_rt *core);
 void				on_tick(struct s_rt *core);
 void				on_window_event(void *event, struct s_rt *core);
+void				change_filter(int key, struct s_rt *core);
 
 #endif
