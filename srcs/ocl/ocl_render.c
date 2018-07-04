@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/04 00:32:04 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/04 05:23:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	unsigned int	sample_seed;
 
 	sample_seed = ((core->sample_count == (core->sample_nb - 1)) ? 0 :
-			(core->sample_count + 1) * (((unsigned int *)core->frame->pixels)[42] + 1));
+			(core->sample_count + 1)
+			* (((unsigned int *)core->frame->pixels)[42] + 1));
 	if ((tmp = ocl_set_kernel_arg(core, &ret)) == NULL)
 		return (ret);
 	update_frame_size(core, &core->mem_info);
@@ -76,5 +77,6 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 			offset, glob_dim, 0, 0, core->frame->pixels, 0, NULL, NULL);
 	if (ret != CL_SUCCESS)
 		return (ret);
+	average_sample(core);
 	return (print_frame(core, t) + (int)release_kernel_arg(tmp) * 0);
 }

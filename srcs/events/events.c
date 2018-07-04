@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/04 01:40:53 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/04 06:32:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void				on_key_pressed(int key, t_rt *core)
 	else if (key == SDLK_h)
 	{
 		core->sdl.show_ui = !core->sdl.show_ui;
-		core->state_flags |= SF_SHOULD_UPDATE;//no update, just print frame
+		print_frame(core, NULL);
 	}
-	else if (key == SDLK_1 || key == SDLK_2 || key == SDLK_3 ||
-			key == SDLK_4 || key == SDLK_5 || key == SDLK_0)
+	else if ((key == SDLK_1 || key == SDLK_2 || key == SDLK_3
+				|| key == SDLK_4 || key == SDLK_5 || key == SDLK_0)
+			&& core->scene.filter != key)
 	{
 		core->scene.filter = (t_filter)key;
-		core->state_flags |= SF_SHOULD_UPDATE;
-//	TODO: call print_frame instead of SF_SHOULD_UPDATE (t_timer needed);
+		print_frame(core, NULL);
 	}
 	mvs = &core->mvs;
 	i = 0;
