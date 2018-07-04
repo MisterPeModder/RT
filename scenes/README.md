@@ -28,14 +28,14 @@ _If an attribute have a default value, it can be elapsed in the scene file._
 * a "depth" attribute, representing the number of possible bouncing of the primary rays. It is represented by an unsigned integer.
 
 * **a "camera" object, which must contain :**
- * a "pos" attribute, describing the position of the object.
- * an "angle" rotation vector. By default, the camera look toward [0, 0, -1]. The rotation is specified in degree.
- * an aperture angle named "fov" (for Field of Vision). by default, it is set to 90.
+    * a "pos" attribute, describing the position of the object.
+    * an "angle" rotation vector. By default, the camera look toward [0, 0, -1]. The rotation is specified in degree.
+    * an aperture angle named "fov" (for Field of Vision). by default, it is set to 90.
 
 * **a "lights" array of objects describing the light sources in the scene. Each object in the array must contain**:
- * a position named "pos".
- * a "color" attribute. By default, it is set to [255, 255, 255].
- * a "power" number, between 0 and 5. By default, it is set to one.
+    * a position named "pos".
+    * a "color" attribute. By default, it is set to [255, 255, 255].
+    * a "power" number, between 0 and 5. By default, it is set to one.
 
 * **an "objects" array of objects. Each object represent an object in the scene (sphere, cylinder, ...) and must have:**
  * a "type" string, which define what type of object it is. The different possible types are :
@@ -57,37 +57,39 @@ _If an attribute have a default value, it can be elapsed in the scene file._
 Each object might take one or many informations that depend of their type. Here is the list, sorted by type:
 
 * **Sphere, Disk:**
- * a "radius" attribute (defined by a float value).
+    * a "radius" attribute (defined by a float value).
 * **Cone:**
- * an "opening_angle" attribute (defined by a float value between 0 and 90 excluded),
- * a "simple" attribute (defined by a boolean), defining if the cone is simple or double (set by default to double),
- * a "length" attribute (defined by a float value. By default, the cone is infinite).
+    * an "opening_angle" attribute (defined by a float value between 0 and 90 excluded),
+    * a "simple" attribute (defined by a boolean), defining if the cone is simple or double (set by default to double),
+    * a "length" attribute (defined by a float value. By default, the cone is infinite).
 * **Cylinder:**
- * a "radius" attribute (defined by a float value).
- * a "length" attribute (defined by a float value. By default, the cone is infinite).
+    * a "radius" attribute (defined by a float value).
+    * a "length" attribute (defined by a float value. By default, the cone is infinite).
 * **Plane:** There is no special attribute for the plane.
 * **Paraboloid:**
- * a "length" attribute (defined by a float value).
+    * a "length" attribute (defined by a float value).
 * **Mesh:**
- * TODO
+    * TODO
 ---
 ### The Material:
 Material is a (JSON) object, which describe the property of a corresponding object.
 Here is the 4 possible attributes in the material attribute:
 
 * a "property" string, which state the property of the object. It can be:
- * reflective (mirror),
- * refractive (transparent),
- * negative (any colision with a negative object is erased),
- * portal (see the Portal section),
- * none (the default plain object).
-* a "coefficient" float value (between 0 and 1), describing how much the object is non-plain. By default, it is set to 0
+    * reflective (mirror),
+    * refractive (transparent),
+    * negative (any colision with a negative object is erased),
+    * portal (see the Portal section),
+    * none (the default plain object).
+* a "coefficient" float value (between 0 and 1), describing how much the object is non-plain. By default, it is set to 0.
 * a "refractive_index" float value, describing how the ray are refracted inside the object (you can seek for informations about it on internet).
 * a "output_pos" position (reserved for portals).
 ---
 ### The Portals:
+
 Portals are a Unique YARP-implemented property of an object. Any primary ray touching a portal object will be teleported to the output_pos position.
 The teleported rays keep the same direction threw the portal.
+
 ---
 ### YARP Pro Tips:
 * Set the fov to 45 to avoid distortion.
