@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 14:08:44 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 02:35:47 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/04 01:29:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <libft_containers/array_list.h>
 # include "objects.h"
 # include "ocl_common_structs.h"
+# include "filters.h"
 
 /*
 ** t_scene: A structure that stores all the information about the current scene.
@@ -39,7 +40,7 @@ typedef struct		s_scene
 	t_cluint		lights_num;
 	cl_float3		bg_color;
 	t_clint			depth;
-	int				filter;
+	t_filter		filter;
 }					t_scene;
 
 /*

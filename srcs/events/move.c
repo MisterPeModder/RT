@@ -6,10 +6,11 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:16:00 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 06:48:21 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/04 01:41:23 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "rt.h"
 #include "move.h"
 #include "sdl_defs.h"
 

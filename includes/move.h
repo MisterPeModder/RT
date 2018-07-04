@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 18:23:01 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/06 00:59:19 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/07/04 01:40:24 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 # include <SDL_keyboard.h>
 # include <math.h>
-# include "rt.h"
 # include "timer.h"
 
 # define MOVE_INCREMENT .5f
 # define ROTATE_INCREMENT (.02f * M_PI)
 
-void				move_cam(t_rt *core, int key, t_timer *time);
-void				rotate_cam(t_rt *core, int key, t_timer *time);
+struct s_rt;
+
+void				move_cam(struct s_rt *core, int key, t_timer *time);
+void				rotate_cam(struct s_rt *core, int key, t_timer *time);
 
 #endif

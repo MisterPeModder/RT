@@ -103,6 +103,7 @@ SRCS_NAMES +=	parsing/args.c					\
 				parsing/scene.c					\
 
 SRCS_NAMES +=	utils/angle.c					\
+				utils/filters.c					\
 				utils/rotate.c					\
 				utils/timer.c					\
 				utils/utils.c					\
@@ -114,6 +115,7 @@ OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))
 OBJ_DIRS := $(sort $(dir $(OBJS)))
 
 INCS :=	controller.h			\
+		filters.h				\
 		image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
