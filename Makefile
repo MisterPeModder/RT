@@ -108,6 +108,7 @@ SRCS_NAMES +=	utils/angle.c					\
 				utils/timer.c					\
 				utils/utils.c					\
 				utils/vec3cl.c					\
+				utils/vec3cl_2.c				\
 
 SRCS := $(addprefix $(SRC_PATH)/,$(SRCS_NAMES))
 OBJS := $(addprefix $(OBJ_PATH)/,$(SRCS_NAMES:.c=.o))

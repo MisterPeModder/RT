@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 02:28:02 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/24 04:34:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ cl_int				compute_work_size(t_mem_info *mem_info, t_rt *core)
 {
 	size_t			tmp;
 
-	mem_info->wg_dim[0] = mem_info->buffer_size / (size_t)(core->scene.depth + 1);
+	mem_info->wg_dim[0] = mem_info->buffer_size
+		/ (size_t)(core->scene.depth + 1);
 	tmp = mem_info->wg_dim[0] % mem_info->wg_mult;
 	if (mem_info->wg_dim[0] == 0)
 	{

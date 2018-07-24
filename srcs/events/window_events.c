@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 08:37:37 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/24 03:55:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,13 @@ static int			remake_surfaces(t_rt *core)
 	TTF_CloseFont(core->sdl.font);
 	if (!(core->frame = img_make(core->sdl.frame_width,
 					core->sdl.frame_height)))
-	{
 		ft_putendl_fd("could not create frame buffer", STDERR_FILENO);
-	}
 	else if (!(core->sdl.ui = img_make(core->sdl.win_width,
 					core->sdl.win_height)))
-	{
 		ft_putendl_fd("could not create UI buffer", STDERR_FILENO);
-	}
 	else if (!(core->sdl.font = TTF_OpenFont(core->sdl.font_name,
 					(int)core->sdl.win_width / 100 + 8)))
 	{
-
 		ft_putstr("Failed to load font: ");
 		ft_putendl(TTF_GetError());
 		return (0);
