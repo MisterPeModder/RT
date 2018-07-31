@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/04 06:32:15 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/31 01:56:56 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "rt.h"
 #include "move.h"
 
-static void			exit_rt(t_rt *core)
+void				exit_rt(t_rt *core)
 {
 	if (core)
 	{
@@ -36,20 +36,7 @@ void				on_key_pressed(int key, t_rt *core)
 	t_mv_state		*mvs;
 	unsigned int	i;
 
-	if (key == SDLK_ESCAPE)
-		exit_rt(core);
-	else if (key == SDLK_h)
-	{
-		core->sdl.show_ui = !core->sdl.show_ui;
-		print_frame(core, NULL);
-	}
-	else if ((key == SDLK_1 || key == SDLK_2 || key == SDLK_3
-				|| key == SDLK_4 || key == SDLK_5 || key == SDLK_0)
-			&& core->scene.filter != key)
-	{
-		core->scene.filter = (t_filter)key;
-		print_frame(core, NULL);
-	}
+	key_handling(key, core);
 	mvs = &core->mvs;
 	i = 0;
 	while (i < MAX_KEYS)
@@ -90,6 +77,21 @@ void				on_key_repeat(int key, t_timer *time, t_rt *core)
 			key == SDLK_DOWN || key == SDLK_RIGHT ||
 			key == SDLK_PAGEUP || key == SDLK_PAGEDOWN)
 		rotate_cam(core, key, time);
+	else if (key == SDLK_EQUALS)
+	{
+		core->sample_nb += 1;
+		core->sample_count += 1;
+		core->state_flags |= SF_SHOULD_UPDATE;
+	}
+	else if (key == SDLK_MINUS && core->sample_nb > 1)
+	{
+		core->sample_nb -= 1;
+		core->sample_count = ((core->sample_count <= 1)
+				? core->sample_nb : core->sample_count - 1);
+		core->state_flags |= SF_SHOULD_UPDATE;
+	}
+	else
+		repeated_key_handling(key, core);
 }
 
 void				on_window_closing(t_rt *core)

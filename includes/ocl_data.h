@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 21:47:42 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/31 02:11:20 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct				s_mem_info
 */
 cl_int					ocl_init(t_ocl *ocl);
 cl_int					init_kernel_args(t_ocl *ocl, struct s_rt *core);
+cl_int					init_frame_kernel_arg(t_ocl *ocl, struct s_rt *core);
 t_kargs					*ocl_set_kernel_arg(struct s_rt *core, cl_int *ret);
 void					*release_kernel_arg(t_kargs *args);
 cl_int					create_ocl_stack(struct s_rt *core, t_mem_info *mem_info);

@@ -71,6 +71,7 @@ SRCS_NAMES +=	controllers/controller_event.c	\
 				controllers/mappings_add.c		\
 
 SRCS_NAMES +=	events/events.c					\
+				events/keys.c					\
 				events/loop.c					\
 				events/move.c					\
 				events/window_events.c			\

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 18:23:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 18:26:59 by jhache           ###   ########.fr       */
+/*   Updated: 2018/07/31 01:42:18 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static t_kargs		*init_kargs(t_rt *core)
 {
 	t_kargs			*result;
 	char			no_negative;
+	cl_int			ret;
 
 	result = malloc(sizeof(t_kargs));
 	if (result == NULL)
@@ -49,8 +50,13 @@ static t_kargs		*init_kargs(t_rt *core)
 	result->arg9 = NULL;
 	result->arg11 = NULL;
 	no_negative = core->state_flags & SF_NO_NEGATIVE;
-	return (clSetKernelArg(core->ocl.kernel, 10, sizeof(char), &no_negative)
-			== CL_SUCCESS ? result : NULL);
+	ret = clSetKernelArg(core->ocl.kernel, 10, sizeof(char), &no_negative);
+	if (ret != CL_SUCCESS)
+	{
+		free(result);
+		result = NULL;
+	}
+	return (result);
 }
 
 static t_kargs		*ocl_set_kernel_arg2(t_rt *core, t_kargs *tmp)

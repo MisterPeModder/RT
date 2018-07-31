@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 14:50:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 15:09:15 by jloro            ###   ########.fr       */
+/*   Updated: 2018/07/31 02:11:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include "ocl_data.h"
 #include <stdio.h>
 
-cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
+cl_int				init_frame_kernel_arg(t_ocl *ocl, t_rt *core)
 {
-	cl_int			ret;
 	cl_image_format	form;
 	cl_image_desc	des;
+	cl_int			ret;
 
 	form = (cl_image_format){.image_channel_order = CL_RGBA,
 		.image_channel_data_type = CL_UNSIGNED_INT8};
@@ -33,14 +33,22 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 			CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, &form, &des, NULL, &ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	ret = clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int), &core->scene.objs_num);
-	ret = clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
-			&core->scene.lights_num);
-	ret = clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
-			&core->sdl.frame_width);
-	ret = clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
-			&core->sdl.frame_height);
 	ret = clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
+	return (ret);
+}
+
+cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
+{
+	cl_int			ret;
+
+	ret = init_frame_kernel_arg(ocl, core);
+	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int), &core->scene.objs_num);
+	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
+			&core->scene.lights_num);
+	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
+			&core->sdl.frame_width);
+	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
+			&core->sdl.frame_height);
 	return (ret);
 }
 
