@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 14:50:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/31 02:11:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 16:06:47 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ cl_int				init_frame_kernel_arg(t_ocl *ocl, t_rt *core)
 	if (ret != CL_SUCCESS)
 		return (ret);
 	ret = clSetKernelArg(core->ocl.kernel, 0, sizeof(cl_mem), &ocl->ocl_img);
+	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
+			&core->sdl.frame_width);
+	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
+			&core->sdl.frame_height);
 	return (ret);
 }
 
@@ -45,10 +49,6 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int), &core->scene.objs_num);
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
 			&core->scene.lights_num);
-	ret |= clSetKernelArg(ocl->kernel, 6, sizeof(cl_uint),
-			&core->sdl.frame_width);
-	ret |= clSetKernelArg(ocl->kernel, 7, sizeof(cl_uint),
-			&core->sdl.frame_height);
 	return (ret);
 }
 

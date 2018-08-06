@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/31 02:03:09 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 16:42:21 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <libft_base/memory.h>
 #include "rt.h"
 
-static int			remake_surfaces(t_rt *core)
+int					remake_surfaces(t_rt *core)
 {
 	free(core->sample_sum);
 	SDL_FreeSurface(core->frame);
@@ -57,7 +57,7 @@ void				on_window_event(void *event, t_rt *core)
 		core->sdl.win_width = (unsigned int)w;
 		core->sdl.win_height = (unsigned int)h;
 		update_frame_size(core, &core->mem_info);
-		init_kernel_args(&core->ocl, core);
+		init_frame_kernel_arg(&core->ocl, core);
 		free(core->sample_sum);
 		core->sample_sum = (int *)ft_memalloc(sizeof(int)
 				* core->sdl.frame_width * core->sdl.frame_height * 4);

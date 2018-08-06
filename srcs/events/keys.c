@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 04:48:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/31 02:15:23 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 16:45:12 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,10 @@ void				repeated_key_handling(int key, t_rt *core)
 	if (key == SDLK_KP_PLUS)
 	{
 		core->scene.depth += 1;
-		if (compute_work_size(&core->mem_info, core) != CL_SUCCESS)
-		{
-			core->scene.depth -= 1;
-			if (compute_work_size(&core->mem_info, core) != CL_SUCCESS)
-				exit_rt(core);
-		}
-		if (init_frame_kernel_arg(&core->ocl, core) != CL_SUCCESS)
+		if (compute_work_size(&core->mem_info, core) != CL_SUCCESS
+			|| init_frame_kernel_arg(&core->ocl, core) != CL_SUCCESS)
+			exit_rt(core);
+		if (!(remake_surfaces(core)))
 			exit_rt(core);
 		core->state_flags |= SF_SHOULD_UPDATE;
 		core->sample_count = core->sample_nb;
@@ -54,6 +51,8 @@ void				repeated_key_handling(int key, t_rt *core)
 		core->scene.depth -= 1;
 		if (compute_work_size(&core->mem_info, core) != CL_SUCCESS
 				|| init_frame_kernel_arg(&core->ocl, core) != CL_SUCCESS)
+			exit_rt(core);
+		if (!(remake_surfaces(core)))
 			exit_rt(core);
 		core->state_flags |= SF_SHOULD_UPDATE;
 		core->sample_count = core->sample_nb;

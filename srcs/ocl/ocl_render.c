@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/31 00:01:57 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 17:04:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
 	size_t			offset[2];
 
 	glob_dim[1] = core->mem_info.wg_dim[1];
-	printf("window dim: %ux%u\n", core->sdl.win_width, core->sdl.win_height);
-	printf("frame dim: %ux%u\n", core->sdl.frame_width, core->sdl.frame_height);
-	printf("wg dim: %zux%zu\n", core->mem_info.wg_dim[0], core->mem_info.wg_dim[1]);
-	printf("wg nb: %zux%zu\n", core->mem_info.wg_nb[0], core->mem_info.wg_nb[1]);
 	ft_bzero(offset, sizeof(size_t) * 3);
 	i = 0;
 	if (clSetKernelArg(core->ocl.kernel, 12, sizeof(unsigned int), sample_seed)
@@ -41,8 +37,8 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
 		return (!CL_SUCCESS);
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])
 	{
-		glob_dim[0] = core->mem_info.wg_dim[0] * ft_min((core->mem_info.wg_nb[0]
-					- (i % core->mem_info.wg_nb[0])),
+		glob_dim[0] = core->mem_info.wg_dim[0]
+			* ft_min((core->mem_info.wg_nb[0] - (i % core->mem_info.wg_nb[0])),
 				core->mem_info.compute_units);
 		offset[0] = core->mem_info.wg_dim[0] * (size_t)(i % core->mem_info.wg_nb[0]);
 		offset[1] = glob_dim[1] * (size_t)(i / core->mem_info.wg_nb[0]);

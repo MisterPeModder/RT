@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 17:44:20 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 22:18:20 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 16:41:24 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,11 @@ t_color				color_make(int8_t r, int8_t g, int8_t b);
 ** returns: a SDL_Surface representing this image.
 */
 SDL_Surface			*img_make(unsigned int w, unsigned int h);
+
+/*
+** remake_surfaces: free and reallocate the SDL surface.
+** This function is used when the size of the frame change.
+*/
+int					remake_surfaces(struct s_rt *core);
 
 #endif
