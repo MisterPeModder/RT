@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 14:50:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/06 16:06:47 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 18:46:32 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ cl_int				init_kernel_args(t_ocl *ocl, t_rt *core)
 	cl_int			ret;
 
 	ret = init_frame_kernel_arg(ocl, core);
-	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int), &core->scene.objs_num);
+	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int),
+			&core->scene.objs_num);
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
 			&core->scene.lights_num);
 	return (ret);

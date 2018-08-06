@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/04 01:41:58 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 18:50:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <libft_base/memory.h>
 #include <libft_base/stringft.h>
 #include "rt.h"
+
+static void			init_empty_mesh(t_scene *scene)
+{
+	scene->triangle_total_num = 1;
+	scene->mesh_triangle = (t_mesh_triangle*)malloc(sizeof(t_mesh_triangle));
+	ft_bzero((void*)scene->mesh_triangle, sizeof(t_mesh_triangle));
+}
+
 
 static int			scene_objs(t_scene *scene, const t_json_array *data)
 {
@@ -41,12 +49,7 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 		++i;
 	}
 	if (scene->triangle_total_num == 0)
-	{
-		scene->triangle_total_num = 1;
-		scene->mesh_triangle = (t_mesh_triangle*)malloc(
-				sizeof(t_mesh_triangle));
-		ft_bzero((void*)scene->mesh_triangle, sizeof(t_mesh_triangle));
-	}
+		init_empty_mesh(scene);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 22:36:27 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 18:57:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 ** -pos: where the intersection is located.
 ** -normal: normal vector of the surface at the intersection point.
 ** -dist: distance of the intersection from the ray's origin.
+** -shadow_amount: used for the light traveling threw refractive objects.
 */
 typedef struct				s_rt_result
 {
@@ -57,8 +58,8 @@ kernel void	render_frame(
 		local t_ray *stack,
 		private t_clint depth,
 		private char no_negative,/*,
-		private float3 bg_color,
-		private unsigned int endian*/
+		private float3 bg_color,*/
+//		private unsigned int endian,	//gerer par sdl je crois, a supprimer
 		constant t_mesh_triangle *triangles,
 		private unsigned int seed
 		)

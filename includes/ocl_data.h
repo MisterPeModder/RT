@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/31 02:11:20 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 18:53:54 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ typedef struct			s_kargs
 ** for the creation of the opencl pseudo-stack.
 ** NB: wg stand for work_group
 */
-typedef struct				s_mem_info
+typedef struct			s_mem_info
 {
-	size_t					wg_dim[2];
-	size_t					wg_nb[2];
-	size_t					wg_mult;
-	cl_uint					compute_units;
-	cl_ulong				buffer_size;
-}							t_mem_info;
+	size_t				wg_dim[2];
+	size_t				wg_nb[2];
+	size_t				wg_mult;
+	cl_uint				compute_units;
+	cl_ulong			buffer_size;
+}						t_mem_info;
 
 /*
 ** OpenCL creation and destruction functions :
@@ -86,10 +86,12 @@ cl_int					init_kernel_args(t_ocl *ocl, struct s_rt *core);
 cl_int					init_frame_kernel_arg(t_ocl *ocl, struct s_rt *core);
 t_kargs					*ocl_set_kernel_arg(struct s_rt *core, cl_int *ret);
 void					*release_kernel_arg(t_kargs *args);
-cl_int					create_ocl_stack(struct s_rt *core, t_mem_info *mem_info);
+cl_int					create_ocl_stack(struct s_rt *core,
+		t_mem_info *mem_info);
 cl_int					compute_work_size(t_mem_info *mem_info,
 		struct s_rt *core);
-void					update_frame_size(struct s_rt *core, t_mem_info *mem_info);
+void					update_frame_size(struct s_rt *core,
+		t_mem_info *mem_info);
 cl_int					load_first_kernel_args(struct s_rt *core);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,

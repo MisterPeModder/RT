@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 02:35:08 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/06 18:52:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ typedef struct	s_noise
 typedef struct		s_material
 {
 	t_clfloat3		p_out;
-//	t_clfloat		shininess;//maybe for specular
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
 //	t_noise			*noise;
@@ -211,7 +210,7 @@ typedef struct		s_object
 **
 ** pos: origin of the ray.
 ** dir: unit director vector of the ray.
-** clr_contribution: how much are we seeing the result of the ray ?
+** clr_contribution: how much are we seeing the result of this ray
 ** This is expressed by a float, between 0 and 1.
 */
 
