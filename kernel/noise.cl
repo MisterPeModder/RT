@@ -87,8 +87,8 @@ static float		noise3(t_env_noise *noise, int x, int y, int z)
 {
 	int 	tmp;
 
-	tmp = noise->hash[((y + noise->seed) * z) % 256];
-	return (noise->hash[((tmp + x) * z) % 256]);
+	tmp = noise->hash[abs(((y + noise->seed) * z) % 256)];
+	return (noise->hash[abs(((tmp + x) * z) % 256)]);
 }
 
 /*
@@ -208,13 +208,15 @@ static float3		wood_noise(t_env_noise *noise, float x, float y, float z)
 	return (noise->result);
 }
 
-
 /*
 ** Determine what is the perturbation of the color. Just "if" things.
 */
-static float3		ft_choose(t_env_noise *e_noise, t_noise *noise, float x, float y, float z)
+static float3		ft_choose(t_env_noise *e_noise, constant t_noise *noise, float x, float y, float z)
 {
-	e_noise->has_noise = noise->has_noise;
+	if (noise->has_noise == 0)
+		return ((float3)(1.f, 1.f, 1.f));
+	else
+		e_noise->has_noise = noise->has_noise;
 	e_noise->freq = noise->freq;
 	e_noise->depth = noise->depth;
 	e_noise->seed = noise->seed;
@@ -230,5 +232,5 @@ static float3		ft_choose(t_env_noise *e_noise, t_noise *noise, float x, float y,
 	else if (e_noise->type == LINE_MARBLE)
 		return(line_marble_noise(e_noise, x, y, z));
 	else
-		return(0);
+		return((float3)(1.f, 1.f, 1.f));
 }

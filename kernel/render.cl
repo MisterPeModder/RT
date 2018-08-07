@@ -175,19 +175,19 @@ static float3			shading(
 	float3			start;
 	float3			result;
 	float			light_dist;
-	/*float3		coef;
-	t_env_noise		e_noise;*/
+	float3			coef;
+	t_env_noise		e_noise;
 
 	i = 0;
-	/*while (hash[i])
+	while (i < 256)
 	{
 		e_noise.hash[i] = hash[i];
 		i++;
 	}
 	i = 0;
-	coef = ft_choose(&e_noise, objs->mat.noise, result.x, result.y, result.z);
+	coef = ft_choose(&e_noise, &r->obj->mat.noise, r->pos.x, r->pos.y, r->pos.z);
 	if (coef.x < 0 || coef.y < 0 || coef.z < 0)
-		coef.xyz = (float3)(1.0f, 1.0f, 1.0f);*/
+		coef = (float3)(1.0f, 1.0f, 1.0f);
 	result = r->obj->color / 10;
 	while (i < lights_num)
 	{
@@ -201,5 +201,6 @@ static float3			shading(
 			colorize(&lights[i], lvec, r, &result, sink.shadow_amount);
 		++i;
 	}
-	return (result/* * coef*/);
+	//printf(" %3f ", coef);
+	return (result * coef);
 }

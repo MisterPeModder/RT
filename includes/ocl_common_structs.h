@@ -183,7 +183,7 @@ typedef struct		s_material
 	t_mat_props		props;
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
-	t_noise			*noise;
+	t_noise			noise;
 	t_clfloat3		p_out;
 	int				has_shadow;
 }					t_material;

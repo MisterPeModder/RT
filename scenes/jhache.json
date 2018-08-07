@@ -2,7 +2,7 @@
 {
 //	"filter": "black and white",
 	"background_color": [0, 0, 10],
-	"depth": 6,
+	"depth": 1,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,
@@ -42,7 +42,10 @@
 			"type": "plane",
 			"pos": [0, -5.0, -10.0],
 			"angle": [0, 0, 0],
-			"color": [18, 99, 229] //blue*/
+			"color": [255, 255, 255], //blue*/
+			"material": {
+				"noise": [1, 0.2, 20, 2016, "sin_marble"]
+			}
 		},
 		{
 			"type": "plane",
