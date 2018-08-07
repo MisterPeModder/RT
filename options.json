@@ -5,6 +5,7 @@
 		"fullscreen": false
 	},
 	"font": "assets/ubuntu.regular.ttf",
+	"sample_nb": 1,
 	"controllers": {
 		"mappings": [
 			//SDL2 controller mappings

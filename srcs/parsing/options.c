@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 07:17:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 17:50:01 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/07 19:02:16 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,13 @@ int					options_parse(t_rt *core, const char *path)
 		if (!options_window(core, &tmp->obj))
 			return (0);
 	}
+	if (!(tmp = json_obj_get(obj, "sample_nb")))
+		return (rel_error("No sample number specified in the options file.",
+						&obj));
+	else if (tmp->n_i.type != JSON_INT || tmp->n_i.value < 1)
+		return (rel_error("The number of sample must be greater than 0.", &obj));
+	else
+		core->sample_nb = (unsigned int)tmp->n_i.value;
 /*if ((tmp = json_obj_get(obj, "controllers")))
   {
   if (tmp->obj.type != JSON_OBJECT ||
