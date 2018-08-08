@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:35:14 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/08 02:00:07 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,19 +175,10 @@ static float3			shading(
 	float3			start;
 	float3			result;
 	float			light_dist;
-	float3			coef;
-	t_env_noise		e_noise;
+	float3			noise_coef;
 
+	noise_coef = noise(hash, r);
 	i = 0;
-	while (i < 256)
-	{
-		e_noise.hash[i] = hash[i];
-		i++;
-	}
-	i = 0;
-	coef = ft_choose(&e_noise, &r->obj->mat.noise, r->pos.x, r->pos.y, r->pos.z);
-	if (coef.x < 0 || coef.y < 0 || coef.z < 0)
-		coef = (float3)(1.0f, 1.0f, 1.0f);
 	result = r->obj->color / 10;
 	while (i < lights_num)
 	{
@@ -201,6 +192,5 @@ static float3			shading(
 			colorize(&lights[i], lvec, r, &result, sink.shadow_amount);
 		++i;
 	}
-	//printf(" %3f ", coef);
-	return (result * coef);
+	return (result * noise_coef);
 }

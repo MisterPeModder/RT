@@ -1,71 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   noise.cl                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/07 22:59:30 by jhache            #+#    #+#             */
+/*   Updated: 2018/08/08 02:07:53 by jhache           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+//TODO: reduire le nombre de variable en reutilisant celle deja creer
+//		au sein de chaque fonction
+
 /*
 ** Noise struct.
-** -c1, c2 and c3 are colors for material perturbation.
-** -amp is amplitude used by noise function.
-** -fin is incremented in noise function by the noise value.
-** -div divide fin at the end of all noise depth.
+** -type describe what kind of perturbation we will apply to the pixel.
 ** -freq is the frequence used by the noise function.
 ** -depth of the noise.
-** -lines of marble perturbation method.
-** -value and value1 for intermediate sin/cos and material perturbations.
-** -result to store material perturbations.
-** -threshold for wood material method.
-** -perturbation for marble perturbation method.
-** -a to d for lerp the noise.
-** -i to increment the depth of the noise.
-** -s to z for noise transformation of x, y and z.
-** -xa, ya, za, x_int, y_int, z_int, x_frac, y_frac and z_frac diverse
-** var to manipulate x, y and z through different types, etc..
-** -low and high to smooth the shape of the function by his mix and max values.
+** -seed and hash is used for the generation of the perturbation.
 */
 typedef struct	s_env_noise
 {
-	t_clint		has_noise;
+	t_type_mat	type;
 	t_clfloat	freq;
 	t_clint		depth;
 	t_clint		seed;
-	t_type_mat	type;
 	t_clint		hash[256];
-	t_clfloat3	c1;
-	t_clfloat3	c2;
-	t_clfloat3	c3;
-	t_clfloat	amp;
-	t_clfloat	fin;
-	t_clfloat	div;
-	t_clint		lines;
-	t_clfloat	value;
-	t_clfloat	value1;
-	t_clfloat3	result;
-	t_clfloat	threshold;
-	t_clfloat	perturbation;
-	t_clint		a;
-	t_clint		b;
-	t_clint		c;
-	t_clint		d;
-	t_clint		i;
-	t_clint		s;
-	t_clint		t;
-	t_clint		u;
-	t_clint		v;
-	t_clint		w;
-	t_clint		x;
-	t_clint		y;
-	t_clint		z;
-	t_clfloat	xa;
-	t_clfloat	ya;
-	t_clfloat	za;
-	t_clfloat	low;
-	t_clfloat	high;
-	t_clint		x_int;
-	t_clint		y_int;
-	t_clint		z_int;
-	t_clfloat	x_frac;
-	t_clfloat	y_frac;
-	t_clfloat	z_frac;
 }				t_env_noise;
 
 /*
-** LERP for Linear Interpolation, it helps to interpolate differente noise->values.
+** LERP for Linear Interpolation, it helps to interpolate different values.
 */
 static float 		lerp(float a, float b, float s)
 {
@@ -81,7 +45,7 @@ static float 		smooth(float x, float y, float s)
 }
 
 /*
-** Run through the hash table of our fake random noise->values with x, y and z.
+** Run through the hash table of our fake random values with x, y and z.
 */
 static float		noise3(t_env_noise *noise, int x, int y, int z)
 {
@@ -92,145 +56,210 @@ static float		noise3(t_env_noise *noise, int x, int y, int z)
 }
 
 /*
-** Return a single noise->value of a noise in 3D.
+** Return a single value of a noise in 3D.
 */
-static float		noise3d(t_env_noise *noise, float x, float y, float z)
+static float		noise3d(
+	t_env_noise *noise,
+	float x_f,
+	float y_f,
+	float z_f)
 {
-	noise->x_int = x;
-	noise->y_int = y;
-	noise->z_int = z;
-	noise->x_frac = x - noise->x_int;
-	noise->y_frac = y - noise->y_int;
-	noise->z_frac = z - noise->z_int;
-	noise->s = noise3(noise, noise->x_int, noise->y_int, noise->z_int);
-	noise->t = noise3(noise, noise->x_int + 1, noise->y_int, noise->z_int);
-	noise->u = noise3(noise, noise->x_int, noise->y_int + 1, noise->z_int);
-	noise->v = noise3(noise, noise->x_int + 1, noise->y_int + 1, noise->z_int);
-	noise->w = noise3(noise, noise->x_int, noise->y_int, noise->z_int + 1);
-	noise->x = noise3(noise, noise->x_int + 1, noise->y_int, noise->z_int + 1);
-	noise->y = noise3(noise, noise->x_int, noise->y_int + 1, noise->z_int + 1);
-	noise->z = noise3(noise, noise->x_int + 1, noise->y_int + 1, noise->z_int + 1);
-	noise->a = lerp(noise->s, noise->t, noise->x_frac);
-	noise->b = lerp(noise->u, noise->v, noise->x_frac);
-	noise->c = lerp(noise->w, noise->x, noise->x_frac);
-	noise->d = lerp(noise->y, noise->z, noise->x_frac);
-	noise->low = smooth(noise->a, noise->b, noise->y_frac);
-	noise->high = smooth(noise->c, noise->d, noise->y_frac);
-	return (lerp(noise->low, noise->high, noise->z_frac));
+	int				x_int;
+	int				y_int;
+	int				z_int;
+	int				a;
+	int				b;
+	int				c;
+	int				d;
+	int				s;
+	int				t;
+	int				u;
+	int				v;
+	int				w;
+	int				x;
+	int				y;
+	int				z;
+	float			low;
+	float			high;
+
+	x_int = x_f;
+	y_int = y_f;
+	z_int = z_f;
+	x_f -= x_int;
+	y_f -= y_int;
+	z_f -= z_int;
+	s = noise3(noise, x_int, y_int, z_int);
+	t = noise3(noise, x_int + 1, y_int, z_int);
+	u = noise3(noise, x_int, y_int + 1, z_int);
+	v = noise3(noise, x_int + 1, y_int + 1, z_int);
+	w = noise3(noise, x_int, y_int, z_int + 1);
+	x = noise3(noise, x_int + 1, y_int, z_int + 1);
+	y = noise3(noise, x_int, y_int + 1, z_int + 1);
+	z = noise3(noise, x_int + 1, y_int + 1, z_int + 1);
+	a = lerp(s, t, x_f);
+	b = lerp(u, v, x_f);
+	c = lerp(w, x, x_f);
+	d = lerp(y, z, x_f);
+	low = smooth(a, b, y_f);
+	high = smooth(c, d, y_f);
+	return (lerp(low, high, z_f));
 }
 
 /*
-** Call me to have a perfect noise->value for a 3D
+** Call me to have a perfect value for a 3D
 */
 static float		perlin3d(t_env_noise *noise, float x, float y, float z)
 {
-	noise->i = 0;
-	noise->fin = 0;
-	noise->amp = 1.0;
-	noise->xa = x * noise->freq;
-	noise->ya = y * noise->freq;
-	noise->za = z * noise->freq;
-	while (noise->i < noise->depth)
+	float			xa;
+	float			ya;
+	float			za;
+	int				i;
+	float			amp;
+	float			fin;
+	float			div;
+
+	i = 0;
+	fin = 0.f;
+	div = 0.f;//cette variable etait non-initialiser, j'ai choisi 0.f arbitrairement
+	amp = 1.f;
+	xa = x * noise->freq;
+	ya = y * noise->freq;
+	za = z * noise->freq;
+	while (i < noise->depth)
 	{
-		noise->div += 256 * noise->amp;
-		noise->fin += noise3d(noise, noise->xa, noise->ya, noise->za) * noise->amp;
-		noise->amp /= 2;
-		noise->xa *= 2;
-		noise->ya *= 2;
-		noise->za *= 2;
-		noise->i++;
+		div += 256 * amp;
+		fin += noise3d(noise, (int)xa, (int)ya, (int)za) * amp;
+		amp /= 2;
+		xa *= 2;
+		ya *= 2;
+		za *= 2;
+		i++;
 	}
-	return (noise->fin / noise->div);
+	return (fin / div);
 }
 
 /*
 ** Procedural texture function for sinus marble effect.
-** noise->c1 is light gray, noise->c2 is white.
+** c1 is light gray, c2 is white.
 */
 static float3		sin_marble_noise(t_env_noise *noise, float x, float y, float z)
 {
-	noise->c1.x = 0.7;
-	noise->c1.y = 0.7;
-	noise->c1.z = 0.7;
-	noise->c2.x = 1.0;
-	noise->c2.y = 1.0;
-	noise->c2.z = 1.0;
-	noise->value = 1 - sqrt(fabs(sin(2 * M_PI_F *
+	float3			c1;
+	float3			c2;
+	float3			result;
+	float			value;
+
+	c1.x = 0.7f;
+	c1.y = 0.7f;
+	c1.z = 0.7f;
+	c2.x = 1.f;
+	c2.y = 1.f;
+	c2.z = 1.f;
+	value = 1 - sqrt(fabs(sin(2 * M_PI_F *
 		perlin3d(noise, x, y, z))));
-	noise->result.x = noise->c1.x * (1 - noise->value) + noise->c2.x * noise->value;
-	noise->result.y = noise->c1.y * (1 - noise->value) + noise->c2.y * noise->value;
-	noise->result.z = noise->c1.z * (1 - noise->value) + noise->c2.z * noise->value;
-	return (noise->result);
+	result.x = c1.x * (1 - value) + c2.x * value;
+	result.y = c1.y * (1 - value) + c2.y * value;
+	result.z = c1.z * (1 - value) + c2.z * value;
+	return (result);
 }
 
 /*
 ** Procedural texture function for line marble effect.
-** noise->c1 is light gray, noise->c2 is white.
+** c1 is light gray, c2 is white.
 */
 static float3		line_marble_noise(t_env_noise *noise, float x, float y, float z)
 {
-	noise->c1.x = 0.7;
-	noise->c1.y = 0.7;
-	noise->c1.z = 0.7;
-	noise->c2.x = 1.0;
-	noise->c2.y = 1.0;
-	noise->c2.z = 1.0;
-	noise->lines = 30;
-	noise->perturbation = 0.25;
-	noise->value = (1 - cos(noise->lines * 2 * M_PI_F * (x / 512 +
-		noise->perturbation * perlin3d(noise, x, y, z)))) / 2;
-	noise->result.x = noise->c1.x * (1 - noise->value) + noise->c2.x * noise->value;
-	noise->result.y = noise->c1.y * (1 - noise->value) + noise->c2.y * noise->value;
-	noise->result.z = noise->c1.z * (1 - noise->value) + noise->c2.z * noise->value;
-	return (noise->result);
+	float3			c1;
+	float3			c2;
+	float3			result;
+	float			value;
+
+	c1.x = 0.7f;
+	c1.y = 0.7f;
+	c1.z = 0.7f;
+	c2.x = 1.f;
+	c2.y = 1.f;
+	c2.z = 1.f;
+	value = (1 - cos(30 * 2 * M_PI_F * (x / 512 +
+		0.25f * perlin3d(noise, x, y, z)))) / 2;
+	result.x = c1.x * (1 - value) + c2.x * value;
+	result.y = c1.y * (1 - value) + c2.y * value;
+	result.z = c1.z * (1 - value) + c2.z * value;
+	return (result);
 }
 
 /*
 ** Procedural texture function for wood effect.
-** noise->c1 is light brown, noise->c2 is dark brown.
+** c1 is light brown, c2 is dark brown.
 */
 static float3		wood_noise(t_env_noise *noise, float x, float y, float z)
 {
-	noise->c1.x = 0.6;
-	noise->c1.y = 0.6;
-	noise->c1.z = 0.0;
-	noise->c2.x = 0.2;
-	noise->c2.y = 0.2;
-	noise->c2.z = 0.0;
-	noise->threshold = 0.2;
-	noise->value1 = (1 - cos(M_PI_F * noise->value / (noise->threshold / 2))) / 2;
-	noise->value = fmod(perlin3d(noise, x, y, z), noise->threshold);
-	if (noise->value > noise->threshold / 2)
-		noise->value = noise->threshold - noise->value;
-	noise->result.x = noise->c1.x * (1 - noise->value1) + noise->c2.x * noise->value1;
-	noise->result.y = noise->c1.y * (1 - noise->value1) + noise->c2.y * noise->value1;
-	noise->result.z = noise->c1.z * (1 - noise->value1) + noise->c2.z * noise->value1;
-	return (noise->result);
+	float3			c1;
+	float3			c2;
+	float3			result;
+	float			value;
+	float			value1;
+	float			threshold;
+
+	c1.x = 0.6f;
+	c1.y = 0.6f;
+	c1.z = 0.f;
+	c2.x = 0.2f;
+	c2.y = 0.2f;
+	c2.z = 0.f;
+	threshold = 0.2f;
+	value = fmod(perlin3d(noise, x, y, z), threshold);
+	if (value > threshold / 2)
+		value = threshold - value;
+	value1 = (1 - cos(M_PI_F * value / (threshold / 2))) / 2;
+	result.x = c1.x * (1 - value1) + c2.x * value1;
+	result.y = c1.y * (1 - value1) + c2.y * value1;
+	result.z = c1.z * (1 - value1) + c2.z * value1;
+	return (result);
 }
 
 /*
 ** Determine what is the perturbation of the color. Just "if" things.
 */
-static float3		ft_choose(t_env_noise *e_noise, constant t_noise *noise, float x, float y, float z)
+static float3		ft_choose(t_env_noise *e_noise, float x, float y, float z)
 {
-	if (noise->has_noise == 0)
-		return ((float3)(1.f, 1.f, 1.f));
-	else
-		e_noise->has_noise = noise->has_noise;
-	e_noise->freq = noise->freq;
-	e_noise->depth = noise->depth;
-	e_noise->seed = noise->seed;
-	e_noise->type = noise->type;
+	float3			result;
+
 	if (e_noise->type == WOOD)
-		return(wood_noise(e_noise, x, y, z));
+		result = wood_noise(e_noise, x, y, z);
 	else if (e_noise->type == WATER)
-		return(wood_noise(e_noise, x, y, z));
+		result = wood_noise(e_noise, x, y, z);
 	else if (e_noise->type == PERLIN)
-		return(perlin3d(e_noise, x, y, z));
+		result = perlin3d(e_noise, x, y, z);
 	else if (e_noise->type == SIN_MARBLE)
-		return(sin_marble_noise(e_noise, x, y, z));
+		result = sin_marble_noise(e_noise, x, y, z);
 	else if (e_noise->type == LINE_MARBLE)
-		return(line_marble_noise(e_noise, x, y, z));
+		result = line_marble_noise(e_noise, x, y, z);
 	else
-		return((float3)(1.f, 1.f, 1.f));
+		return ((float3)(1.f, 1.f, 1.f));
+	if (result.x < 0 || result.y < 0 || result.z < 0)
+		result = (float3)(1.f, 1.f, 1.f);
+	return (result);
+}
+
+static float3		noise(global t_clint *hash, t_rt_result *r)
+{
+	int				i;
+	float3			result;
+	t_env_noise		e_noise;
+
+	if (r->obj->mat.noise.has_noise == 0)
+		return ((float3)(1.f, 1.f, 1.f));
+	i = 0;
+	while (i < 256)
+	{
+		e_noise.hash[i] = hash[i];
+		i++;
+	}
+	e_noise.freq = r->obj->mat.noise.freq;
+	e_noise.depth = r->obj->mat.noise.depth;
+	e_noise.seed = r->obj->mat.noise.seed;
+	e_noise.type = r->obj->mat.noise.type;
+	result = ft_choose(&e_noise, r->pos.x, r->pos.y, r->pos.z);
+	return (result);
 }

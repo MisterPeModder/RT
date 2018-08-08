@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/29 11:34:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/08 01:41:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef enum		e_type_mat
 	NONE = 6
 }					t_type_mat;
 
-/*
+/* !!! THIS COMMENT IS A MEMO FOR THE KERNEL COMMENT, IT SHOULD BE DELETED
 ** Noise struct.
 ** -c1, c2 and c3 are colors for material perturbation.
 ** -amp is amplitude used by noise function.
@@ -134,43 +134,6 @@ typedef struct	s_noise
 	t_clint		depth;
 	t_clint		seed;
 	t_type_mat	type;
-	t_clint		hash[256];
-	t_clfloat3	c1;
-	t_clfloat3	c2;
-	t_clfloat3	c3;
-	t_clfloat	amp;
-	t_clfloat	fin;
-	t_clfloat	div;
-	t_clint		lines;
-	t_clfloat	value;
-	t_clfloat	value1;
-	t_clfloat3	result;
-	t_clfloat	threshold;
-	t_clfloat	perturbation;
-	t_clint		a;
-	t_clint		b;
-	t_clint		c;
-	t_clint		d;
-	t_clint		i;
-	t_clint		s;
-	t_clint		t;
-	t_clint		u;
-	t_clint		v;
-	t_clint		w;
-	t_clint		x;
-	t_clint		y;
-	t_clint		z;
-	t_clfloat	xa;
-	t_clfloat	ya;
-	t_clfloat	za;
-	t_clfloat	low;
-	t_clfloat	high;
-	t_clint		x_int;
-	t_clint		y_int;
-	t_clint		z_int;
-	t_clfloat	x_frac;
-	t_clfloat	y_frac;
-	t_clfloat	z_frac;
 }				t_noise;
 
 /*
