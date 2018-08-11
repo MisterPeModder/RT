@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/24 05:31:02 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/11 16:28:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,14 @@ typedef struct		s_mv_state
 
 struct s_rt;
 
-void				draw_text_box(struct s_rt *core,
-		const char *str, int x, int y);
+/*
+** == UI ==
+*/
 
+void				render_ui(struct s_rt *core, t_timer *t);
+char				*display_fps(struct s_rt *core, t_timer *t, int last);
+char				*display_depth(struct s_rt *core);
+char				*display_sample(struct s_rt *core);
 /*
 ** == EVENTS ==
 */

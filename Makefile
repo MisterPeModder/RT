@@ -63,7 +63,6 @@ NORM := norminette
 SRCS_NAMES :=	core.c							\
 				img.c							\
 				main.c							\
-				sdl_render.c					\
 
 SRCS_NAMES +=	controllers/controller_event.c	\
 				controllers/controller_motion.c	\
@@ -91,6 +90,10 @@ SRCS_NAMES +=	ocl/kernel_args.c				\
 				ocl/ocl_render.c				\
 				ocl/ocl_stack_init.c			\
 				ocl/read_kernel.c				\
+
+SRCS_NAMES +=	rendering/display_string.c		\
+				rendering/sdl_render.c			\
+				rendering/ui.c					\
 
 SRCS_NAMES +=	parsing/args.c					\
 				parsing/cam.c					\

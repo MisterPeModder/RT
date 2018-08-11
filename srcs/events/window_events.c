@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/06 16:42:21 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/11 17:12:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int					remake_surfaces(t_rt *core)
 					core->sdl.win_height)))
 		ft_putendl_fd("could not create UI buffer", STDERR_FILENO);
 	else if (!(core->sdl.font = TTF_OpenFont(core->sdl.font_name,
-					(int)core->sdl.win_width / 100 + 8)))
+					15 + (int)(core->sdl.win_width - MIN_IMG_W) / 250
+					+ (int)(core->sdl.win_height - MIN_IMG_H) / 400)))
 	{
 		ft_putstr("Failed to load font: ");
 		ft_putendl(TTF_GetError());
