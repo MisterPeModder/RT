@@ -46,7 +46,7 @@ OCL_FLAGS := -I$(INC_PATH) -Ikernel -Werror
 # Compiler flags
 CPPFLAGS := -iquote$(INC_PATH) -isystem$(LIBFT_PATH)/includes -isystem$(LIBFT_JSON_PATH)/includes
 CFLAGS :=	-Wall -Wextra -Werror -Wmissing-prototypes -Wsign-conversion	\
-			-g -O3 `$(LIBSDL_PATH)/sdl2-config --cflags`					\
+			-g `$(LIBSDL_PATH)/sdl2-config --cflags`					\
 			-D KERNEL_PATH='"$(KERNELSRC_PATH)"' -D OPENCL_BUILD_FLAGS='"$(OCL_FLAGS)"'
 LDFLAGS :=	-L$(LIBFT_PATH) -L$(LIBFT_JSON_PATH)						\
 			-l$(LIBFT_NAME) -l$(LIBFT_JSON_NAME) -l$(LIBFT_NAME) -lm	\
@@ -75,6 +75,9 @@ SRCS_NAMES +=	events/events.c					\
 				events/move.c					\
 				events/window_events.c			\
 
+SRCS_NAMES +=	meshes/json_mesh.c				\
+				meshes/mesh_load.c				\
+
 SRCS_NAMES +=	objects/cone.c					\
 				objects/cylinder.c				\
 				objects/disk.c					\
@@ -100,8 +103,6 @@ SRCS_NAMES +=	parsing/args.c					\
 				parsing/from_json.c				\
 				parsing/from_json2.c			\
 				parsing/lights.c				\
-				parsing/meshes.c				\
-				parsing/meshes_utils.c			\
 				parsing/options.c				\
 				parsing/read.c					\
 				parsing/scene.c					\
@@ -124,6 +125,7 @@ INCS :=	controller.h			\
 		image.h					\
 		internal_ocl_types_c.h	\
 		internal_ocl_types_cl.h	\
+		mesh.h					\
 		move.h					\
 		objects.h				\
 		ocl_common_structs.h	\

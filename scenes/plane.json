@@ -1,5 +1,5 @@
 {
-	"depth": 6,
+	"depth": 2,
 	"background_color": [0, 0, 0],
 	"camera": {
 		"pos": [5, 0, -4],
@@ -43,4 +43,4 @@
 		}
 	]
 }
-			
+

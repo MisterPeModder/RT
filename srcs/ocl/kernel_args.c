@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 18:23:49 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/31 01:42:18 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/14 09:15:21 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static t_kargs		*ocl_set_kernel_arg2(t_rt *core, t_kargs *tmp)
 
 	tmp->arg11 = clCreateBuffer(core->ocl.context,
 			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
-			sizeof(t_mesh_triangle) * core->scene.triangle_total_num,
-			core->scene.mesh_triangle, &ret);
+			sizeof(t_mesh_triangle) * core->scene.triangles_num,
+			core->scene.mesh_triangles, &ret);
 	if (ret != CL_SUCCESS)
 		return (release_kernel_arg(tmp));
 	ret |= clSetKernelArg(core->ocl.kernel, 11, sizeof(cl_mem), &tmp->arg11);

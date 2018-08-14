@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/06 18:50:40 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/14 09:16:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,14 @@
 #include <libft_base/stringft.h>
 #include "rt.h"
 
-static void			init_empty_mesh(t_scene *scene)
-{
-	scene->triangle_total_num = 1;
-	scene->mesh_triangle = (t_mesh_triangle*)malloc(sizeof(t_mesh_triangle));
-	ft_bzero((void*)scene->mesh_triangle, sizeof(t_mesh_triangle));
-}
-
-
 static int			scene_objs(t_scene *scene, const t_json_array *data)
 {
 	size_t			i;
 	t_json_value	*tmp;
 
 	scene->objs_num = data->values_num;
-	scene->triangle_total_num = 0;
+	scene->triangles_num = 0;
+	scene->mesh_triangles = NULL;
 	if (!(scene->objs = malloc(sizeof(t_object) * scene->objs_num)))
 		return (0);
 	i = 0;
@@ -48,8 +41,13 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 		}
 		++i;
 	}
-	if (scene->triangle_total_num == 0)
-		init_empty_mesh(scene);
+	if (scene->triangles_num == 0)
+	{
+		scene->triangles_num = 1;
+		scene->mesh_triangles = (t_mesh_triangle*)malloc(
+				sizeof(t_mesh_triangle));
+		ft_bzero((void*)scene->mesh_triangles, sizeof(t_mesh_triangle));
+	}
 	return (1);
 }
 

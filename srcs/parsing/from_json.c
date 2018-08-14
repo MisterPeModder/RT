@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 11:36:07 by jloro            ###   ########.fr       */
+/*   Updated: 2018/08/14 06:55:27 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int					float_from_json(const t_json_value *val, t_clfloat *f)
 	}
 	else if (val->n_d.type == JSON_DOUBLE)
 	{
-		*f = val->n_d.value;
+		*f = (float)val->n_d.value;
 		return (1);
 	}
 	else

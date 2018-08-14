@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/29 11:34:33 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/13 23:25:34 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int					obj_make(t_scene *scene, t_object *object,
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
 			!obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
-	if (object->type == OBJ_MESH && !mesh_parse(scene, object, data))
+	if (object->type == OBJ_MESH && !parse_json_mesh(scene, object, data))
 		return (0);
 	if ((tmp = json_obj_get(data, "material")) && tmp->obj.type == JSON_OBJECT)
 	{

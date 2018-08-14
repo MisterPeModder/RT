@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/04 01:27:30 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/14 09:13:03 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void				scene_release(t_scene *scene)
 	scene->objs = NULL;
 	free(scene->lights);
 	scene->lights = NULL;
-	if (scene->mesh_triangle != NULL)
+	if (scene->mesh_triangles != NULL)
 	{
-		free(scene->mesh_triangle);
-		scene->mesh_triangle = NULL;
+		free(scene->mesh_triangles);
+		scene->mesh_triangles = NULL;
 	}
 }
 
