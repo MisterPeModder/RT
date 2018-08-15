@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/07/03 11:48:42 by jloro            ###   ########.fr       */
+/*   Updated: 2018/08/15 21:01:05 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_rt
 	int				state_flags;
 	float			last_time;
 	t_controller	controller;
+	t_kargs			*mem_objects;
 }					t_rt;
 
 int					core_init(t_rt *core, unsigned int w, unsigned int h);

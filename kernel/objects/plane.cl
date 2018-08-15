@@ -6,12 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:56:10 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/21 18:02:07 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:43:36 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		plane_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -26,7 +26,7 @@ static float		plane_intersect(
 }
 
 static void			plane_normal(
-		constant t_object *o,
+		local t_object *o,
 		t_rt_result *r,
 		int face
 		)

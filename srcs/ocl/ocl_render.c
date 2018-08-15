@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/06 18:47:25 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/16 00:45:54 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static size_t		ft_min(size_t arg1, size_t arg2)
 }
 
 //TODO CHANGE IT !!!!!!
-static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
-		unsigned int *sample_seed)
+static cl_int		compute_le_frame(t_rt *core, unsigned int *sample_seed)
 {
 	unsigned int	i;
 	cl_int			ret;
@@ -45,7 +44,7 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
 		offset[1] = glob_dim[1] * (size_t)(i / core->mem_info.wg_nb[0]);
 		ret = clEnqueueNDRangeKernel(core->ocl.queue, core->ocl.kernel, 2,
 				offset, glob_dim, core->mem_info.wg_dim, 0, NULL, NULL);
-		if (ret != CL_SUCCESS && !release_kernel_arg(tmp))
+		if (ret != CL_SUCCESS)
 			return (ret);
 		i += glob_dim[0] / core->mem_info.wg_dim[0];
 	}
@@ -54,7 +53,6 @@ static cl_int		compute_le_frame(t_rt *core, t_kargs *tmp,
 
 cl_int				render_frame(t_rt *core, t_timer *t)
 {
-	t_kargs			*tmp;
 	size_t			glob_dim[3];
 	cl_int			ret;
 	size_t			offset[3];
@@ -63,10 +61,10 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	sample_seed = ((core->sample_count == (core->sample_nb - 1)) ? 0 :
 			(core->sample_count + 1)
 			* (((unsigned int *)core->sample_sum)[42 * 4] + 1));
-	if ((tmp = ocl_set_kernel_arg(core, &ret)) == NULL)
+	if ((ret = ocl_set_kernel_arg(core)) != CL_SUCCESS)
 		return (ret);
 	update_frame_size(core, &core->mem_info);
-	if ((ret = compute_le_frame(core, tmp, &sample_seed)) != CL_SUCCESS)
+	if ((ret = compute_le_frame(core, &sample_seed)) != CL_SUCCESS)
 		return (ret);
 	ft_bzero(offset, sizeof(size_t) * 3);
 	SDL_LockSurface(core->frame);
@@ -78,5 +76,5 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	if (ret != CL_SUCCESS)
 		return (ret);
 	average_sample(core);
-	return (print_frame(core, t) + (int)release_kernel_arg(tmp) * 0);
+	return (print_frame(core, t));
 }

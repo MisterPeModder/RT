@@ -6,12 +6,12 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/05 14:23:50 by jloro            ###   ########.fr       */
+/*   Updated: 2018/08/15 20:43:22 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		paraboloid_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u
 		)
@@ -40,7 +40,7 @@ static float		paraboloid_intersect(
 }
 
 static void			paraboloid_normal(
-		constant t_object *o,
+		local t_object *o,
 		t_rt_result *r
 		)
 {

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/11 17:29:01 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/16 00:52:59 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void				exit_rt(t_rt *core)
 {
 	if (core)
 	{
+		clReleaseMemObject(core->mem_objects->arg1);
+		clReleaseMemObject(core->mem_objects->arg2);
+		clReleaseMemObject(core->mem_objects->arg3);
+		clReleaseMemObject(core->mem_objects->arg11);
+		free(core->mem_objects);
 		scene_release(&core->scene);
 		ocl_release(&core->ocl, NULL, 0);
 		SDL_DestroyWindow(core->sdl.win);

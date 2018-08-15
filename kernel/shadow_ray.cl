@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 20:42:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 00:01:34 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:46:10 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 */
 
 static int			shadow_raytrace(
-		constant t_object *objs,
+		local t_object *objs,
 		constant t_mesh_triangle *triangles,
 		size_t objs_num,
 		float3 o,

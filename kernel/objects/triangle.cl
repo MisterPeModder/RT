@@ -6,12 +6,12 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/06/23 17:05:26 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:44:03 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		triangle_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face

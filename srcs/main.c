@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/07 19:18:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/16 00:45:03 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ static int			init_data(int ac, char **av, t_rt *core)
 	if (load_first_kernel_args(core) != CL_SUCCESS
 			|| !(core->frame = img_make(core->sdl.frame_width,
 					core->sdl.frame_height))
-			|| (core->sample_sum = (int *)ft_memalloc(sizeof(int)
-					* core->sdl.frame_width * core->sdl.frame_height * 4))
-				== NULL)
+			|| !(core->sample_sum = (int *)ft_memalloc(sizeof(int)
+					* core->sdl.frame_width * core->sdl.frame_height * 4)))
 		return (-1);
 	return (1);
 }
@@ -53,6 +52,7 @@ int					main(int ac, char **av)
 		return (ret == -1 ? EXIT_FAILURE : EXIT_SUCCESS);
 	}
 	core.sample_count = core.sample_nb;
+	core.mem_info.used_local_mem = 0;
 	scene_has_neg_objects(&core.scene, &core.state_flags);
 	controller_update(&core.controller);
 	event_loop(&core);

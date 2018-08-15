@@ -6,12 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:04:43 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/21 18:50:25 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:41:54 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		cone_intersect_simple(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -35,7 +35,7 @@ static float		cone_intersect_simple(
 }
 
 static float		cone_intersect_double(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -78,7 +78,7 @@ static float		cone_intersect_double(
 }
 
 static float		cone_intersect2(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		float3 c,
@@ -172,7 +172,7 @@ static float		cone_intersect2(
 */
 
 static float		cone_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -210,7 +210,7 @@ static float		cone_intersect(
 }
 
 static void			cone_normal(
-		constant t_object *o,
+		local t_object *o,
 		t_rt_result *r,
 		int face
 		)
@@ -223,7 +223,7 @@ static void			cone_normal(
 	{
 		s = length(r->pos - o->pos);
 		n = o->facing;
-		if (dot(o->facing, r->pos - o->pos) < 0)
+		if (dot(n, r->pos - o->pos) < 0)
 			n = -n;
 		v = s / cos(o->props.cone.opening_angle) * n + o->pos;
 		if (face == 0)

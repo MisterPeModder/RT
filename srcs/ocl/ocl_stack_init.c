@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/24 04:34:48 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 18:28:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,20 @@ static cl_int		stack_to_kernel(t_rt *core, t_mem_info *mem_info)
 
 cl_int				create_ocl_stack(t_rt *core, t_mem_info *mem_info)
 {
-	size_t			max_wg_size;
+	size_t			tmp;
 	cl_int			ret;
 
 	ft_bzero(mem_info->wg_dim, sizeof(size_t) * 3);
-	clGetDeviceInfo(core->ocl.device, CL_DEVICE_MAX_COMPUTE_UNITS,
+	ret = clGetDeviceInfo(core->ocl.device, CL_DEVICE_MAX_COMPUTE_UNITS,
 			sizeof(cl_uint), &mem_info->compute_units, NULL);
-	ret = clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
-			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &max_wg_size, NULL);
 	ret |= clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
 			CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE,
 			sizeof(size_t), &mem_info->wg_mult, NULL);
 	ret |= clGetDeviceInfo(core->ocl.device, CL_DEVICE_LOCAL_MEM_SIZE,
 			sizeof(cl_ulong), &mem_info->buffer_size, NULL);
+	mem_info->buffer_size -= mem_info->used_local_mem;
+	ret |= clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
+			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &tmp, NULL);
 	if (ret != CL_SUCCESS)
 	{
 		ft_putendl("error while getting device memory infos.");
@@ -94,7 +95,7 @@ cl_int				create_ocl_stack(t_rt *core, t_mem_info *mem_info)
 	}
 	mem_info->buffer_size /= sizeof(t_ray);
 	mem_info->buffer_size -= mem_info->buffer_size % mem_info->wg_mult;
-	if (mem_info->buffer_size > max_wg_size)
-		mem_info->buffer_size = max_wg_size;
+	if (mem_info->buffer_size > tmp)
+		mem_info->buffer_size = tmp;
 	return (stack_to_kernel(core, mem_info));
 }

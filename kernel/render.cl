@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/03 23:40:49 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:45:27 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static float3		compute_pixel_coor(constant t_cam *cam, unsigned int w,
 */
 
 static int			raytrace(
-		constant t_object *objs,
+		local t_object *objs,
 		constant t_mesh_triangle *triangles,
 		size_t objs_num,
 		float3 o,
@@ -171,7 +171,7 @@ static int			raytrace(
 ** -result: where the color of the pixel will be stored.
 */
 static float3			shading(
-		constant t_object *objs, size_t objs_num,
+		local t_object *objs, size_t objs_num,
 		constant t_light *lights, size_t lights_num, t_rt_result *r,
 		constant t_mesh_triangle *triangles,
 		char no_negative

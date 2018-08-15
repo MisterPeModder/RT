@@ -6,12 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:43:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/20 17:56:02 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:42:23 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float				cylinder_intersect3(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		float2 c,
@@ -87,7 +87,7 @@ static float				cylinder_intersect3(
  */
 
 static float			cylinder_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -134,7 +134,7 @@ static float			cylinder_intersect(
  */
 
 static void				cylinder_normal(
-		constant t_object *o,
+		local t_object *o,
 		t_rt_result *r,
 		int face
 		)

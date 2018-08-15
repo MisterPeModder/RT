@@ -6,12 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 13:58:37 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/20 14:34:37 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:43:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static float		cut_x_axis(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		float2 c,
@@ -52,7 +52,7 @@ static float		cut_x_axis(
 }
 
 static float		cut_y_axis(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		float2 c,
@@ -93,7 +93,7 @@ static float		cut_y_axis(
 }
 
 static float		cut_z_axis(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		float2 c,
@@ -134,7 +134,7 @@ static float		cut_z_axis(
 }
 
 static float		sphere_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u,
 		int *face
@@ -177,7 +177,7 @@ static float		sphere_intersect(
 }
 
 static float2		negative_sphere_intersect(
-		constant t_object *obj,
+		local t_object *obj,
 		float3 origin,
 		float3 u
 		)
@@ -206,7 +206,7 @@ static float2		negative_sphere_intersect(
 }
 
 static void			sphere_normal(
-		constant t_object *o,
+		local t_object *o,
 		t_rt_result *r,
 		int face
 		)

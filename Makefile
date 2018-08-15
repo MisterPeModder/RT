@@ -87,8 +87,7 @@ SRCS_NAMES +=	objects/cone.c					\
 				objects/sphere.c				\
 				objects/triangle.c				\
 
-SRCS_NAMES +=	ocl/kernel_args.c				\
-				ocl/load_first_args.c			\
+SRCS_NAMES +=	ocl/load_args.c					\
 				ocl/ocl_data.c					\
 				ocl/ocl_render.c				\
 				ocl/ocl_stack_init.c			\

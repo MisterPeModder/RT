@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/06 18:57:26 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/15 20:09:36 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 typedef struct				s_rt_result
 {
-	constant t_object		*obj;
+	local t_object			*obj;
 	float3					pos;
 	float3					normal;
 	float					dist;
@@ -49,7 +49,7 @@ typedef struct				s_rt_result
 kernel void	render_frame(
 		write_only image2d_t output,
 		constant t_cam *cam,
-		constant t_object *objs,
+		global t_object *global_objs,
 		constant t_light *lights,
 		private unsigned int objs_num,
 		private unsigned int lights_num,
@@ -59,13 +59,11 @@ kernel void	render_frame(
 		private t_clint depth,
 		private char no_negative,/*,
 		private float3 bg_color,*/
-//		private unsigned int endian,	//gerer par sdl je crois, a supprimer
 		constant t_mesh_triangle *triangles,
-		private unsigned int seed
+		private unsigned int seed,
+		local t_object *objs
 		)
 {
-	unsigned int	x;
-	unsigned int	y;
 	t_rt_result		r;
 	t_cluint		stack_size;
 	t_cluint		offset;
@@ -75,13 +73,17 @@ kernel void	render_frame(
 	float3			bg_color;
 	set_to_zero(&bg_color);
 //
-	x = get_global_id(0);
-	y = get_global_id(1);
+	event_t event;
+	event = async_work_group_copy((local char *)objs, (global char *)global_objs,
+			(size_t)objs_num * sizeof(t_object), 0);
+	wait_group_events(1, &event);
+//
 	stack_size = 0;
 	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))
 		* (depth + 1);
 	curr_ray.pos = cam->pos;
-	curr_ray.dir = compute_pixel_coor(cam, w, h, x, y, seed);
+	curr_ray.dir = compute_pixel_coor(cam, w, h,
+			get_global_id(0), get_global_id(1), seed);
 	curr_ray.clr_contrib = 1.f;
 	curr_ray.depth = depth;
 	stack_push(stack, curr_ray, &stack_size, offset);
@@ -89,13 +91,14 @@ kernel void	render_frame(
 	while (stack_size != 0)
 	{
 		curr_ray = stack_pop(stack, &stack_size, offset);
-		if (!raytrace(objs, triangles, objs_num, curr_ray.pos, curr_ray.dir, &r, no_negative))
+		if (!raytrace(objs, triangles, objs_num, curr_ray.pos,
+					curr_ray.dir, &r, no_negative))
 			color += bg_color * curr_ray.clr_contrib;
 		else
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
-				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative)
-					* curr_ray.clr_contrib;
+				color += shading(objs, objs_num, lights, lights_num,
+						&r, triangles, no_negative) * curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);
 			if (r.obj->mat.props == MAT_REFLECTIVE
@@ -103,5 +106,6 @@ kernel void	render_frame(
 				compute_secondary_rays(curr_ray, &r, stack, &stack_size, offset);
 		}
 	}
-	write_imageui(output, (int2)(x, y), (uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
+	write_imageui(output, (int2)(get_global_id(0), get_global_id(1)),
+			(uint4)(color.z * 255, color.y * 255, color.x * 255, 255));
 }
