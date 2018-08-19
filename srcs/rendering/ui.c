@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 15:29:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/11 16:25:32 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 00:50:11 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void				render_ui(t_rt *core, t_timer *t)
 	}
 	wipe_surface(core->sdl.ui);
 	str[0] = display_fps(core, t, 0);
-	str[1] = display_sample(core);
+	str[1] = display_samples(core);
 	str[2] = display_depth(core);
 	draw_text_box(core, (const char**)str, 0, 0);
 	free(str[0]);

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 16:13:26 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/11 16:36:32 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 00:50:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char				*display_depth(t_rt *core)
 	return (str);
 }
 
-char				*display_sample(t_rt *core)
+char				*display_samples(t_rt *core)
 {
 	char			*str;
 	char			*sample_nb;
@@ -62,7 +62,7 @@ char				*display_sample(t_rt *core)
 	sample_nb = ft_itoa((int)core->sample_nb);
 	sample_count = ft_itoa(tmp);
 	str = ft_memalloc(sizeof(char) * 256);
-	ft_strlcat(str, "Sample : ", 256);
+	ft_strlcat(str, "Samples : ", 256);
 	ft_strlcat(str, sample_count, 256);
 	ft_strlcat(str, " / ", 256);
 	ft_strlcat(str, sample_nb, 256);
