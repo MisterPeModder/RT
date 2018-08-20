@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:41:50 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/16 00:45:03 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 02:56:32 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int					main(int ac, char **av)
 	if ((ret = init_data(ac, av, &core)) != 1)
 	{
 		quit_release(&core);
+		while (1)
+			;
 		return (ret == -1 ? EXIT_FAILURE : EXIT_SUCCESS);
 	}
 	core.sample_count = core.sample_nb;

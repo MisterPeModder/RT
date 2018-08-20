@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/03 05:46:06 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/14 08:16:13 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 03:20:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void				mesh_compute_normal(t_mesh_triangle *t,
 	get_defined_normal(&n3, n1, n2);*/
 }
 
-static void				triangle_rotate(t_mesh_triangle *triangle,
-		t_clfloat3 *angle)
+static void				triangle_to_world(t_mesh_triangle *triangle,
+		t_clfloat3 *angle, float scale, t_clfloat3 *pos)
 {
 	rotate_x(&triangle->p1, angle->x);
 	rotate_x(&triangle->p2, angle->x);
@@ -56,6 +56,12 @@ static void				triangle_rotate(t_mesh_triangle *triangle,
 	rotate_z(&triangle->p1, angle->z);
 	rotate_z(&triangle->p2, angle->z);
 	rotate_z(&triangle->p3, angle->z);
+	vec3cl_mul(&triangle->p1, scale, &triangle->p1);
+	vec3cl_mul(&triangle->p2, scale, &triangle->p2);
+	vec3cl_mul(&triangle->p3, scale, &triangle->p3);
+	vec3cl_add(&triangle->p1, pos, &triangle->p1);
+	vec3cl_add(&triangle->p2, pos, &triangle->p2);
+	vec3cl_add(&triangle->p3, pos, &triangle->p3);
 }
 
 static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
@@ -73,13 +79,8 @@ static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
 		t.p1 = data->vertices[face->verts[0]];
 		t.p2 = data->vertices[face->verts[i + 1]];
 		t.p3 = data->vertices[face->verts[i + 2]];
-		triangle_rotate(&t, &data->angle);
-		vec3cl_mul(&t.p1, data->scale, &t.p1);
-		vec3cl_mul(&t.p2, data->scale, &t.p2);
-		vec3cl_mul(&t.p3, data->scale, &t.p3);
-		vec3cl_add(&t.p1, &object->pos, &t.p1);
-		vec3cl_add(&t.p2, &object->pos, &t.p2);
-		vec3cl_add(&t.p3, &object->pos, &t.p3);
+		triangle_to_world(&t, &data->angle, data->scale, &object->pos);
+
 		/*n[0] = (face->normals[0] < 0) ? NULL : &data->normals[face->normals[0]];
 		  n[1] = (face->normals[i + 1] < 0) ? NULL
 		  : &data->normals[face->normals[i + 1]];
@@ -110,6 +111,7 @@ static void				free_mesh_data(t_mesh_data *data)
 		if (data->faces[i].normals)
 			free(data->faces[i].normals);
 	}
+	free(data->faces);
 }
 
 static void				add_scene_triangles(t_scene *scene, t_arrlst *lst)

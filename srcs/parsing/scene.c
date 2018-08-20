@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 01:17:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 03:03:51 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 	if (scene->triangles_num == 0)
 	{
 		scene->triangles_num = 1;
-		scene->mesh_triangles = (t_mesh_triangle*)malloc(
+		scene->mesh_triangles = (t_mesh_triangle*)ft_memalloc(
 				sizeof(t_mesh_triangle));
-		ft_bzero((void*)scene->mesh_triangles, sizeof(t_mesh_triangle));
 	}
 	return (1);
 }
