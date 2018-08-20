@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/13 23:25:34 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 01:09:02 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int					obj_make(t_scene *scene, t_object *object,
 {
 	t_json_value	*tmp;
 
-	if (!vec3f_from_json(json_obj_get(data, "pos"), &object->pos) ||
-			!calc_angle(object, json_obj_get(data, "angle")))
+	if (!vec3f_from_json(json_obj_get(data, "pos"), &object->pos)
+			|| !calc_angle(object, json_obj_get(data, "angle")))
 		return (0);
 	if ((tmp = json_obj_get(data, "color")))
 	{
@@ -80,8 +80,8 @@ int					obj_make(t_scene *scene, t_object *object,
 	}
 	else
 		vec3cl_fill(&object->color, 1, 1, 1);
-	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING ||
-			!obj_props(object, tmp->str.value, data, &object->type))
+	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING
+			|| !obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
 	if (object->type == OBJ_MESH && !parse_json_mesh(scene, object, data))
 		return (0);

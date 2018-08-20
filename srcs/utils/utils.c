@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 19:52:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/14 09:13:03 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 01:15:26 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void				average_sample(t_rt *core)
 		while (i < core->frame->w * core->frame->h * 4)
 		{
 			core->sample_sum[i] += frame[i];
-			frame[i] = core->sample_sum[i] /
-				(int)(core->sample_nb - core->sample_count);
+			frame[i] = core->sample_sum[i]
+				/ (int)(core->sample_nb - core->sample_count);
 			++i;
 		}
 	}

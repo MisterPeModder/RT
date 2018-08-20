@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/16 00:52:59 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 02:38:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ void				on_key_released(int key, t_rt *core)
 
 void				on_key_repeat(int key, t_timer *time, t_rt *core)
 {
-	if (key == SDLK_w || key == SDLK_a || key == SDLK_s || key == SDLK_d ||
-			key == SDLK_LSHIFT || key == SDLK_SPACE)
+	if (key == SDLK_w || key == SDLK_a || key == SDLK_s || key == SDLK_d
+			|| key == SDLK_LSHIFT || key == SDLK_SPACE)
 		move_cam(core, key, time);
-	else if (key == SDLK_UP || key == SDLK_LEFT ||
-			key == SDLK_DOWN || key == SDLK_RIGHT ||
-			key == SDLK_PAGEUP || key == SDLK_PAGEDOWN)
+	else if (key == SDLK_UP || key == SDLK_LEFT
+			|| key == SDLK_DOWN || key == SDLK_RIGHT
+			|| key == SDLK_PAGEUP || key == SDLK_PAGEDOWN)
 		rotate_cam(core, key, time);
 	else if (key == SDLK_EQUALS && core->sample_nb < 20)
 	{

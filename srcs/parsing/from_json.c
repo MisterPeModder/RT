@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:44:33 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/14 06:55:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 01:13:38 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int					bool_from_json(const t_json_value *val, int *b)
 
 int					vec3f_from_json(const t_json_value *arr, cl_float3 *vec)
 {
-	if (!arr || arr->arr.type != JSON_ARRAY || arr->arr.values_num != 3 ||
-			!float_from_json(json_arr_get(&arr->arr, 0), &vec->x) ||
-			!float_from_json(json_arr_get(&arr->arr, 1), &vec->y) ||
-			!float_from_json(json_arr_get(&arr->arr, 2), &vec->z))
+	if (!arr || arr->arr.type != JSON_ARRAY || arr->arr.values_num != 3
+			|| !float_from_json(json_arr_get(&arr->arr, 0), &vec->x)
+			|| !float_from_json(json_arr_get(&arr->arr, 1), &vec->y)
+			|| !float_from_json(json_arr_get(&arr->arr, 2), &vec->z))
 		return (0);
 	return (1);
 }
@@ -66,16 +66,16 @@ int					color_from_json(const t_json_value *arr, cl_float3 *color)
 
 	if (!arr || arr->arr.type != JSON_ARRAY || arr->arr.values_num != 3)
 		return (0);
-	if (!(tmp = json_arr_get(&arr->arr, 0)) || tmp->n_i.type != JSON_INT ||
-			tmp->n_i.value < 0 || tmp->n_i.value > 255)
+	if (!(tmp = json_arr_get(&arr->arr, 0)) || tmp->n_i.type != JSON_INT
+			|| tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
 	color->x = tmp->n_i.value / 255.f;
-	if (!(tmp = json_arr_get(&arr->arr, 1)) || tmp->n_i.type != JSON_INT ||
-			tmp->n_i.value < 0 || tmp->n_i.value > 255)
+	if (!(tmp = json_arr_get(&arr->arr, 1)) || tmp->n_i.type != JSON_INT
+			|| tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
 	color->y = tmp->n_i.value / 255.f;
-	if (!(tmp = json_arr_get(&arr->arr, 2)) || tmp->n_i.type != JSON_INT ||
-			tmp->n_i.value < 0 || tmp->n_i.value > 255)
+	if (!(tmp = json_arr_get(&arr->arr, 2)) || tmp->n_i.type != JSON_INT
+			|| tmp->n_i.value < 0 || tmp->n_i.value > 255)
 		return (0);
 	color->z = tmp->n_i.value / 255.f;
 	return (1);

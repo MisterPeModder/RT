@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/16 00:45:54 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 01:10:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static size_t		ft_min(size_t arg1, size_t arg2)
 	return (arg1 > arg2 ? arg2 : arg1);
 }
 
-//TODO CHANGE IT !!!!!!
-static cl_int		compute_le_frame(t_rt *core, unsigned int *sample_seed)
+static cl_int		compute_frame(t_rt *core, unsigned int *sample_seed)
 {
 	unsigned int	i;
 	cl_int			ret;
@@ -32,13 +31,13 @@ static cl_int		compute_le_frame(t_rt *core, unsigned int *sample_seed)
 	ft_bzero(offset, sizeof(size_t) * 3);
 	i = 0;
 	if (clSetKernelArg(core->ocl.kernel, 12, sizeof(unsigned int), sample_seed)
-		!= CL_SUCCESS)
+			!= CL_SUCCESS)
 		return (!CL_SUCCESS);
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])
 	{
 		glob_dim[0] = core->mem_info.wg_dim[0]
 			* ft_min((core->mem_info.wg_nb[0] - (i % core->mem_info.wg_nb[0])),
-				core->mem_info.compute_units);
+					core->mem_info.compute_units);
 		offset[0] = core->mem_info.wg_dim[0]
 			* (size_t)(i % core->mem_info.wg_nb[0]);
 		offset[1] = glob_dim[1] * (size_t)(i / core->mem_info.wg_nb[0]);
@@ -64,7 +63,7 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	if ((ret = ocl_set_kernel_arg(core)) != CL_SUCCESS)
 		return (ret);
 	update_frame_size(core, &core->mem_info);
-	if ((ret = compute_le_frame(core, &sample_seed)) != CL_SUCCESS)
+	if ((ret = compute_frame(core, &sample_seed)) != CL_SUCCESS)
 		return (ret);
 	ft_bzero(offset, sizeof(size_t) * 3);
 	SDL_LockSurface(core->frame);

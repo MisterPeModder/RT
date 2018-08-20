@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/14 09:16:27 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 01:17:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 	i = 0;
 	while (i < scene->objs_num)
 	{
-		if (!(tmp = json_arr_get(data, i)) || tmp->obj.type != JSON_OBJECT ||
-				!obj_make(scene, &scene->objs[i], &tmp->obj))
+		if (!(tmp = json_arr_get(data, i)) || tmp->obj.type != JSON_OBJECT
+				|| !obj_make(scene, &scene->objs[i], &tmp->obj))
 		{
 			ft_putstr_fd("Invalid format for object #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
@@ -86,8 +86,8 @@ int					scene_parse(t_scene *scene, const char *path)
 
 	if (!(obj = &(json_file_read(path)->obj)))
 		return (0);
-	if (!(tmp = json_obj_get(obj, "camera")) || tmp->obj.type != JSON_OBJECT ||
-			!make_cam(&scene->cam, &tmp->obj))
+	if (!(tmp = json_obj_get(obj, "camera")) || tmp->obj.type != JSON_OBJECT
+			|| !make_cam(&scene->cam, &tmp->obj))
 		return (rel_error("No camera or invalid format", &obj));
 	scene->depth = 0;
 	scene->filter = FILTER_NONE;
