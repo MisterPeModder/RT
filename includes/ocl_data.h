@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/16 00:42:46 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:15:53 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct			s_mem_info
 	size_t				wg_nb[2];
 	size_t				wg_mult;
 	cl_uint				compute_units;
-	size_t				used_local_mem;
 	cl_ulong			buffer_size;
 }						t_mem_info;
 

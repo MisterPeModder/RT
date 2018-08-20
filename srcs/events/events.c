@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 02:38:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:47:19 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,6 @@ void				on_key_repeat(int key, t_timer *time, t_rt *core)
 			|| key == SDLK_DOWN || key == SDLK_RIGHT
 			|| key == SDLK_PAGEUP || key == SDLK_PAGEDOWN)
 		rotate_cam(core, key, time);
-	else if (key == SDLK_EQUALS && core->sample_nb < 20)
-	{
-		core->sample_nb += 1;
-		core->sample_count += 1;
-		core->state_flags |= SF_SHOULD_UPDATE;
-	}
-	else if (key == SDLK_MINUS && core->sample_nb > 1)
-	{
-		core->sample_nb -= 1;
-		core->sample_count = ((core->sample_count <= 1)
-				? core->sample_nb : core->sample_count - 1);
-		core->state_flags |= SF_SHOULD_UPDATE;
-	}
-	else
-		repeated_key_handling(key, core);
 }
 
 void				on_window_closing(t_rt *core)

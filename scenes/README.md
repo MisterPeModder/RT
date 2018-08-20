@@ -83,7 +83,7 @@ Here is the possible attributes in the material attribute:
     * portal (see the Portal section),
     * none (the default plain object).
 * a "coefficient" float value (between 0 and 1), describing how much the object is non-plain. By default, it is set to 0.
-* a "refractive_index" float value, describing how the ray are refracted inside the object (you can seek for informations about it on internet).
+* a "refractive_index" float value, describing how the ray are refracted inside the object (you can seek for informations about it on internet). By default, it is set to 1.
 * a "perturbation" (JSON) object, defining a color/normal change, or a texture to apply. This object must contain the following attributes:
     * "frequence": float value,
 	* "depth": integer value,

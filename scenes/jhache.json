@@ -2,7 +2,7 @@
 {
 //	"filter": "black and white",
 	"background_color": [0, 0, 10],
-	"depth": 6,
+	"depth": 0,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,
@@ -70,13 +70,6 @@
 			"color": [244, 197, 66],
 			"angle": [0, 0, 30]
 		}
-		/*{
-			"type": "sphere",
-			"pos": [0, 0, -30],
-			"radius": 24,
-			"brightness": 1,
-			"color": [187, 187, 187] //light gray
-		}*/
 	],
 	"lights": [
 /*		{

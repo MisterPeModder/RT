@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/15 20:09:36 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:10:08 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 typedef struct				s_rt_result
 {
-	local t_object			*obj;
+	constant t_object		*obj;
 	float3					pos;
 	float3					normal;
 	float					dist;
@@ -49,7 +49,7 @@ typedef struct				s_rt_result
 kernel void	render_frame(
 		write_only image2d_t output,
 		constant t_cam *cam,
-		global t_object *global_objs,
+		constant t_object *objs,
 		constant t_light *lights,
 		private unsigned int objs_num,
 		private unsigned int lights_num,
@@ -60,8 +60,7 @@ kernel void	render_frame(
 		private char no_negative,/*,
 		private float3 bg_color,*/
 		constant t_mesh_triangle *triangles,
-		private unsigned int seed,
-		local t_object *objs
+		private unsigned int seed
 		)
 {
 	t_rt_result		r;
@@ -72,11 +71,6 @@ kernel void	render_frame(
 //
 	float3			bg_color;
 	set_to_zero(&bg_color);
-//
-	event_t event;
-	event = async_work_group_copy((local char *)objs, (global char *)global_objs,
-			(size_t)objs_num * sizeof(t_object), 0);
-	wait_group_events(1, &event);
 //
 	stack_size = 0;
 	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))

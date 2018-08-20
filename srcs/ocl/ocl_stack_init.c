@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/15 18:28:02 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:15:17 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ cl_int				create_ocl_stack(t_rt *core, t_mem_info *mem_info)
 			sizeof(size_t), &mem_info->wg_mult, NULL);
 	ret |= clGetDeviceInfo(core->ocl.device, CL_DEVICE_LOCAL_MEM_SIZE,
 			sizeof(cl_ulong), &mem_info->buffer_size, NULL);
-	mem_info->buffer_size -= mem_info->used_local_mem;
 	ret |= clGetKernelWorkGroupInfo(core->ocl.kernel, NULL,
 			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &tmp, NULL);
 	if (ret != CL_SUCCESS)

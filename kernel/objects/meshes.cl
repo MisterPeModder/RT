@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 14:23:48 by jloro             #+#    #+#             */
-/*   Updated: 2018/08/15 20:43:00 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:11:27 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static float	face_triangle_intersect(
 }
 
 static float		mesh_intersect(
-		local t_object *obj,
+		constant t_object *obj,
 		constant t_mesh_triangle *triangles,
 		float3 origin,
 		float3 u,

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 00:31:25 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/16 00:47:41 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:14:12 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ static cl_int		load_arg_to_kernel(t_ocl *ocl, t_rt *core)
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
 			&core->scene.lights_num);
 	ret |= clSetKernelArg(core->ocl.kernel, 10, sizeof(char), &no_negative);
-	ret |= clSetKernelArg(ocl->kernel, 13,
-		sizeof(t_object) * core->scene.objs_num, NULL);
-	core->mem_info.used_local_mem += sizeof(t_object) * core->scene.objs_num;
 	return (ret);
 }
 

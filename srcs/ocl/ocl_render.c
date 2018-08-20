@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 01:10:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 17:09:11 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ cl_int				render_frame(t_rt *core, t_timer *t)
 	if ((ret = compute_frame(core, &sample_seed)) != CL_SUCCESS)
 		return (ret);
 	ft_bzero(offset, sizeof(size_t) * 3);
-	SDL_LockSurface(core->frame);
 	glob_dim[0] = core->sdl.frame_width;
 	glob_dim[1] = core->sdl.frame_height;
 	glob_dim[2] = 1;

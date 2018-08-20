@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 03:03:51 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:20:05 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int					scene_parse(t_scene *scene, const char *path)
 	if (!(tmp = json_obj_get(obj, "camera")) || tmp->obj.type != JSON_OBJECT
 			|| !make_cam(&scene->cam, &tmp->obj))
 		return (rel_error("No camera or invalid format", &obj));
-	scene->depth = 0;
 	scene->filter = FILTER_NONE;
 	if ((tmp = json_obj_get(obj, "depth")))
 	{

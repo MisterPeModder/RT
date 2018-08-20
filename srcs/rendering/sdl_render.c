@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/29 11:45:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/11 15:49:53 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 17:08:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int					print_frame(t_rt *core, t_timer *t)
 	img_size[1] = (SDL_Rect){0, 0,
 		(int)core->sdl.win_width, (int)core->sdl.win_height};
 	apply_filter(core);
-	SDL_UnlockSurface(core->frame);
 	if (t != NULL)
 		render_ui(core, t);
 	if ((ret = SDL_BlitScaled(core->frame, img_size,

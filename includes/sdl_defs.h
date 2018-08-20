@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:14:51 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 00:50:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 15:40:12 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void				on_key_pressed(int key, struct s_rt *core);
 void				on_key_released(int key, struct s_rt *core);
 void				on_key_repeat(int key, t_timer *time, struct s_rt *core);
 void				key_handling(int key, struct s_rt *core);
-void				repeated_key_handling(int key, struct s_rt *core);
 void				on_window_closing(struct s_rt *core);
 void				exit_rt(struct s_rt *core);
 void				on_tick(struct s_rt *core);
