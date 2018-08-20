@@ -2,7 +2,7 @@
 {
 //	"filter": "black and white",
 	"background_color": [0, 0, 10],
-	"depth": 1,
+	"depth": 0,
 	"camera": {
 		"pos": [1, 2, 10],
 		"fov": 90,
@@ -35,23 +35,26 @@
 		{
 			"type": "sphere",
 			"pos": [-0.2, -2.2, -6.0],
-			"radius": 1,
-			"color": [153, 153, 153] //gray
+			"radius": 3,
+			"color": [153, 153, 153],
+			"material": {
+				"noise": [1, 0.7, 20, 2000, "sin_marble"]
+			}
 		},
 		{
 			"type": "plane",
 			"pos": [0, -5.0, -10.0],
 			"angle": [0, 0, 0],
-			"color": [255, 255, 255], //blue*/
+			"color": [255, 255, 255],
 			"material": {
-				"noise": [1, 0.2, 20, 2016, "sin_marble"]
+				"noise": [1, 0.7, 20, 2000, "sin_marble"]
 			}
 		},
 		{
 			"type": "plane",
 			"pos": [-20, -5.0, -10.0],
 			"angle": [90, 45, 0],
-			"color": [247, 78, 17] //blue
+			"color": [247, 78, 17]//blue
 		},
 		{
 			"type": "cylinder",

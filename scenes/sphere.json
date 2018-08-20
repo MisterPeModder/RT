@@ -10,8 +10,7 @@
 			"pos": [0, 0, -5],
 			"radius": 1,
 			"color": [150, 70, 70],
-			"cut": "y axis",
-			"noise": [1, 0.8, 15, 20, "wood"]
+			"cut": "y axis"
 		}
 	],
 	"lights": [
