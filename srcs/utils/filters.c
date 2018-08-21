@@ -6,12 +6,30 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/04 01:27:20 by jhache            #+#    #+#             */
-/*   Updated: 2018/07/24 03:50:28 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/21 19:37:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "filters.h"
+
+static void			more_filter(t_filter filter, unsigned char *frame,
+		unsigned char original[3], int i)
+{
+	if (filter == FILTER_GREY)
+	{
+		frame[i] = original[0] * 0.114
+			+ original[1] * 0.587 + original[2] * 0.229;
+		frame[i + 1] = frame[i];
+		frame[i + 2] = frame[i];
+	}
+	else if (filter == FILTER_NEG)
+	{
+		frame[i] = 255 - original[0];
+		frame[i + 1] = 255 - original[1];
+		frame[i + 2] = 255 - original[2];
+	}
+}
 
 static void			color_filter(t_filter filter, unsigned char *frame,
 		unsigned char original[3], int i)
@@ -34,13 +52,8 @@ static void			color_filter(t_filter filter, unsigned char *frame,
 		frame[i + 1] = 0;
 		frame[i + 2] = 0;
 	}
-	else if (filter == FILTER_GREY)
-	{
-		frame[i] = original[0] * 0.114
-			+ original[1] * 0.587 + original[2] * 0.229;
-		frame[i + 1] = frame[i];
-		frame[i + 2] = frame[i];
-	}
+	else
+		more_filter(filter, frame, original, i);
 }
 
 static void			choose_filter(t_rt *core, unsigned char *frame,

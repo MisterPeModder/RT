@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 04:48:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:49:05 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/21 19:46:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void				key_handling(int key, t_rt *core)
 		core->sdl.show_ui = !core->sdl.show_ui;
 		print_frame(core, NULL);
 	}
-	else if ((key == SDLK_1 || key == SDLK_2 || key == SDLK_3
-				|| key == SDLK_4 || key == SDLK_5 || key == SDLK_0)
+	else if ((key == SDLK_1 || key == SDLK_2 || key == SDLK_3 || key == SDLK_4
+				|| key == SDLK_5 || key == SDLK_6 || key == SDLK_0)
 			&& core->scene.filter != key)
 	{
 		core->scene.filter = (t_filter)key;
