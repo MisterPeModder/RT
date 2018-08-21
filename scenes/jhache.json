@@ -4,9 +4,9 @@
 	"background_color": [0, 0, 10],
 	"depth": 0,
 	"camera": {
-		"pos": [1, 2, 10],
+		"pos": [0, 0, 10],
 		"fov": 90,
-		"angle": [0, 20, 0]
+		"angle": [0, 0, 0]
 	},
 	"objects": [
 		{
@@ -38,7 +38,7 @@
 			"radius": 3,
 			"color": [153, 153, 153],
 			"material": {
-				"noise": [1, 0.7, 20, 2000, "sin_marble"]
+				"noise": [1, 0.7, 10, 2000, "sin_marble"]
 			}
 		},
 		{
@@ -47,7 +47,7 @@
 			"angle": [0, 0, 0],
 			"color": [255, 255, 255],
 			"material": {
-				"noise": [1, 0.7, 20, 2000, "sin_marble"]
+				"noise": [1, 0.7, 10, 2000, "line_marble"]
 			}
 		},
 		{
@@ -65,7 +65,8 @@
 			"material": {
 				"property": "refractive",
 				"coefficient": 0.8,
-				"refractive_index": 2.42
+				"refractive_index": 2.42,
+				"noise": [1, 0.8, 10, 2000, "sin_marble"]
 			}
 		},
 		{

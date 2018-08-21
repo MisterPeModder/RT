@@ -65,7 +65,7 @@ static float quinticDeriv(const float t)
 	return 30 * t * t * (t * (t - 2) + 1);
 }
 
-/*static float		float perm, float x, float y, float z)
+static float gradient(float perm, float x, float y, float z)
 {
 	switch ((int)perm & 15)
 	{
@@ -86,7 +86,7 @@ static float quinticDeriv(const float t)
 		case 14: return -y + z; // (0,-1,1)
 		case 15: return -y - z; // (0,-1,-1) 
 	}
-}*/
+}
 
 /*
 ** Return a single val of a noise in 3D.
@@ -97,18 +97,18 @@ static float		noise3d(
 	float y_f,
 	float z_f)
 {
-	float				a;
-	float				b;
-	float				c;
-	float				d;
-	int				s;
-	int				t;
-	int				u;
-	int				v;
-	int				w;
-	int				x;
-	int				y;
-	int				z;
+	float			a;
+	float			b;
+	float			c;
+	float			d;
+	float			s;
+	float			t;
+	float			u;
+	float			v;
+	float			w;
+	float			x;
+	float			y;
+	float			z;
 	int				x_i;
 	int				y_i;
 	int				z_i;
@@ -123,15 +123,15 @@ static float		noise3d(
 	z_f -= z_i;
 	x_f = smooth(x_f);
 	y_f = smooth(y_f);
-	y_f = smooth(z_f);
-	s = noise3(noise, x_i, y_i, z_i);
-	t = noise3(noise, x_i + 1, y_i, z_i);
-	u = noise3(noise, x_i, y_i + 1, z_i);
-	v = noise3(noise, x_i + 1, y_i + 1, z_i);
-	w = noise3(noise, x_i, y_i, z_i + 1);
-	x = noise3(noise, x_i + 1, y_i, z_i + 1);
-	y = noise3(noise, x_i, y_i + 1, z_i + 1);
-	z = noise3(noise, x_i + 1, y_i + 1, z_i + 1);
+	z_f = smooth(z_f);
+	s = gradient(noise3(noise, x_i, y_i, z_i), x_i, y_i, z_i);
+	t = gradient(noise3(noise, x_i + 1, y_i, z_i), x_i + 1, y_i, z_i);
+	u = gradient(noise3(noise, x_i, y_i + 1, z_i), x_i, y_i + 1, z_i);
+	v = gradient(noise3(noise, x_i + 1, y_i + 1, z_i), x_i + 1, y_i + 1, z_i);
+	w = gradient(noise3(noise, x_i, y_i, z_i + 1), x_i, y_i, z_i + 1);
+	x = gradient(noise3(noise, x_i + 1, y_i, z_i + 1), x_i + 1, y_i, z_i + 1);
+	y = gradient(noise3(noise, x_i, y_i + 1, z_i + 1), x_i, y_i + 1, z_i + 1);
+	z = gradient(noise3(noise, x_i + 1, y_i + 1, z_i + 1), x_i + 1, y_i + 1, z_i + 1);
 	a = lerp(s, t, x_f);
 	b = lerp(u, v, x_f);
 	c = lerp(w, x, x_f);
@@ -139,7 +139,7 @@ static float		noise3d(
 	low = lerp(a, b, y_f);
 	high = lerp(c, d, y_f);
 	//printf("%f ", smooth(a, b, y_f));
-	return (lerp(low, high, z_f) * 0.001);
+	return (lerp(low, high, z_f) * 0.05);
 }
 
 /*
