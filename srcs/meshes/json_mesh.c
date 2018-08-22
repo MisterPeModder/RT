@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 22:09:15 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 04:06:53 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/21 20:13:39 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,13 @@ static int			parse_json_face(t_face *face, const t_json_value *data,
 	if (!data || data->arr.type != JSON_ARRAY
 			|| !(face->verts = malloc(sizeof(int) * data->arr.values_num)))
 		return (0);
-	if (!(face->normals = malloc(sizeof(int) * data->arr.values_num)))
-	{
-		free(face->verts);
-		return (0);
-	}
-	ft_memset(face->normals, ((int)(i = 0)) - 1, data->arr.values_num);
+	i = 0;
 	while (i < data->arr.values_num)
 	{
 		if (!data->arr.values[i] || data->arr.values[i]->n_i.type != JSON_INT
 				|| (size_t)data->arr.values[i]->n_i.value >= verts_num)
 		{
 			free(face->verts);
-			free(face->normals);
 			return (0);
 		}
 		face->verts[i] = data->arr.values[i]->n_i.value;
@@ -84,7 +78,6 @@ static t_face		*parse_json_faces(t_mesh_data *mesh,
 			while (i > 0)
 			{
 				free(faces[i - 1].verts);
-				free(faces[i - 1].normals);
 				--i;
 			}
 			free(faces);
@@ -103,7 +96,6 @@ int			parse_json_mesh(struct s_scene *scene, t_object *object,
 	t_json_value	*tmp;
 	size_t			verts_num;
 
-	mesh.normals = NULL;
 	if ((tmp = json_obj_get(data, "scale")))
 	{
 		if (!(float_from_json(tmp, &mesh.scale)))

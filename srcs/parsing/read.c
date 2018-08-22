@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 10:18:30 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/25 19:36:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 04:37:56 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char			*file_err(char *buf, const char *path, const char *after)
 	return (buf);
 }
 
-static int			json_file_open(const char *path)
+int					safe_file_open(const char *path)
 {
 	int				fd;
 	struct stat		infos;
@@ -56,7 +56,7 @@ t_json_value		*json_file_read(const char *path)
 	t_json_parse_res	*res;
 	t_json_value		*obj;
 
-	if ((fd = json_file_open(path)) == -1)
+	if ((fd = safe_file_open(path)) == -1)
 		return (NULL);
 	if (!(res = json_from_file(fd, JFLAG_ALLOW_COMMENTS | JFLAG_IGNORE_EXTRA)))
 	{

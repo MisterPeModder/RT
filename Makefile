@@ -8,7 +8,7 @@ LIBS := $(CURDIR)/libs
 LIBFT_PATH := $(LIBS)/libft
 LIBFT_NAME := ft
 LIBFT := $(LIBFT_PATH)/lib$(LIBFT_NAME).a
-LIBFT_MODULES := base containers math
+LIBFT_MODULES := base containers math gnl
 
 # Libftjson
 LIBFT_JSON_PATH := $(LIBS)/ft_json
@@ -77,6 +77,9 @@ SRCS_NAMES +=	events/events.c					\
 
 SRCS_NAMES +=	meshes/json_mesh.c				\
 				meshes/mesh_load.c				\
+				meshes/mesh_utils.c				\
+				meshes/wobj_file.c				\
+				meshes/wobj_mesh.c				\
 
 SRCS_NAMES +=	objects/cone.c					\
 				objects/cylinder.c				\

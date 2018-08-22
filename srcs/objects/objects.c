@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 01:09:02 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/20 04:46:36 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ static int			obj_props(t_object *object, char *str,
 		return (triangle_init(object, data));
 	else if (ft_strequ(str, "paraboloid") && (*type = OBJ_PARABOLOID))
 		return (paraboloid_init(object, data));
-	else if (ft_strequ(str, "mesh") && (*type = OBJ_MESH))
-		return (1);
+	else if ((ft_strequ(str, "mesh") || ft_strequ(str, "wavefront_obj"))
+			&& (*type = OBJ_MESH))
+		return ((object->props.mesh.is_wobj = ft_strequ(str, "wavefront_obj"))
+				+ 1);
 	return (0);
 }
 
@@ -83,7 +85,7 @@ int					obj_make(t_scene *scene, t_object *object,
 	if (!(tmp = json_obj_get(data, "type")) || tmp->str.type != JSON_STRING
 			|| !obj_props(object, tmp->str.value, data, &object->type))
 		return (0);
-	if (object->type == OBJ_MESH && !parse_json_mesh(scene, object, data))
+	if (object->type == OBJ_MESH && !parse_mesh(scene, object, data))
 		return (0);
 	if ((tmp = json_obj_get(data, "material")) && tmp->obj.type == JSON_OBJECT)
 	{

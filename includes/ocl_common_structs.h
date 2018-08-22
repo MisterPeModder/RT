@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/06 18:52:51 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 04:19:58 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef union		u_properties
 	}				paraboloid;
 	struct {
 		t_cluint	num_triangles;
+		int			is_wobj;
 	}				mesh;
 }					t_properties;
 

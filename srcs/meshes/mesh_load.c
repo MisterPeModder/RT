@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/03 05:46:06 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 03:20:55 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/21 22:26:15 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,15 @@
 #include "rt.h"
 #include "mesh.h"
 
-/*
-	static void			get_defined_normal(t_clfloat3 **n,
-	t_clfloat3 *n1, t_clfloat3 *n2)
-	{
-	if (!*n)
- *n = n1;
- if (!*n)
- *n = n2;
- }*/
-
-static void				mesh_compute_normal(t_mesh_triangle *t,
-		t_clfloat3 *n1, t_clfloat3 *n2, t_clfloat3 *n3)
+static void				mesh_compute_normal(t_mesh_triangle *t)
 {
 	t_clfloat3			u;
 	t_clfloat3			v;
 
-	if (/*TMP*/1 && !n1 && !n2 && !n3)
-	{
-		vec3cl_sub(&t->p2, &t->p1, &u);
-		vec3cl_sub(&t->p3, &t->p1, &v);
-		vec3cl_cross(&u, &v, &t->facing);
-		vec3cl_normalize(&t->facing, &t->facing);
-		return ;
-	}
-/*	get_defined_normal(&n1, n2, n3);
-	get_defined_normal(&n2, n1, n3);
-	get_defined_normal(&n3, n1, n2);*/
+	vec3cl_sub(&t->p2, &t->p1, &u);
+	vec3cl_sub(&t->p3, &t->p1, &v);
+	vec3cl_cross(&u, &v, &t->facing);
+	vec3cl_normalize(&t->facing, &t->facing);
 }
 
 static void				triangle_to_world(t_mesh_triangle *triangle,
@@ -69,7 +51,6 @@ static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
 {
 	int					i;
 	t_mesh_triangle		t;
-	t_clfloat3			*n[3];
 
 	if (face->verts_num < 3)
 		return (1);
@@ -80,16 +61,7 @@ static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
 		t.p2 = data->vertices[face->verts[i + 1]];
 		t.p3 = data->vertices[face->verts[i + 2]];
 		triangle_to_world(&t, &data->angle, data->scale, &object->pos);
-
-		/*n[0] = (face->normals[0] < 0) ? NULL : &data->normals[face->normals[0]];
-		  n[1] = (face->normals[i + 1] < 0) ? NULL
-		  : &data->normals[face->normals[i + 1]];
-		  n[2] = (face->normals[i + 2] < 0) ? NULL
-		  : &data->normals[face->normals[i + 2]];*/
-		n[0] = NULL;
-		n[1] = NULL;
-		n[2] = NULL;
-		mesh_compute_normal(&t, n[0], n[1], n[2]);
+		mesh_compute_normal(&t);
 		if (!arrlst_add(lst, &t))
 			return (0);
 	}
@@ -101,16 +73,11 @@ static void				free_mesh_data(t_mesh_data *data)
 	int					i;
 
 	free(data->vertices);
-	free(data->normals);
 	i = -1;
 	if (!data->faces)
 		return ;
 	while (++i < data->faces_num)
-	{
 		free(data->faces[i].verts);
-		if (data->faces[i].normals)
-			free(data->faces[i].normals);
-	}
 	free(data->faces);
 }
 

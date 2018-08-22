@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/15 21:01:05 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/20 04:38:42 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ float				perlin2d(float x, float y, float freq, int depth);
 
 int					parse_args(int ac, char **av, char **options_path);
 
+int					safe_file_open(const char *path);
 t_json_value		*json_file_read(const char *path);
 
 # define DEFAULT_OPTIONS "./options.json"
