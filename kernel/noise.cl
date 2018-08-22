@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 22:59:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/08 02:07:53 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/22 06:08:17 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //TODO: reduire le nombre de variable en reutilisant celle deja creer
@@ -33,10 +33,11 @@ typedef struct	s_env_noise
 */
 static float 		lerp(float a, float b, float s)
 {
-    /*double f = (1 - cos(s * 3.141593)) * 0.5;
+	float			f;
 
-	return a * (1 - f) + b * f;
-	*/return (a + s * (b - a));
+	f = s/*(1 - native_cos(s * M_PI_F)) * 0.5f*/;
+	return (a + f * (b - a));
+//	return ((1 - f) * a + f * b);
 }
 
 /*
@@ -44,8 +45,7 @@ static float 		lerp(float a, float b, float s)
 */
 static float 		smooth(float s)
 {
-	return (s * s * s * (s * (s * 6 - 15) + 10));
-	//return (s * s * (3.f - 2.f * s));
+	return (s * s * s * (s * (s * 6.f - 15.f) + 10.f));
 }
 
 /*
@@ -53,16 +53,7 @@ static float 		smooth(float s)
 */
 static int		noise3(t_env_noise *noise, int x, int y, int z)
 {
-	int 			tmp;
-
-	tmp = 0;
-	tmp = noise->hash[abs(((y + noise->seed) * z) % 256)];
-	return (noise->hash[abs(((tmp + x) * z) % 256)]);
-}
-
-static float quinticDeriv(const float t)
-{
-	return 30 * t * t * (t * (t - 2) + 1);
+	return (noise->hash[(z + noise->hash[(y + noise->hash[(x + noise->seed) & 255]) & 255]) & 255]);
 }
 
 static float gradient(float perm, float x, float y, float z)
@@ -84,7 +75,7 @@ static float gradient(float perm, float x, float y, float z)
 		case 12: return y + x; // (1,1,0)
 		case 13: return -x + y; // (-1,1,0)
 		case 14: return -y + z; // (0,-1,1)
-		case 15: return -y - z; // (0,-1,-1) 
+		case 15: return -y - z; // (0,-1,-1)
 	}
 }
 
@@ -97,78 +88,78 @@ static float		noise3d(
 	float y_f,
 	float z_f)
 {
-	float			a;
-	float			b;
-	float			c;
-	float			d;
-	float			s;
-	float			t;
-	float			u;
-	float			v;
-	float			w;
-	float			x;
-	float			y;
-	float			z;
 	int				x_i;
 	int				y_i;
 	int				z_i;
 	float			low;
 	float			high;
 
-	x_i = x_f;
-	y_i = y_f;
-	z_i = z_f;
+	x_i = (int)floor(x_f);
+	y_i = (int)floor(y_f);
+	z_i = (int)floor(z_f);
 	x_f -= x_i;
 	y_f -= y_i;
 	z_f -= z_i;
+	float a = gradient(noise3(noise, x_i, y_i, z_i), x_f, y_f, z_f);
+	float b = gradient(noise3(noise, x_i + 1, y_i, z_i), x_f - 1, y_f, z_f);
+	float c = gradient(noise3(noise, x_i, y_i + 1, z_i), x_f, y_f - 1, z_f);
+	float d = gradient(noise3(noise, x_i + 1, y_i + 1, z_i), x_f - 1, y_f - 1, z_f);
+	float e = gradient(noise3(noise, x_i, y_i, z_i + 1), x_f, y_f, z_f - 1);
+	float f = gradient(noise3(noise, x_i + 1, y_i, z_i + 1), x_f - 1, y_f, z_f - 1);
+	float g = gradient(noise3(noise, x_i, y_i + 1, z_i + 1), x_f, y_f - 1, z_f - 1);
+	float h = gradient(noise3(noise, x_i + 1, y_i + 1, z_i + 1), x_f - 1, y_f - 1, z_f - 1);
 	x_f = smooth(x_f);
 	y_f = smooth(y_f);
 	z_f = smooth(z_f);
-	s = gradient(noise3(noise, x_i, y_i, z_i), x_i, y_i, z_i);
-	t = gradient(noise3(noise, x_i + 1, y_i, z_i), x_i + 1, y_i, z_i);
-	u = gradient(noise3(noise, x_i, y_i + 1, z_i), x_i, y_i + 1, z_i);
-	v = gradient(noise3(noise, x_i + 1, y_i + 1, z_i), x_i + 1, y_i + 1, z_i);
-	w = gradient(noise3(noise, x_i, y_i, z_i + 1), x_i, y_i, z_i + 1);
-	x = gradient(noise3(noise, x_i + 1, y_i, z_i + 1), x_i + 1, y_i, z_i + 1);
-	y = gradient(noise3(noise, x_i, y_i + 1, z_i + 1), x_i, y_i + 1, z_i + 1);
-	z = gradient(noise3(noise, x_i + 1, y_i + 1, z_i + 1), x_i + 1, y_i + 1, z_i + 1);
-	a = lerp(s, t, x_f);
-	b = lerp(u, v, x_f);
-	c = lerp(w, x, x_f);
-	d = lerp(y, z, x_f);
-	low = lerp(a, b, y_f);
-	high = lerp(c, d, y_f);
-	//printf("%f ", smooth(a, b, y_f));
-	return (lerp(low, high, z_f) * 0.05);
+	float w = lerp(a, b, x_f);
+	float x = lerp(c, d, x_f);
+	float y = lerp(e, f, x_f);
+	float z = lerp(g, h, x_f);
+	low = lerp(w, x, y_f);
+	high = lerp(y, z, y_f);
+	return (lerp(low, high, z_f));
+/*	float k0 = a;
+	float k1 = (b - a);
+	float k2 = (c - a);
+	float k3 = (e - a);
+	float k4 = (a + d - b - c);
+	float k5 = (a + f - b - e);
+	float k6 = (a + g - c - e);
+	float k7 = (b + c + e + h - a - d - f - g);
+	return k0 + k1 * x_f + k2 * y_f + k3 * z_f + k4 * x_f * y_f + k5 * x_f * z_f + k6 * y_f * z_f + k7 * x_f * y_f * z_f;*/
 }
 
 /*
 ** Call me to have a perfect val for a 3D
 */
-static float		perlin3d(t_env_noise *noise, float x, float y, float z)
+static float3		perlin3d(t_env_noise *noise, float x, float y, float z)
 {
 	int				i;
-	float			div;
 	float			res;
 	float			amp;
 	float			freq;
+	float			pers;
+	float			max_amp;
 
+	pers = noise->freq;
+	res = 0.f;
+	amp = 64.f;
+	freq = 1.f;
+	max_amp = 0;
 	i = 0;
-	div = 0.0f;
-	res = 0.0f;
-	freq = 1.0f;
-	amp = 1.0f;
 	while (i < noise->depth)
 	{
-		res += noise3d(noise, x, y, z) * amp;
-		freq /= 2.f;
-		amp *= noise->freq;
-		x *= 2.f;
-		y *= 2.f;
-		z *= 2.f;
+		res += noise3d(noise, x * freq, y * freq, z * freq) * amp;
+		max_amp += amp;
+		amp *= pers;
+		freq *= 2.f;
 		i++;
 	}
-	return (res);
+//	res = ((pers == 1.f) ? res / noise->depth : res * ((1 - pers) / (1 - amp)));
+	res /= max_amp;
+//	printf("%f  ", res);
+	res = fabs(res);
+	return ((float3)(res, res, res));
 }
 
 /*
@@ -181,16 +172,12 @@ static float3		sin_marble_noise(t_env_noise *noise, float x, float y, float z)
 	float3			c2;
 	float3			res;
 	float			val;
-	
-	val = 0.0f;
+
 	c1 = (float3)(1.0f, 1.0f, 1.0f);
 	c2 = (float3)(0.7f, 0.7f, 0.7f);
-	res = (float3)(0.0f, 0.0f, 0.0f);
-	val = 1.f - sqrt(fabs(sin(2 * M_PI_F *
+	val = 1.f - sqrt(fabs(native_sin(2.f * M_PI_F *
 		noise3d(noise, x, y, z))));
-	res.x = c1.x * (1.f - val) + c2.x * val;
-	res.y = c1.y * (1.f - val) + c2.y * val;
-	res.z = c1.z * (1.f - val) + c2.z * val;
+	res = c1 * (1.f - val) + c2 * val;
 	return (res);
 }
 
@@ -206,18 +193,15 @@ static float3		line_marble_noise(t_env_noise *noise, float x, float y, float z)
 	float			val;
 	int 			line;
 	float			perturb;
-	
+
 	line = 30;
-	val = 0.0f;
-	perturb = 0.9f;
+	val = 0.f;
+	perturb = 0.25f;
 	c1 = (float3)(0.7f, 0.7f, 0.7f);
 	c2 = (float3)(1.0f, 1.0f, 1.0f);
-	res = (float3)(0.0f, 0.0f, 0.0f);
-	val = (1 - cos(line * 2 * M_PI_F * (x / 512 +
+	val = (1 - native_cos(line * 2 * M_PI_F * (x / 256 +
 		perturb * noise3d(noise, x, y, z)))) / 2;
-	res.x = c1.x * (1 - val) + c2.x * val;
-	res.y = c1.y * (1 - val) + c2.y * val;
-	res.z = c1.z * (1 - val) + c2.z * val;
+	res = c1 * (1 - val) + c2 * val;
 	return (res);
 }
 
@@ -234,8 +218,6 @@ static float3		wood_noise(t_env_noise *noise, float x, float y, float z)
 	float			val1;
 	float			threshold;
 
-	val = 0.0f;
-	val1 = 0.0f;
 	threshold = 0.2f;
 	c1 = (float3)(0.6f, 0.6f, 0.0f);
 	c2 = (float3)(0.2f, 0.2f, 0.0f);
