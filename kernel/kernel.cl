@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:10:08 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 01:05:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ kernel void	render_frame(
 		private unsigned int h,
 		local t_ray *stack,
 		private t_clint depth,
-		private char no_negative,/*,
-		private float3 bg_color,*/
+		private char no_negative,
+		private float3 bg_color,
 		constant t_mesh_triangle *triangles,
 		private unsigned int seed
 		)
@@ -68,10 +68,7 @@ kernel void	render_frame(
 	t_cluint		offset;
 	t_ray			curr_ray;
 	float3			color;
-//
-	float3			bg_color;
-	set_to_zero(&bg_color);
-//
+
 	stack_size = 0;
 	offset = (get_local_id(0) + get_local_id(1) * get_local_size(0))
 		* (depth + 1);

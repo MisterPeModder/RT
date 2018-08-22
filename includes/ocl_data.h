@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:15:53 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 01:12:49 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct			s_kargs
 	cl_mem				arg1;
 	cl_mem				arg2;
 	cl_mem				arg3;
-	cl_mem				arg11;
+	cl_mem				arg12;
 }						t_kargs;
 
 /*

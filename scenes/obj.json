@@ -1,5 +1,5 @@
 {
-	"background_color": [0, 0, 0],
+	"background_color": [0, 0, 255],
 	"camera": {
 		"pos": [0, 0, 0],
 		"fov": 90

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 00:31:25 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:14:12 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 01:12:59 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ cl_int				ocl_set_kernel_arg(t_rt *core)
 			&core->mem_objects->arg1);
 	ret |= clSetKernelArg(core->ocl.kernel, 9,
 			sizeof(t_clint), &core->scene.depth);
+	ret |= clSetKernelArg(core->ocl.kernel, 11, sizeof(t_clfloat3),
+			&core->scene.bg_color);
 	return (ret);
 }
 
@@ -69,8 +71,8 @@ static cl_int		load_arg_to_kernel(t_ocl *ocl, t_rt *core)
 			&core->mem_objects->arg2);
 	ret |= clSetKernelArg(core->ocl.kernel, 3, sizeof(cl_mem),
 			&core->mem_objects->arg3);
-	ret |= clSetKernelArg(core->ocl.kernel, 11, sizeof(cl_mem),
-			&core->mem_objects->arg11);
+	ret |= clSetKernelArg(core->ocl.kernel, 12, sizeof(cl_mem),
+			&core->mem_objects->arg12);
 	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int),
 			&core->scene.objs_num);
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
@@ -85,7 +87,7 @@ static cl_int		init_kernel_args(t_ocl *ocl, t_rt *core)
 
 	if ((core->mem_objects = ft_memalloc(sizeof(t_kargs))) == NULL)
 		return (!CL_SUCCESS);
-	core->mem_objects->arg11 = clCreateBuffer(core->ocl.context,
+	core->mem_objects->arg12 = clCreateBuffer(core->ocl.context,
 			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
 			sizeof(t_mesh_triangle) * core->scene.triangles_num,
 			core->scene.mesh_triangles, &ret);
@@ -115,7 +117,7 @@ cl_int				load_first_kernel_args(t_rt *core)
 		return (ret);
 	}
 	if ((ret = create_ocl_stack(core, &core->mem_info)) != CL_SUCCESS
-		|| (ret = compute_work_size(&core->mem_info, core)) != CL_SUCCESS)
+			|| (ret = compute_work_size(&core->mem_info, core)) != CL_SUCCESS)
 	{
 		ft_putendl("error while creating the openCL stack.");
 		return (ret);
