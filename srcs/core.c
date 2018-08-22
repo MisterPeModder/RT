@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/30 18:19:51 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/22 08:08:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void			mvs_init(t_mv_state *mvs)
 
 static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 {
+	SDL_DisplayMode	display;
+
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 	{
 		ft_putstr("Failed to initialize SDL: ");
@@ -41,6 +43,8 @@ static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 		ft_putendl(SDL_GetError());
 		return (0);
 	}
+	if (!SDL_GetCurrentDisplayMode(0, &display))
+		SDL_SetWindowMaximumSize(sdl->win, display.w, display.h);
 	SDL_SetWindowMinimumSize(sdl->win, MIN_IMG_W, MIN_IMG_H);
 	sdl->screen = SDL_GetWindowSurface(sdl->win);
 	sdl->show_ui = 1;
