@@ -38,7 +38,7 @@
 			"radius": 3,
 			"color": [153, 153, 153],
 			"material": {
-				"noise": [1, 0.7, 10, 2000, "sin_marble"]
+				"noise": [1, 0.9, 4, 1000, "wood"]
 			}
 		},
 		{
@@ -47,7 +47,7 @@
 			"angle": [0, 0, 0],
 			"color": [255, 255, 255],
 			"material": {
-				"noise": [1, 0.7, 10, 2000, "line_marble"]
+				"noise": [1, 0.1, 20, 2000, "wood"]
 			}
 		},
 		{
@@ -65,8 +65,8 @@
 			"material": {
 				"property": "refractive",
 				"coefficient": 0.8,
-				"refractive_index": 2.42,
-				"noise": [1, 0.8, 10, 2000, "sin_marble"]
+				"refractive_index": 2.42
+				//"noise": [1, 0.8, 20, 2000, "sin_marble"]
 			}
 		},
 		{
@@ -75,7 +75,10 @@
 			"simple": false,
 			"opening_angle": 30,
 			"color": [244, 197, 66],
-			"angle": [0, 0, 30]
+			"angle": [0, 0, 30],
+			"material": {
+				"noise": [1, 0.1, 20, 2000, "sin_marble"]
+			}
 		}
 		/*{
 			"type": "sphere",

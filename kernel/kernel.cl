@@ -40,6 +40,7 @@ typedef struct				s_rt_result
 #include "objects/paraboloid.cl"
 #include "objects/meshes.cl"
 #include "shadow_ray.cl"
+#include "noise_util.cl"
 #include "noise.cl"
 #include "render.cl"
 #include "stack_functions.cl"
