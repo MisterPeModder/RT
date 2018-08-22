@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 06:44:29 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/22 07:19:07 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 00:30:39 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int				parse_wobj_face(const char *line, t_arrlst *faces)
 	{
 		while (ft_isspace(*line))
 			++line;
-		if (!ft_strisint(line) || ((index = ft_atoi(line)) * 0 + 1
-					&& !arrlst_add(indexes, &index)))
+		if (*line && (!ft_strisint(line) || ((index = ft_atoi(line)) * 0 + 1
+						&& !arrlst_add(indexes, &index))))
 		{
 			arrlst_del(&indexes, NULL, NULL);
 			return (0);

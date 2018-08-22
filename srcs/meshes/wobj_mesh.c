@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 04:28:27 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/22 07:19:23 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 00:31:45 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ static int			parse_wobj_line(char *line,
 {
 	int				offset;
 
-	if (line && *line && *line != '#') {
+	if (line && *line && *line != '#' && !ft_isspace(*line))
+	{
 		if (has_cmd(line, "v"))
 			return (parse_wobj_vertex(line, vertices));
 		else if (has_cmd(line, "f"))
 			return (parse_wobj_face(line, faces));
 		else if (!has_cmd(line, "mtllib") && !has_cmd(line, "usemtl")
 				&& !has_cmd(line, "g") && !has_cmd(line, "s")
-				&& !has_cmd(line, "vt") && !has_cmd(line, "vn"))
+				&& !has_cmd(line, "vt") && !has_cmd(line, "vn")
+				&& !has_cmd(line, "o"))
 		{
 			offset = 0;
 			while (line[offset] && !ft_isspace(line[offset]))
