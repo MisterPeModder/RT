@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 20:42:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:13:07 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:50:55 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 **
 ** -scene: the scene instance.
 ** -o: origin of the ray.
- ** -u: unit vector (direction) of that ray.
+** -u: unit vector (direction) of that ray.
 ** -r: where the result will be stored.
 **
 ** returns: 1 if an intersection has been found, 0 otherwise.

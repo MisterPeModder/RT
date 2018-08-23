@@ -1,8 +1,8 @@
 {
 	"depth": 2,
-	"background_color": [0, 0, 0],
+	"background_color": [186, 183, 254],
 	"camera": {
-		"pos": [5, 0, -4],
+		"pos": [0, 0, 0],
 		"angle": [0, 180, 0],
 		"fov": 90
 	},
@@ -21,26 +21,41 @@
 			"type": "plane",
 			"pos": [0, -5, -9],
 			"angle": [0, 0, 0],
-			"color": [255, 255, 255]
+			"color": [79, 121, 66]
+		},
+		{
+			"type": "sphere",
+			"pos": [2, 10, 0],
+			"angle": [-45, 45, 0],
+			"radius": 6
+		},
+		{
+			"type": "disk",
+			"pos": [0,  1550, 2002],
+			"angle": [80, 0, 0],
+			"radius": 500,
+			"color": [253, 104, 19],
+			"has_shadow": false
 		},
 		{
 			"type": "cylinder",
-			"pos": [2, 5, 0],
+			"pos": [2, -3, 0],
 			"angle": [90, 0, 0],
 			"length": 5,
 			"radius": 1,
 			"color": [54, 255, 50],
 			"material": {
 				"property": "refractive",
-				"coefficient": 1,
-				"noise": [1, 0.4, 10, 2016, "line_marble"]
+				"coefficient": 0.9
 			}
 		}
 	],
 	"lights": [
 		{
-			"pos": [3, 7, 7],
-			"power": 1
+			"pos": [0, 1500, 1000],
+			"parallel_angle": [260, 0, 0],
+			"color": [255, 230, 230],
+			"power": 0.8
 		}
 	]
 }

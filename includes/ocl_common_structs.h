@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 04:50:45 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:31:50 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,19 @@ typedef struct		s_cam
 ** t_light: Represents a light.
 **
 ** -pos: its location
-** -power: how bright it is
 ** -color: its color
+** -nfacing: the negative direction vector. Is initialized if 'is_parallel is 1.
+** -power: how bright it is
+** -is_parallel: if set to 1, tells that this light should be considered as
+**               a parallel light.
 */
 typedef struct		s_light
 {
 	t_clfloat3		pos;
 	t_clfloat3		color;
+	t_clfloat3		facing;
 	t_clfloat		power;
+	int				is_parallel;
 }					t_light;
 
 /*

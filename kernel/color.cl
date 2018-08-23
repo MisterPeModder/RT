@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:09:46 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 03:52:38 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:32:51 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static void			colorize(
 		t_rt_result *r,
 		float3 *c,
 		float3 transparency_coef
-	)
+		)
 {
 	float			comp[2];
 	float3			tmp;
 
 	comp[1] = dot(r->normal, lvec);
 	comp[0] = light->power * comp[1] * (1.f - r->obj->mat.props_coef);
-	if (comp[1] < 0)
+	if (comp[1] < 0 || light->is_parallel)
 		comp[1] = 0;
 	else
 		comp[1] = pow(dot((r->normal * (2 * comp[1])) - r->normal,

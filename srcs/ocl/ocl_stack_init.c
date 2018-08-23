@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 15:11:44 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:15:17 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:49:17 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ cl_int				compute_work_size(t_mem_info *mem_info, t_rt *core)
 		mem_info->wg_dim[0] >>= 1;
 		mem_info->wg_dim[1] <<= 1;
 	}
-	printf("%zd x %zd\n", mem_info->wg_dim[0], mem_info->wg_dim[1]);
 	update_frame_size(core, mem_info);
 	return (CL_SUCCESS);
 }

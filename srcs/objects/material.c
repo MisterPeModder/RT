@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 21:46:57 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 04:22:04 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:36:31 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static int		parse_noise(const t_json_object *data, t_noise *noise)
 		noise->amp = -1;
 	if ((tmp = json_obj_get(data, "type")))
 	{
-			if (tmp->obj.type != JSON_STRING
+		if (tmp->obj.type != JSON_STRING
 				|| !parse_type_noise(tmp, &noise->type))
-				return (0);
+			return (0);
 	}
 	else
 		noise->type = NONE;

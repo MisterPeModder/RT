@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 04:54:30 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:36:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ static void			obj_default_material(t_object *object)
 	object->mat.props = MAT_NONE;
 	object->mat.props_coef = 0.f;
 	object->mat.refractive_index = 1.f;
+	object->mat.has_shadow = 1;
 }
 
 int					obj_make(t_scene *scene, t_object *object,
-	const t_json_object *data)
+		const t_json_object *data)
 {
 	t_json_value	*tmp;
 

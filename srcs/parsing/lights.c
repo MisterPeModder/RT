@@ -6,13 +6,32 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 18:38:46 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 01:13:12 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 04:57:47 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <libft_base/io.h>
 #include "rt.h"
+
+static int			parallel_light(t_light *light, const t_json_value *data)
+{
+	cl_float3			angle;
+
+	if (!data)
+	{
+		light->is_parallel = 0;
+		return (1);
+	}
+	else if (!angle_from_json(data, &angle))
+		return (1);
+	vec3cl_fill(&light->facing, 0, 1, 0);
+	rotate_x(&light->facing, angle.x);
+	rotate_y(&light->facing, angle.y);
+	rotate_z(&light->facing, angle.z);
+	light->is_parallel = 1;
+	return (1);
+}
 
 static int			make_light(t_light *light, const t_json_object *data)
 {
@@ -35,7 +54,7 @@ static int			make_light(t_light *light, const t_json_object *data)
 	}
 	else
 		light->power = 1;
-	return (1);
+	return (parallel_light(light, json_obj_get(data, "parallel_angle")));
 }
 
 int					scene_lights(t_scene *scene, const t_json_array *data)

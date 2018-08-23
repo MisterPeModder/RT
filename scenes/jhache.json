@@ -44,8 +44,8 @@
 					"octave": 2,
 					"seed": 2000,
 //					"color": true,
-					"normal": true,
-					"type": "water"
+"normal": true,
+"type": "water"
 				}
 			}
 		},
@@ -81,8 +81,8 @@
 					"octave": 2,
 					"seed": 2000,
 //					"color": true,
-					"normal": true,
-					"type": "water"
+"normal": true,
+"type": "water"
 				}
 			}
 		},
@@ -97,14 +97,14 @@
 	],
 	"lights": [
 /*		{
-			"pos": [3, 10, 3],
-			"color": [255, 255, 255]
-		},*/
-		{
-			"pos": [5, 5, 0],
-			"power": 1,
-			"color": [255, 255, 255]
-		}
+	"pos": [3, 10, 3],
+	"color": [255, 255, 255]
+},*/
+{
+	"pos": [5, 5, 0],
+	"power": 1,
+	"color": [255, 255, 255]
+}
 	]
 //				"noise": [1, 0.4, 10, 1000, "wood"] amp = 1
 //				"noise": [1, 0.4, 10, 1000, "sin_marble"] amp = 0.3

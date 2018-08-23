@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 04:53:32 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:33:26 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,17 +166,20 @@ static int			raytrace(
 ** shading: Handles the shading using the Phong algorithm.
 **
 ** -objs: the chained list for every object in the scene.
+** -objs_num: the number of objects.
 ** -lights: the chained list for every lights in the scene.
+** -lights_num: the number of lights.
 ** -r: the primary ray's raytrace result.
-** -result: where the color of the pixel will be stored.
+** -triangles: the currently loaded meshes triangles.
+** -no_negative: if 1, tells there is no negative objects on this scene.
 */
 static float3			shading(
-	constant t_object *objs, size_t objs_num,
-	constant t_light *lights, size_t lights_num, t_rt_result *r,
-	constant t_mesh_triangle *triangles,
-	char no_negative,
-	constant t_cluchar *hash
-	)
+		constant t_object *objs, size_t objs_num,
+		constant t_light *lights, size_t lights_num, t_rt_result *r,
+		constant t_mesh_triangle *triangles,
+		char no_negative,
+		constant t_cluchar *hash
+		)
 {
 	size_t			i;
 	float3			lvec;
@@ -196,11 +199,24 @@ static float3			shading(
 	i = 0;
 	while (i < lights_num)
 	{
-		lvec = lights[i].pos - r->pos;
-		light_dist = length(lvec);
-		lvec = normalize(lvec);
+		if (!lights[i].is_parallel)
+		{
+			lvec = lights[i].pos - r->pos;
+			light_dist = length(lvec);
+			lvec = normalize(lvec);
+		}
+		else
+		{
+			float3 tmp = lights[i].pos - r->pos;
+
+			lvec = dot(lights[i].facing, tmp) <= 0
+				? -lights[i].facing
+				: lights[i].facing;
+			light_dist = dot(tmp, lvec);
+		}
 		start = r->pos + 0.001f * r->normal;
-		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec, &shadow_amount, no_negative, light_dist))
+		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec,
+					&shadow_amount, no_negative, light_dist))
 			colorize(&lights[i], lvec, r, &result, (float3)(1.f, 1.f, 1.f));
 		else if (shadow_amount.x >= 0.f)
 			colorize(&lights[i], lvec, r, &result, shadow_amount);
