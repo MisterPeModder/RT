@@ -38,7 +38,13 @@
 			"type": "plane",
 			"pos": [0, 0, -4],
 			"color": [249, 0, 155],
-			"angle": [90, 0, 0]
+			"angle": [90, 0, 0],
+			"material": {
+				"perturbation": {
+					"color": true,
+					"type": "sin_marble"
+				}
+			}
 		}
 	],
 	"lights": [

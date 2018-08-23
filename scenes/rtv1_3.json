@@ -1,0 +1,43 @@
+{
+	"objects": [
+		{
+			"type": "plane",
+			"pos": [0, 0, 0],
+			"color": [100, 100, 100]
+		},
+		{
+			"type": "plane",
+			"pos": [0, 0, -10],
+			"angle": [90, 0, 0],
+			"color": [9, 65, 155]
+		},
+		{
+			"type": "sphere",
+			"pos": [0, 0.7, -5],
+			"radius": 1,
+			"color": [255, 0, 0]
+		},
+		{
+			"type": "cylinder",
+			"pos": [0, 2, -5],
+			"angle": [0, 0, -45],
+			"radius": 0.5,
+			"color": [0, 255, 0]
+		},
+		{
+			"type": "cone",
+			"pos": [1.5, 1, -5],
+			"angle": [0, 0, 30],
+			"color": [255, 255, 0],
+			"opening_angle": 40
+		}
+	],
+	"lights": [
+		{
+			"pos": [3, 1.2, 0]
+		}
+	],
+	"camera": {
+		"pos": [0, 1, 0]
+	}
+}

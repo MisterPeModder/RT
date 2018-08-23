@@ -1,4 +1,5 @@
 {
+	"depth": 1,
 	"objects": [
 		{
 			"type": "sphere",
@@ -10,11 +11,22 @@
 			"type": "plane",
 			"pos": [0, 0, -5],
 			"angle": [90, 0, 0],
-			"color": [0, 0, 255]
+			"color": [0, 0, 255],
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"perturbation": {
+					"persistence": 0.8,
+					"octave": 2,
+					"seed": 2000,
+					"normal": true,
+					"type": "water"
+				}
+			}
 		},
 		{
-			"type": "cube",
-			"length": 1,
+			"type": "sphere",
+			"radius": 1,
 			"pos": [0, 0, -5.5],
 			"angle": [45, 45, 45],
 			"material": {
