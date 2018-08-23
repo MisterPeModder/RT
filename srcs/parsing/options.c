@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 07:17:03 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 08:01:40 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 08:55:51 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int					options_parse(t_rt *core, const char *path)
 					&obj));
 	else if (tmp->n_i.type != JSON_INT || tmp->n_i.value < 1
 			|| tmp->n_i.value > 20)
-		return (rel_error("The number of sample must be between 1 and 20.", &obj));
+		return (rel_error("The number of sample must be between 1 and 20.",
+					&obj));
 	else
 		core->sample_nb = (unsigned int)tmp->n_i.value;
 	json_release((t_json_value **)&obj);

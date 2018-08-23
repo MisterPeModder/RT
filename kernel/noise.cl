@@ -135,6 +135,8 @@ static float3		water_noise(t_env_noise *noise, float x, float y, float z)
 	pertub = 0.4f;
 	c2 = (float3)(0.8f, 0.8f, 1.0f);
 	c1 = (float3)(0.0f, 0.4f, 0.5f);
+	if (noise->pers == -1)
+		noise->pers = 0.7;
 	val = (1 - native_sin(line * 2 * M_PI_F * (x / 256 +
 					pertub * perlin3d(noise, x, y, z,
 						(noise->amp == -1 ? 1.f : noise->amp))))) / 2;

@@ -6,7 +6,7 @@
 /*   By: jloro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 07:35:06 by jloro             #+#    #+#             */
-/*   Updated: 2018/08/23 07:43:18 by jloro            ###   ########.fr       */
+/*   Updated: 2018/08/23 09:02:11 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int					parse_noise(const t_json_object *data, t_noise *noise)
 			return (0);
 	}
 	else
-		noise->octave = -1;
+		noise->octave = 10;
 	if (!parse_noise2(data, noise) || !parse_noise3(data, noise))
 		return (0);
 	return (1);

@@ -1,0 +1,83 @@
+{
+	"background_color": [0, 0, 0],
+	"depth": 0,
+	"camera": {
+		"pos": [0, 0, 0],
+		"fov": 45,
+		"angle": [0, 0, 0]
+	},
+	"objects": [
+		{
+			"type": "plane",
+			"pos": [2, 0, -20],
+			"color": [255, 255, 255],
+			"angle": [90, 0, 0],
+			"material": {
+				"property": "reflective",
+				"coefficient": 1,
+				"refractive_index": 1
+			}
+		},
+		{
+			"type": "sphere",
+			"pos": [0, -3, -10],
+			"radius": 3,
+			"color": [247, 44, 166],
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"perturbation": {
+					"persistence": 0.7,
+					"octave": 2,
+					"seed": 2000,
+					"color": false,
+					"normal": true,
+					"type": "water"
+				}
+			}
+			},
+		{
+			"type": "sphere",
+			"pos": [4, -3, -10],
+			"radius": 3,
+			"color": [0, 255, 255],
+			"material": {
+				"property": "refractive",
+				"coefficient": 0.8,
+				"perturbation": {
+					"persistence": 0.7,
+					"octave": 2,
+					"seed": 2000,
+					"color": false,
+					"normal": true,
+					"type": "water"
+				}
+			}
+
+			},
+			{
+			"type": "cone",
+			"pos": [2, -15, -10],
+			"simple": true,
+			"length": 10,
+			"angle": [180, 0, 0],
+			"opening_angle": 20,
+			"color": [244, 173, 66],
+			"material": {
+				"perturbation": {
+					"persistence": 0.4,
+					"octave": 1,
+					"amplitude": 0.5,
+					"seed": 2000,
+					"color": false,
+					"normal": true,
+					"type": "line_marble"
+				}
+			}
+		}
+	],
+	"lights": [
+		{"pos": [0, 0, 0]}
+	]
+}
+
