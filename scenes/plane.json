@@ -32,7 +32,8 @@
 			"color": [54, 255, 50],
 			"material": {
 				"property": "refractive",
-				"coefficient": 1
+				"coefficient": 1,
+				"noise": [1, 0.4, 10, 2016, "line_marble"]
 			}
 		}
 	],

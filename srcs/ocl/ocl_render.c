@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 01:12:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:01:18 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static cl_int		compute_frame(t_rt *core, unsigned int *sample_seed)
 	glob_dim[1] = core->mem_info.wg_dim[1];
 	ft_bzero(offset, sizeof(size_t) * 3);
 	i = 0;
-	if (clSetKernelArg(core->ocl.kernel, 13, sizeof(unsigned int), sample_seed)
+	if (clSetKernelArg(core->ocl.kernel, 14, sizeof(unsigned int), sample_seed)
 			!= CL_SUCCESS)
 		return (!CL_SUCCESS);
 	while (i < core->mem_info.wg_nb[1] * core->mem_info.wg_nb[0])

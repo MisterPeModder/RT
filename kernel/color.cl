@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 16:09:46 by jhache            #+#    #+#             */
-/*   Updated: 2018/06/27 02:32:04 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 03:52:38 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void			colorize(
 		float3 lvec,
 		t_rt_result *r,
 		float3 *c,
-		float3 transparency_coef)
+		float3 transparency_coef
+	)
 {
 	float			comp[2];
 	float3			tmp;

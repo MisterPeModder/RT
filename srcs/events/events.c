@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 14:19:36 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 01:13:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:14:03 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void				exit_rt(t_rt *core)
 		clReleaseMemObject(core->mem_objects->arg2);
 		clReleaseMemObject(core->mem_objects->arg3);
 		clReleaseMemObject(core->mem_objects->arg12);
+		clReleaseMemObject(core->mem_objects->arg13);
 		free(core->mem_objects);
 		scene_release(&core->scene);
 		ocl_release(&core->ocl, NULL, 0);

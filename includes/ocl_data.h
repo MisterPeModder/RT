@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 14:08:48 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 01:12:49 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:17:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct			s_kargs
 	cl_mem				arg2;
 	cl_mem				arg3;
 	cl_mem				arg12;
+	cl_mem				arg13;
 }						t_kargs;
 
 /*
@@ -89,6 +90,7 @@ cl_int					compute_work_size(t_mem_info *mem_info,
 void					update_frame_size(struct s_rt *core,
 		t_mem_info *mem_info);
 cl_int					load_first_kernel_args(struct s_rt *core);
+cl_int					init_hash_tab(t_ocl *ocl, struct s_rt *core);
 cl_int					ft_create_kernel(t_ocl *ocl);
 cl_int					ocl_release(t_ocl *ocl, const char *debug_msg,
 		cl_int ret);

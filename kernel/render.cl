@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 15:12:42 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 04:53:32 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,12 @@ static int			raytrace(
 ** -result: where the color of the pixel will be stored.
 */
 static float3			shading(
-		constant t_object *objs, size_t objs_num,
-		constant t_light *lights, size_t lights_num, t_rt_result *r,
-		constant t_mesh_triangle *triangles,
-		char no_negative
-		)
+	constant t_object *objs, size_t objs_num,
+	constant t_light *lights, size_t lights_num, t_rt_result *r,
+	constant t_mesh_triangle *triangles,
+	char no_negative,
+	constant t_cluchar *hash
+	)
 {
 	size_t			i;
 	float3			lvec;
@@ -183,9 +184,16 @@ static float3			shading(
 	float3			start;
 	float3			result;
 	float			light_dist;
+	float3			noise_coef;
 
-	i = 0;
+	if (r->obj->mat.noise.perturb & COLOR)
+		noise_coef = noise(hash, r, r->pos - r->obj->pos);
+	else
+		noise_coef = (float3)(1.f, 1.f, 1.f);
+	if (r->obj->mat.noise.perturb & NORMAL)
+		r->normal += bump(hash, r);
 	result = r->obj->color / 10;
+	i = 0;
 	while (i < lights_num)
 	{
 		lvec = lights[i].pos - r->pos;
@@ -198,5 +206,5 @@ static float3			shading(
 			colorize(&lights[i], lvec, r, &result, shadow_amount);
 		++i;
 	}
-	return (result);
+	return (result * noise_coef);
 }

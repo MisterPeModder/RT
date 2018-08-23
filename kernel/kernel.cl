@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 17:28:29 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 01:05:17 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 04:53:21 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct				s_rt_result
 #include "objects/paraboloid.cl"
 #include "objects/meshes.cl"
 #include "shadow_ray.cl"
+#include "noise_util.cl"
+#include "noise.cl"
 #include "render.cl"
 #include "stack_functions.cl"
 #include "teleport_ray.cl"
@@ -59,6 +61,7 @@ kernel void	render_frame(
 		private t_clint depth,
 		private char no_negative,
 		private float3 bg_color,
+		constant t_cluchar *hash,
 		constant t_mesh_triangle *triangles,
 		private unsigned int seed
 		)
@@ -89,7 +92,7 @@ kernel void	render_frame(
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
 				color += shading(objs, objs_num, lights, lights_num,
-						&r, triangles, no_negative) * curr_ray.clr_contrib;
+						&r, triangles, no_negative, hash) * curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);
 			if (r.obj->mat.props == MAT_REFLECTIVE

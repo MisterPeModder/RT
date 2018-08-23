@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 00:31:25 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 01:12:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 05:16:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static cl_int		load_arg_to_kernel(t_ocl *ocl, t_rt *core)
 			&core->mem_objects->arg3);
 	ret |= clSetKernelArg(core->ocl.kernel, 12, sizeof(cl_mem),
 			&core->mem_objects->arg12);
+	ret |= clSetKernelArg(core->ocl.kernel, 13, sizeof(cl_mem),
+			&core->mem_objects->arg13);
 	ret |= clSetKernelArg(ocl->kernel, 4, sizeof(unsigned int),
 			&core->scene.objs_num);
 	ret |= clSetKernelArg(ocl->kernel, 5, sizeof(unsigned int),
@@ -87,15 +89,15 @@ static cl_int		init_kernel_args(t_ocl *ocl, t_rt *core)
 
 	if ((core->mem_objects = ft_memalloc(sizeof(t_kargs))) == NULL)
 		return (!CL_SUCCESS);
-	core->mem_objects->arg12 = clCreateBuffer(core->ocl.context,
+	core->mem_objects->arg13 = clCreateBuffer(core->ocl.context,
 			CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
 			sizeof(t_mesh_triangle) * core->scene.triangles_num,
 			core->scene.mesh_triangles, &ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	core->mem_objects->arg3 = clCreateBuffer(core->ocl.context,
-			CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-			sizeof(t_light) * core->scene.lights_num, core->scene.lights, &ret);
+	core->mem_objects->arg3 = clCreateBuffer(ocl->context, CL_MEM_READ_ONLY
+			| CL_MEM_COPY_HOST_PTR, sizeof(t_light) * core->scene.lights_num,
+			core->scene.lights, &ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
 	core->mem_objects->arg2 = clCreateBuffer(core->ocl.context,
@@ -103,8 +105,9 @@ static cl_int		init_kernel_args(t_ocl *ocl, t_rt *core)
 			sizeof(t_object) * core->scene.objs_num, core->scene.objs, &ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
-	ret = load_arg_to_kernel(ocl, core);
-	return (ret);
+	if ((ret = init_hash_tab(ocl, core)) != CL_SUCCESS)
+		return (ret);
+	return (load_arg_to_kernel(ocl, core));
 }
 
 cl_int				load_first_kernel_args(t_rt *core)

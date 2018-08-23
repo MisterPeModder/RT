@@ -90,7 +90,8 @@ SRCS_NAMES +=	objects/cone.c					\
 				objects/sphere.c				\
 				objects/triangle.c				\
 
-SRCS_NAMES +=	ocl/load_args.c					\
+SRCS_NAMES +=	ocl/init_hash_tab.c				\
+				ocl/load_args.c					\
 				ocl/ocl_data.c					\
 				ocl/ocl_render.c				\
 				ocl/ocl_stack_init.c			\

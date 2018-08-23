@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 21:46:57 by yguaye            #+#    #+#             */
-/*   Updated: 2018/06/27 07:29:59 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 04:22:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,79 @@ static t_mat_props	mat_props(char *str)
 		return (MAT_NONE);
 }
 
+static int			parse_type_noise(t_json_value *tmp, t_type_noise *type)
+{
+	if (ft_strcmp(tmp->str.value, "wood") == 0 && (*type = WOOD))
+		return (1);
+	else if (ft_strcmp(tmp->str.value, "water") == 0 && (*type = WATER))
+		return (1);
+	else if (ft_strcmp(tmp->str.value, "perlin") == 0 && (*type = PERLIN))
+		return (1);
+	else if (ft_strcmp(tmp->str.value, "sin_marble") == 0 && (*type = SIN_MARBLE))
+		return (1);
+	else if (ft_strcmp(tmp->str.value, "line_marble") == 0 && (*type = LINE_MARBLE))
+		return (1);
+	else
+		return (0);;
+}
+
 /*
 ** Activate it while noise will be ready. Same for lines in parse_material.
 */
-/*static t_noise		*parse_noise(const t_json_value *data, t_noise *noise)
-  {
-  t_json_value	*tmp;
 
-  if ((tmp = json_arr_get(&data->arr, 0)) && tmp->n_i.value == 1)
-  noise->has_noise = tmp->n_i.value;
-  else
-  {
-  noise->has_noise = 0;
-  return (noise);
-  }
-  if ((tmp = json_arr_get(&data->arr, 1)) && tmp->n_d.value > 0)
-  noise->freq = tmp->n_d.value;
-  if ((tmp = json_arr_get(&data->arr, 2)) && tmp->n_i.value > 0)
-  noise->depth = tmp->n_i.value;
-  if ((tmp = json_arr_get(&data->arr, 3))
-  && ft_strcmp(tmp->str.value, "wood") == 0
-  && ft_strcmp(tmp->str.value, "sin_marble") == 0
-  && ft_strcmp(tmp->str.value, "line_marble") == 0)
-  noise->type = tmp->str.value;
-  return (noise);
-  }*/
+static int		parse_noise(const t_json_object *data, t_noise *noise)
+{
+	t_json_value	*tmp;
+
+	noise->perturb = 0;
+	if ((tmp = json_obj_get(data, "persistence")))
+	{
+		if (!float_from_json(tmp, &noise->pers))
+			return (0);
+	}
+	else
+		noise->pers = -1;
+	if ((tmp = json_obj_get(data, "octave")))
+	{
+		if (!int_from_json(tmp, &noise->octave) || noise->octave <= 0)
+			return (0);
+	}
+	else
+		noise->octave = -1;
+	if ((tmp = json_obj_get(data, "seed")))
+	{
+		if (!int_from_json(tmp, &noise->seed) || noise->seed <= 0)
+			return (0);
+	}
+	else
+		noise->seed = 1000;
+	if ((tmp = json_obj_get(data, "amplitude")))
+	{
+		if (!float_from_json(tmp, &noise->amp) || noise->amp <= 0)
+			return (0);
+	}
+	else
+		noise->amp = -1;
+	if ((tmp = json_obj_get(data, "type")))
+	{
+			if (tmp->obj.type != JSON_STRING
+				|| !parse_type_noise(tmp, &noise->type))
+				return (0);
+	}
+	else
+		noise->type = NONE;
+	if ((tmp = json_obj_get(data, "color")))
+	{
+		if (tmp && tmp->bol.type == JSON_BOOL && tmp->bol.value == 1)
+			noise->perturb |= COLOR;
+	}
+	if ((tmp = json_obj_get(data, "normal")))
+	{
+		if (tmp && tmp->bol.type == JSON_BOOL && tmp->bol.value == 1)
+			noise->perturb |= NORMAL;
+	}
+	return (1);
+}
 
 static int			obj_parse_portal(t_object *obj, const t_json_object *data)
 {
@@ -92,9 +140,13 @@ int					parse_material(t_object *object, const t_json_object *data)
 		}
 		object->mat.has_shadow = tmp->bol.value;
 	}
-	/*if ((tmp = json_obj_get(data, "noise")) && tmp->obj.type == JSON_ARRAY)
-	  object->mat.noise = parse_noise(tmp, object->mat.noise);
-	  else
-	  object->mat.noise->has_noise = 0;*/
+	if ((tmp = json_obj_get(data, "perturbation")))
+	{
+		if (tmp->obj.type != JSON_OBJECT || !parse_noise(&tmp->obj, &object->mat.noise))
+			return (0);
+		object->mat.has_noise = 1;
+	}
+	else
+		object->mat.has_noise = 0;
 	return (1);
 }

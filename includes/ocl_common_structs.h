@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/20 04:19:58 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 04:50:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define OCL_COMMON_STRUCTS_H
 
 # include "ocl_types.h"
+
+# define COLOR 1
+# define NORMAL 2
 
 /*
 ** t_cam: The camera
@@ -98,81 +101,39 @@ typedef enum		e_mat_props
 	MAT_NEGATIVE
 }					t_mat_props;
 
-/*
-** Noise struct.
-** -c1, c2 and c3 are colors for material perturbation.
-** -amp is amplitude used by noise function.
-** -fin is incremented in noise function by the noise value.
-** -div divide fin at the end of all noise depth.
-** -freq is the frequence used by the noise function.
-** -depth of the noise.
-** -lines of marble perturbation method.
-** -value and value1 for intermediate sin/cos and material perturbations.
-** -result to store material perturbations.
-** -threshold for wood material method.
-** -perturbation for marble perturbation method.
-** -a to d for lerp the noise.
-** -i to increment the depth of the noise.
-** -s to z for noise transformation of x, y and z.
-** -xa, ya, za, x_int, y_int, z_int, x_frac, y_frac and z_frac diverse
-** var to manipulate x, y and z through different types, etc..
-** -low and high to smooth the shape of the function by his mix and max values.
-*/
-typedef struct	s_noise
+typedef enum		e_type_noise
 {
-	t_clint		has_noise;
-	t_clchar	*type;
-	t_clfloat3	c1;
-	t_clfloat3	c2;
-	t_clfloat3	c3;
-	t_clfloat	amp;
-	t_clfloat	fin;
-	t_clfloat	div;
-	t_clfloat	freq;
-	t_clfloat	depth;
-	t_clint		lines;
-	t_clfloat	value;
-	t_clfloat	value1;
-	t_clfloat3	result;
-	t_clfloat	threshold;
-	t_clfloat	perturbation;
-	t_clint		a;
-	t_clint		b;
-	t_clint		c;
-	t_clint		d;
-	t_clint		i;
-	t_clint		s;
-	t_clint		t;
-	t_clint		u;
-	t_clint		v;
-	t_clint		w;
-	t_clint		x;
-	t_clint		y;
-	t_clint		z;
-	t_clfloat	xa;
-	t_clfloat	ya;
-	t_clfloat	za;
-	t_clfloat	low;
-	t_clfloat	high;
-	t_clint		x_int;
-	t_clint		y_int;
-	t_clint		z_int;
-	t_clfloat	x_frac;
-	t_clfloat	y_frac;
-	t_clfloat	z_frac;
-}				t_noise;
+	NONE = 0,
+	WOOD = 1,
+	WATER = 2,
+	PERLIN = 3,
+	SIN_MARBLE = 4,
+	LINE_MARBLE = 5
+}					t_type_noise;
+
+
+typedef struct		s_noise
+{
+	t_clfloat		pers;
+	t_clfloat		amp;
+	t_clint			octave;
+	t_clint			seed;
+	t_clint			perturb;
+	t_type_noise	type;
+}					t_noise;
 
 /*
 ** -p_out: the portal output coordinates (set if material
-**         property is MAT_PORTAL)
+**			property is MAT_PORTAL)
 */
 typedef struct		s_material
 {
 	t_clfloat3		p_out;
 	t_clfloat		props_coef;
 	t_clfloat		refractive_index;
-//	t_noise			*noise;
 	t_mat_props		props;
+	t_noise			noise;
+	t_clint			has_noise;
 	t_clint			has_shadow;
 }					t_material;
 
