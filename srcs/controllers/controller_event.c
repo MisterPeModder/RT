@@ -6,13 +6,30 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 14:55:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 08:50:34 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 16:22:40 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <SDL_events.h>
 #include <libft_base/io.h>
 #include "rt.h"
+
+static t_filter			cycle_filter(t_filter current)
+{
+	if (current == FILTER_NONE)
+		return (FILTER_RED);
+	else if (current == FILTER_RED)
+		return (FILTER_GREEN);
+	else if (current == FILTER_GREEN)
+		return (FILTER_BLUE);
+	else if (current == FILTER_BLUE)
+		return (FILTER_GREY);
+	else if (current == FILTER_GREY)
+		return (FILTER_BLACK_WHITE);
+	else if (current == FILTER_BLACK_WHITE)
+		return (FILTER_NEG);
+	return (FILTER_NONE);
+}
 
 void					on_controller_button_pressed(void *event, t_rt *core)
 {
@@ -29,6 +46,12 @@ void					on_controller_button_pressed(void *event, t_rt *core)
 		on_key_pressed(SDLK_RIGHT, core);
 	else if (e->button == SDL_CONTROLLER_BUTTON_X)
 		on_key_pressed(SDLK_LEFT, core);
+	else if (e->button == SDL_CONTROLLER_BUTTON_LEFTSTICK)
+	{
+		core->scene.filter = cycle_filter(core->scene.filter);
+		on_key_pressed(core->scene.filter, core);
+		on_key_released(core->scene.filter, core);
+	}
 }
 
 void					on_controller_button_released(void *event, t_rt *core)

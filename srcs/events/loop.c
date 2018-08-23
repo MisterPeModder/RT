@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 17:44:23 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/16 00:45:33 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 16:38:53 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ void				on_tick(t_rt *core)
 	}
 }
 
+static void			on_mouse_wheel(SDL_MouseWheelEvent *e, t_rt *core)
+{
+	if (e->y != 0)
+		core->mvs.move_speed += 0.1f * (float)e->y;
+	if (core->mvs.move_speed < 0.f)
+		core->mvs.move_speed = 0.f;
+	else if (core->mvs.move_speed > 42.f)
+		core->mvs.move_speed = 42.f;
+}
+
 static void			handle_event(SDL_Event *e, t_rt *core)
 {
 	if (e->type == SDL_QUIT)
@@ -76,6 +86,8 @@ static void			handle_event(SDL_Event *e, t_rt *core)
 		on_controller_disconnect(e->cdevice.which, core);
 	else if (e->type == SDL_CONTROLLERAXISMOTION)
 		on_controller_axis_motion(&e->caxis, core);
+	else if (e->type == SDL_MOUSEWHEEL)
+		on_mouse_wheel(&e->wheel, core);
 }
 
 void				event_loop(t_rt *core)
