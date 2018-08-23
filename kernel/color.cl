@@ -42,11 +42,19 @@ static void			colorize(
 		float3 lvec,
 		t_rt_result *r,
 		float3 *c,
-		float3 transparency_coef)
+		float3 transparency_coef,
+		float3 origin)
 {
 	float			comp[2];
 	float3			tmp;
+	float	u;
+	float	v;
+	float	color;
 
+	u = dot(r->pos, r->obj->dir);
+	v = dot(r->pos, r->obj->right);
+	color = ((int)floor(u) % 2 == 0) ? 1.f : 0.f;
+	color += ((int)floor(v) % 2 == 0) ? 1.f : 0.f;
 	comp[1] = dot(r->normal, lvec);
 	comp[0] = light->power * comp[1] * (1.f - r->obj->mat.props_coef);
 	if (comp[1] < 0)
@@ -56,7 +64,10 @@ static void			colorize(
 					lvec), 42) * light->power;
 	comp[0] = comp[0] < 0 ? 0 : comp[0];
 	comp[1] = comp[1] < 0 ? 0 : comp[1];
-	tmp.x = (r->obj->color.x * comp[0] + comp[1]) * light->color.x;
+//	if (r->obj->type == OBJ_SPHERE)
+//		tmp.x = (color * comp[0] + comp[1]) * light->color.x;
+//	else
+		tmp.x = (r->obj->color.x * comp[0] + comp[1]) * light->color.x;
 	tmp.y = (r->obj->color.y * comp[0] + comp[1]) * light->color.y;
 	tmp.z = (r->obj->color.z * comp[0] + comp[1]) * light->color.z;
 	tmp *= transparency_coef;

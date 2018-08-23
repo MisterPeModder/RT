@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/08 01:41:06 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 01:38:58 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define OCL_COMMON_STRUCTS_H
 
 # include "ocl_types.h"
+
+# define COLOR 1
+# define NORMAL 2
 
 /*
 ** t_cam: The camera
@@ -97,15 +100,15 @@ typedef enum		e_mat_props
 	MAT_NEGATIVE
 }					t_mat_props;
 
-typedef enum		e_type_mat
+typedef enum		e_type_noise
 {
+	NONE = 0,
 	WOOD = 1,
 	WATER = 2,
 	PERLIN = 3,
 	SIN_MARBLE = 4,
-	LINE_MARBLE = 5,
-	NONE = 6
-}					t_type_mat;
+	LINE_MARBLE = 5
+}					t_type_noise;
 
 /* !!! THIS COMMENT IS A MEMO FOR THE KERNEL COMMENT, IT SHOULD BE DELETED
 ** Noise struct.
@@ -127,14 +130,16 @@ typedef enum		e_type_mat
 ** var to manipulate x, y and z through different types, etc..
 ** -low and high to smooth the shape of the function by his mix and max values.
 */
-typedef struct	s_noise
+
+typedef struct		s_noise
 {
-	t_clint		has_noise;
-	t_clfloat	freq;
-	t_clint		depth;
-	t_clint		seed;
-	t_type_mat	type;
-}				t_noise;
+	t_clfloat		pers;
+	t_clfloat		amp;
+	t_clint			octave;
+	t_clint			seed;
+	t_clint			perturb;
+	t_type_noise	type;
+}					t_noise;
 
 /*
 ** -p_out: the portal output coordinates (set if material
@@ -148,7 +153,8 @@ typedef struct		s_material
 	t_clfloat		refractive_index;
 	t_noise			noise;
 	t_clfloat3		p_out;
-	int				has_shadow;
+	t_clint			has_noise;
+	t_clint			has_shadow;
 }					t_material;
 
 typedef struct		s_mesh_triangle

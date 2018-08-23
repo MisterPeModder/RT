@@ -95,7 +95,7 @@ kernel void	render_frame(
 		else
 		{
 			if (r.obj->mat.props != MAT_PORTAL)
-				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative, hash)
+				color += shading(objs, objs_num, lights, lights_num, &r, triangles, no_negative, hash, curr_ray.pos)
 					* curr_ray.clr_contrib;
 			else
 				teleport_ray(curr_ray, &r, stack, &stack_size, offset);

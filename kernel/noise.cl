@@ -13,26 +13,26 @@
 /*
 ** Call me to have a perfect val for a 3D
 */
+
 static float		perlin3d(t_env_noise *noise, float x, float y, float z)
 {
 	int				i;
 	float			res;
 	float			amp;
 	float			freq;
-	float			pers;
 	float			max_amp;
 
-	pers = noise->freq;
 	res = 0.f;
-	amp = 64.f;
+	amp = 1.f;
 	freq = 1.f;
 	max_amp = 0;
 	i = 0;
 	while (i < noise->depth)
 	{
 		res += noise3d(noise, x * freq, y * freq, z * freq) * amp;
-		max_amp += amp;
-		amp *= pers;
+		if (max_amp < amp)
+			max_amp = amp;
+		amp *= noise->pers;
 		freq *= 2.f;
 		i++;
 	}
@@ -74,7 +74,6 @@ static float3		line_marble_noise(t_env_noise *noise, float x, float y, float z)
 	float			perturb;
 
 	line = 30;
-	val = 0.f;
 	perturb = 0.25f;
 	c1 = (float3)(0.7f, 0.7f, 0.7f);
 	c2 = (float3)(1.0f, 1.0f, 1.0f);
@@ -112,6 +111,32 @@ static float3		wood_noise(t_env_noise *noise, float x, float y, float z)
 }
 
 /*
+** Procedural texture function for water effect.
+** c1 is light brown, c2 is dark brown.
+*/
+static float3		water_noise(t_env_noise *noise, float x, float y, float z)
+{
+	float3			c1;
+	float3			c2;
+	float3			res;
+	float			val;
+	float			val1;
+	float			pertub;
+	int				line;
+
+	line = 5;
+	pertub = 0.4f;
+	c2 = (float3)(0.8f, 0.8f, 1.0f);
+	c1 = (float3)(0.0f, 0.4f, 0.5f);
+//	val1 = perlin3d(noise, x, y, z, pertub, 5);
+	val1 = (1 - native_sin(line * 2 * M_PI_F * (x / 256 +
+		pertub * perlin3d(noise, x, y, z)))) / 2;
+	res.x = c1.x * (1 - val1) + c2.x * val1;
+	res.y = c1.y * (1 - val1) + c2.y * val1;
+	res.z = c1.z * (1 - val1) + c2.z * val1;
+	return (res);
+}
+/*
 ** Determine what is the perturbation of the color. Just "if" things.
 */
 static float3		ft_choose(t_env_noise *e_noise, float x, float y, float z)
@@ -122,9 +147,13 @@ static float3		ft_choose(t_env_noise *e_noise, float x, float y, float z)
 	if (e_noise->type == WOOD)
 		res = wood_noise(e_noise, x, y, z);
 	else if (e_noise->type == WATER)
-		res = wood_noise(e_noise, x, y, z);
+		res = water_noise(e_noise, x, y, z);
 	else if (e_noise->type == PERLIN)
-		res = perlin3d(e_noise, x, y, z);
+	{
+		res.x = perlin3d(e_noise, x, y, z);
+		res.y = res.x;
+		res.z = res.x;
+	}
 	else if (e_noise->type == SIN_MARBLE)
 		res = sin_marble_noise(e_noise, x, y, z);
 	else if (e_noise->type == LINE_MARBLE)
@@ -136,7 +165,7 @@ static float3		ft_choose(t_env_noise *e_noise, float x, float y, float z)
 	return (res);
 }
 
-static float3		noise(global t_clint *hash, t_rt_result *r)
+static float3		noise(global t_clint *hash, t_rt_result *r, float3 vec)
 {
 	int				i;
 	float3			res;
@@ -144,17 +173,18 @@ static float3		noise(global t_clint *hash, t_rt_result *r)
 
 	i = 0;
 	res = (float3)(0.0f, 0.0f, 0.0f);
-	if (r->obj->mat.noise.has_noise == 0)
+	if (r->obj->mat.has_noise == 0)
 		return ((float3)(1.0f, 1.0f, 1.0f));
 	while (i < 256)
 	{
 		e_noise.hash[i] = hash[i];
 		i++;
 	}
-	e_noise.freq = r->obj->mat.noise.freq;
+	e_noise.pers = r->obj->mat.noise.pers;
 	e_noise.seed = r->obj->mat.noise.seed;
 	e_noise.type = r->obj->mat.noise.type;
-	e_noise.depth = r->obj->mat.noise.depth;
-	res = ft_choose(&e_noise, (r->pos.x - r->obj->pos.x), (r->pos.y - r->obj->pos.y), (r->pos.z - r->obj->pos.z));
+	e_noise.depth = r->obj->mat.noise.octave;
+	e_noise.amp = r->obj->mat.noise.amp;
+	res = ft_choose(&e_noise, vec.x, vec.y, vec.z);
 	return (res);
 }

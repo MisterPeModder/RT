@@ -17,14 +17,15 @@
 ** -depth of the noise.
 ** -seed and hash is used for the generation of the perturbation.
 */
-typedef struct	s_env_noise
+typedef struct		s_env_noise
 {
-	t_type_mat	type;
-	t_clfloat	freq;
-	t_clint		seed;
-	t_clint		depth;
-	t_clint		hash[256];
-}				t_env_noise;
+	t_type_noise	type;
+	t_clfloat		pers;
+	t_clfloat		amp;
+	t_clint			seed;
+	t_clint			depth;
+	t_clint			hash[256];
+}					t_env_noise;
 
 /*
 ** LERP for Linear Interpolation, it helps to interpolate different vals.

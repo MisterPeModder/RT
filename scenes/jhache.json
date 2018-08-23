@@ -5,7 +5,7 @@
 	"depth": 0,
 	"camera": {
 		"pos": [0, 0, 10],
-		"fov": 90,
+		"fov": 45,
 		"angle": [0, 0, 0]
 	},
 	"objects": [
@@ -34,21 +34,35 @@
 		},
 		{
 			"type": "sphere",
-			"pos": [-0.2, -2.2, -6.0],
+			"pos": [0, 5, 10],
 			"radius": 3,
-			"color": [153, 153, 153],
+			"color": [255, 255, 255],
 			"material": {
-				"noise": [1, 0.9, 4, 1000, "wood"]
+				"noise": {
+					"persistence": 0.2,
+					"octave": 2,
+					"seed": 2000,
+					"perturbation color": true,
+					"perturbation normal": true,
+					"type": "water"
+				}
 			}
 		},
 		{
 			"type": "plane",
 			"pos": [0, -5.0, -10.0],
 			"angle": [0, 0, 0],
-			"color": [255, 255, 255],
+			"color": [255, 255, 255]/*,
 			"material": {
-				"noise": [1, 0.1, 20, 2000, "wood"]
-			}
+				"noise": {
+					"persistence": 0.2,
+					"octave": 2,
+					"seed": 2000,
+					"perturbation color": true,
+					"perturbation normal": false,
+					"type": "water"
+				}
+			}*/
 		},
 		{
 			"type": "plane",
@@ -66,7 +80,6 @@
 				"property": "refractive",
 				"coefficient": 0.8,
 				"refractive_index": 2.42
-				//"noise": [1, 0.8, 20, 2000, "sin_marble"]
 			}
 		},
 		{
@@ -75,10 +88,7 @@
 			"simple": false,
 			"opening_angle": 30,
 			"color": [244, 197, 66],
-			"angle": [0, 0, 30],
-			"material": {
-				"noise": [1, 0.1, 20, 2000, "sin_marble"]
-			}
+			"angle": [0, 0, 30]
 		}
 		/*{
 			"type": "sphere",
