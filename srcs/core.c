@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:22:53 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/22 08:08:28 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:56:14 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ static void			mvs_init(t_mv_state *mvs)
 		mvs->keys[i++].set = 0;
 	mvs->move_speed = 6.0f;
 	mvs->rotate_speed = 1.5f;
+}
+
+static void			controller_mappings(void)
+{
+	SDL_GameControllerAddMapping("030000007e0500000620000001000000,Joy-Con (L),"
+			"platform:Mac OS X,a:b0,b:b1,x:b2,y:b3,guide:b13,start:b8,leftstick"
+			":b10,leftshoulder:b14,rightshoulder:b15,-leftx:h0.8,+leftx:h0.2,"
+			"-lefty:h0.1,+lefty:h0.4,lefttrigger:b4,righttrigger:b5");
+	SDL_GameControllerAddMapping("030000007e0500000720000001000000,Joy-Con (R),"
+			"platform:Mac OS X,a:b0,b:b1,x:b2,y:b3,guide:b12,start:b9,leftstick"
+			":b11,leftshoulder:b14,rightshoulder:b15,-leftx:h0.8,+leftx:h0.2,"
+			"-lefty:h0.1,+lefty:h0.4,lefttrigger:b4,righttrigger:b5");
 }
 
 static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
@@ -48,6 +60,7 @@ static int			sdl_win_init(t_sdl_ctx *sdl, unsigned int w, unsigned int h)
 	SDL_SetWindowMinimumSize(sdl->win, MIN_IMG_W, MIN_IMG_H);
 	sdl->screen = SDL_GetWindowSurface(sdl->win);
 	sdl->show_ui = 1;
+	controller_mappings();
 	return (1);
 }
 
