@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 22:09:15 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/21 20:13:39 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:45:47 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static t_face		*parse_json_faces(t_mesh_data *mesh,
 	return (faces);
 }
 
-int			parse_json_mesh(struct s_scene *scene, t_object *object,
+int					parse_json_mesh(struct s_scene *scene, t_object *object,
 		const t_json_object *data)
 {
 	t_mesh_data		mesh;

@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/03 05:46:06 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/21 22:26:15 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:52:41 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 #include <libft_base/memory.h>
 #include "rt.h"
 #include "mesh.h"
-
-static void				mesh_compute_normal(t_mesh_triangle *t)
-{
-	t_clfloat3			u;
-	t_clfloat3			v;
-
-	vec3cl_sub(&t->p2, &t->p1, &u);
-	vec3cl_sub(&t->p3, &t->p1, &v);
-	vec3cl_cross(&u, &v, &t->facing);
-	vec3cl_normalize(&t->facing, &t->facing);
-}
 
 static void				triangle_to_world(t_mesh_triangle *triangle,
 		t_clfloat3 *angle, float scale, t_clfloat3 *pos)
@@ -51,6 +40,8 @@ static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
 {
 	int					i;
 	t_mesh_triangle		t;
+	t_clfloat3			u;
+	t_clfloat3			v;
 
 	if (face->verts_num < 3)
 		return (1);
@@ -61,7 +52,10 @@ static int				mesh_face_triangulation(t_arrlst *lst, t_face *face,
 		t.p2 = data->vertices[face->verts[i + 1]];
 		t.p3 = data->vertices[face->verts[i + 2]];
 		triangle_to_world(&t, &data->angle, data->scale, &object->pos);
-		mesh_compute_normal(&t);
+		vec3cl_sub(&t.p2, &t.p1, &u);
+		vec3cl_sub(&t.p3, &t.p1, &v);
+		vec3cl_cross(&u, &v, &t.facing);
+		vec3cl_normalize(&t.facing, &t.facing);
 		if (!arrlst_add(lst, &t))
 			return (0);
 	}

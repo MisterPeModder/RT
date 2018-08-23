@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 17:01:31 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 06:36:47 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:48:41 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static int			obj_props(t_object *object, char *str,
 	else if ((ft_strequ(str, "mesh") || ft_strequ(str, "wavefront_obj"))
 			&& (*type = OBJ_MESH))
 		return ((object->props.mesh.is_wobj = ft_strequ(str, "wavefront_obj"))
-				+ 1);
-	return (0);
+			+ 1);
+	else
+		return (0);
 }
 
 static int			calc_angle(t_object *object, const t_json_value *v)

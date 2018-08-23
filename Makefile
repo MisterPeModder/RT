@@ -106,6 +106,7 @@ SRCS_NAMES +=	parsing/args.c					\
 				parsing/from_json.c				\
 				parsing/from_json2.c			\
 				parsing/lights.c				\
+				parsing/noise.c					\
 				parsing/options.c				\
 				parsing/read.c					\
 				parsing/scene.c					\

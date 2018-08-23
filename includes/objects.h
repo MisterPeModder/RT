@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 13:29:09 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 04:48:26 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:38:44 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int					mesh_create_triangle(t_scene *scene, void *triangles,
 int					multiple_mesh(t_scene *scene, size_t *len);
 int					mesh_parse(t_scene *scene, t_object *object,
 		const t_json_object *data);
+int					parse_noise(const t_json_object *data, t_noise *noise);
 
 /*
 ** OBJECT INITIALIZATION FUNCTIONS:

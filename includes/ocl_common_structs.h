@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:54:11 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 06:31:50 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 07:54:30 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef enum		e_type_noise
 	LINE_MARBLE = 5
 }					t_type_noise;
 
-
 typedef struct		s_noise
 {
 	t_clfloat		pers;
@@ -159,6 +158,7 @@ typedef struct		s_mesh_triangle
 ** -color: are you really asking ?
 ** -props: the properties of this object.
 */
+
 typedef struct		s_object
 {
 	t_material		mat;
