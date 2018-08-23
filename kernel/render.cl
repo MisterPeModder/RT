@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 14:04:19 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/08 02:00:07 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 03:46:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,7 @@ static float3			shading(
 	constant t_light *lights, size_t lights_num, t_rt_result *r,
 	constant t_mesh_triangle *triangles,
 	char no_negative,
-	global t_clint *hash,
-	float3 origin
+	constant t_cluchar *hash
 	)
 {
 	size_t			i;
@@ -177,23 +176,15 @@ static float3			shading(
 	float3			result;
 	float			light_dist;
 	float3			noise_coef;
-	float3			bump;
-	float			eps;
 
-	eps = 0.01f;
 	if (r->obj->mat.noise.perturb & COLOR)
 		noise_coef = noise(hash, r, r->pos - r->obj->pos);
 	else
 		noise_coef = (float3)(1.f, 1.f, 1.f);
 	if (r->obj->mat.noise.perturb & NORMAL)
-	{
-		bump.x = noise(hash, r, (float3)(r->pos.x - eps, r->pos.y, r->pos.z)).x - noise(hash, r, (float3)(r->pos.x + eps, r->pos.y, r->pos.z)).x;
-		bump.y = noise(hash, r, (float3)(r->pos.x, r->pos.y - eps, r->pos.z)).x - noise(hash, r, (float3)(r->pos.x, r->pos.y + eps, r->pos.z)).x;
-		bump.z = noise(hash, r, (float3)(r->pos.x, r->pos.y, r->pos.z - eps)).x - noise(hash, r, (float3)(r->pos.x, r->pos.y, r->pos.z + eps)).x;
-		r->normal += bump;
-	}
-	i = 0;
+		r->normal += bump(hash, r);
 	result = r->obj->color / 10;
+	i = 0;
 	while (i < lights_num)
 	{
 		lvec = lights[i].pos - r->pos;
@@ -201,9 +192,9 @@ static float3			shading(
 		lvec = normalize(lvec);
 		start = r->pos + 0.001f * r->normal;
 		if (!shadow_raytrace(objs, triangles, objs_num, start, lvec, &sink, no_negative, light_dist))
-			colorize(&lights[i], lvec, r, &result, (float3)(1.f, 1.f, 1.f), origin);
+			colorize(&lights[i], lvec, r, &result, (float3)(1.f, 1.f, 1.f));
 		else if (sink.shadow_amount.x >= 0.f)
-			colorize(&lights[i], lvec, r, &result, sink.shadow_amount, origin);
+			colorize(&lights[i], lvec, r, &result, sink.shadow_amount);
 		++i;
 	}
 	return (result * noise_coef);

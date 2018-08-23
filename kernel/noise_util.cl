@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 22:59:30 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/22 06:08:17 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 03:51:39 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,30 @@
 ** -depth of the noise.
 ** -seed and hash is used for the generation of the perturbation.
 */
-typedef struct		s_env_noise
+typedef struct			s_env_noise
 {
-	t_type_noise	type;
-	t_clfloat		pers;
-	t_clfloat		amp;
-	t_clint			seed;
-	t_clint			depth;
-	t_clint			hash[256];
+	t_type_noise		type;
+	t_clfloat			pers;
+	t_clfloat			amp;
+	t_clint				seed;
+	t_clint				depth;
+	constant t_cluchar	*hash;
 }					t_env_noise;
 
 /*
 ** LERP for Linear Interpolation, it helps to interpolate different vals.
+** (Well, this one is a cosine interpolation, but's it's almost the same)
+** It give a point between a and b.
 */
-static float 	lerp(float a, float b, float s)
+static inline float		lerp(float a, float b, float s)
 {
-	float		f;
-
-	f = (1 - native_cos(s * M_PI_F)) * 0.5f;
-	return (a + f * (b - a));
+	return (a + ((1 - native_cos(s * M_PI_F)) * 0.5f) * (b - a));
 }
 
 /*
 ** It "smooth" the shape of a function, it form is: 6t^5 - 15t^4 + 10t^3.
 */
-static float 	smooth(float s)
+static inline float 	smooth(float s)
 {
 	return (s * s * s * (s * (s * 6.f - 15.f) + 10.f));
 }
@@ -49,7 +48,7 @@ static float 	smooth(float s)
 /*
 ** Run through the hash table of our fake random vals with x, y and z.
 */
-static int		noise3(t_env_noise *noise, int x, int y, int z)
+static inline int		noise3(t_env_noise *noise, int x, int y, int z)
 {
 	return (noise->hash[(z + noise->hash[(y + noise->hash[(x + noise->seed) & 255]) & 255]) & 255]);
 }
@@ -57,7 +56,7 @@ static int		noise3(t_env_noise *noise, int x, int y, int z)
 /*
 ** Used to pick the correct gradient.
 */
-static float	gradient(float perm, float x, float y, float z)
+static float			gradient(float perm, float x, float y, float z)
 {
 	switch ((int)perm & 15)
 	{
@@ -78,12 +77,13 @@ static float	gradient(float perm, float x, float y, float z)
 		case 14: return -y + z;
 		case 15: return -y - z;
 	}
+	return (-1);
 }
 
 /*
 ** Return a single val of a noise in 3D.
 */
-static float		noise3d(
+static float			noise3d(
 	t_env_noise *noise,
 	float x_f,
 	float y_f,

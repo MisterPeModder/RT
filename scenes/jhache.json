@@ -2,7 +2,7 @@
 {
 //	"filter": "black and white",
 	"background_color": [0, 0, 10],
-	"depth": 0,
+	"depth": 3,
 	"camera": {
 		"pos": [0, 0, 10],
 		"fov": 45,
@@ -36,14 +36,16 @@
 			"type": "sphere",
 			"pos": [0, 5, 10],
 			"radius": 3,
-			"color": [255, 255, 255],
+			"color": [40, 230, 230],
 			"material": {
-				"noise": {
-					"persistence": 0.2,
+				"property": "refractive",
+				"coefficient": 0.8,
+				"perturbation": {
+					"persistence": 0.8,
 					"octave": 2,
 					"seed": 2000,
-					"perturbation color": true,
-					"perturbation normal": true,
+//					"color": true,
+					"normal": true,
 					"type": "water"
 				}
 			}
@@ -52,17 +54,13 @@
 			"type": "plane",
 			"pos": [0, -5.0, -10.0],
 			"angle": [0, 0, 0],
-			"color": [255, 255, 255]/*,
+			"color": [255, 255, 255],
 			"material": {
-				"noise": {
-					"persistence": 0.2,
-					"octave": 2,
-					"seed": 2000,
-					"perturbation color": true,
-					"perturbation normal": false,
-					"type": "water"
+				"perturbation": {
+					"color": true,
+					"type": "sin_marble"
 				}
-			}*/
+			}
 		},
 		{
 			"type": "plane",
@@ -79,7 +77,14 @@
 			"material": {
 				"property": "refractive",
 				"coefficient": 0.8,
-				"refractive_index": 2.42
+				"perturbation": {
+					"persistence": 0.2,
+					"octave": 2,
+					"seed": 2000,
+//					"color": true,
+					"normal": true,
+					"type": "water"
+				}
 			}
 		},
 		{
@@ -109,4 +114,7 @@
 			"color": [255, 255, 255]
 		}
 	]
+//				"noise": [1, 0.4, 10, 1000, "wood"] amp = 1
+//				"noise": [1, 0.4, 10, 1000, "sin_marble"] amp = 0.3
+//				"noise": [1, 0.7, 10, 1000, "line_marble"] amp = 0.2
 }

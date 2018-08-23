@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 21:46:57 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 01:59:26 by jloro            ###   ########.fr       */
+/*   Updated: 2018/08/23 04:22:04 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int			parse_type_noise(t_json_value *tmp, t_type_noise *type)
 /*
 ** Activate it while noise will be ready. Same for lines in parse_material.
 */
-#include <stdio.h>
+
 static int		parse_noise(const t_json_object *data, t_noise *noise)
 {
 	t_json_value	*tmp;
@@ -89,12 +89,12 @@ static int		parse_noise(const t_json_object *data, t_noise *noise)
 	}
 	else
 		noise->type = NONE;
-	if ((tmp = json_obj_get(data, "perturbation color")))
+	if ((tmp = json_obj_get(data, "color")))
 	{
 		if (tmp && tmp->bol.type == JSON_BOOL && tmp->bol.value == 1)
 			noise->perturb |= COLOR;
 	}
-	if ((tmp = json_obj_get(data, "perturbation normal")))
+	if ((tmp = json_obj_get(data, "normal")))
 	{
 		if (tmp && tmp->bol.type == JSON_BOOL && tmp->bol.value == 1)
 			noise->perturb |= NORMAL;
@@ -140,7 +140,7 @@ int					parse_material(t_object *object, const t_json_object *data)
 		}
 		object->mat.has_shadow = tmp->bol.value;
 	}
-	if ((tmp = json_obj_get(data, "noise")))
+	if ((tmp = json_obj_get(data, "perturbation")))
 	{
 		if (tmp->obj.type != JSON_OBJECT || !parse_noise(&tmp->obj, &object->mat.noise))
 			return (0);
