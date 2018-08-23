@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 17:42:56 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 04:38:42 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 10:18:28 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,7 @@ t_json_value		*json_file_read(const char *path);
 # define DEFAULT_OPTIONS "./options.json"
 
 int					options_parse(t_rt *core, const char *path);
+
+void				take_screeshot(t_rt *core);
 
 #endif

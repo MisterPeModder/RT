@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 04:48:03 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/21 19:46:51 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 10:36:33 by yguaye           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void			depth_change(int key, t_rt *core)
 	{
 		core->scene.depth += 1;
 		if (compute_work_size(&core->mem_info, core) != CL_SUCCESS
-			|| init_frame_kernel_arg(&core->ocl, core) != CL_SUCCESS)
+				|| init_frame_kernel_arg(&core->ocl, core) != CL_SUCCESS)
 			exit_rt(core);
 		if (!(remake_surfaces(core)))
 			exit_rt(core);
@@ -76,6 +76,8 @@ void				key_handling(int key, t_rt *core)
 	}
 	else if (key == SDLK_EQUALS || key == SDLK_MINUS)
 		sample_change(key, core);
+	else if (key == SDLK_p)
+		take_screeshot(core);
 	else
 		depth_change(key, core);
 }

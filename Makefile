@@ -73,6 +73,7 @@ SRCS_NAMES +=	events/events.c					\
 				events/keys.c					\
 				events/loop.c					\
 				events/move.c					\
+				events/screenshot.c				\
 				events/window_events.c			\
 
 SRCS_NAMES +=	meshes/json_mesh.c				\
