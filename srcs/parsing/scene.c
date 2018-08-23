@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 06:51:19 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 08:29:47 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,9 @@ static int			scene_parse2(t_scene *scene, t_json_object *obj)
 	t_json_value	*tmp;
 
 	if (!(tmp = json_obj_get(obj, "lights")) || tmp->obj.type != JSON_ARRAY)
-	{
-		free(scene->objs);
 		return (rel_error("No lights or invalid format", &obj));
-	}
 	if (!scene_lights(scene, &tmp->arr))
-	{
-		free(scene->objs);
 		return (rel_error(NULL, &obj));
-	}
 	if ((tmp = json_obj_get(obj, "background_color")))
 	{
 		if (!color_from_json(tmp, &scene->bg_color))

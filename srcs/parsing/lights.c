@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 18:38:46 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/23 04:57:47 by yguaye           ###   ########.fr       */
+/*   Updated: 2018/08/23 08:24:34 by jloro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int					scene_lights(t_scene *scene, const t_json_array *data)
 			ft_putstr_fd("Invalid format for light #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
-			free(scene->lights);
 			return (0);
 		}
 		++i;
