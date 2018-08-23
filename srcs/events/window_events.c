@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 01:14:37 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 16:26:35 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:30:20 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int					remake_surfaces(t_rt *core)
 		ft_putendl_fd("could not create Sample buffer", STDERR_FILENO);
 	else
 		return (1);
-	SDL_SetSurfaceBlendMode(core->sdl.ui, SDL_BLENDMODE_BLEND);
 	return (0);
 }
 
@@ -60,7 +59,10 @@ void				on_window_event(void *event, t_rt *core)
 		update_frame_size(core, &core->mem_info);
 		init_frame_kernel_arg(&core->ocl, core);
 		if (!remake_surfaces(core))
+		{
+			SDL_SetSurfaceBlendMode(core->sdl.ui, SDL_BLENDMODE_BLEND);
 			on_window_closing(core);
+		}
 		core->sdl.screen = SDL_GetWindowSurface(core->sdl.win);
 		core->state_flags |= SF_SHOULD_UPDATE;
 		core->sample_count = core->sample_nb;

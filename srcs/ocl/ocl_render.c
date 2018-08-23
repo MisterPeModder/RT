@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 22:08:53 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 05:01:18 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:36:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static cl_int		compute_frame(t_rt *core, unsigned int *sample_seed)
 		glob_dim[0] = core->mem_info.wg_dim[0]
 			* ft_min((core->mem_info.wg_nb[0] - (i % core->mem_info.wg_nb[0])),
 					core->mem_info.compute_units);
-		offset[0] = core->mem_info.wg_dim[0]
-			* (size_t)(i % core->mem_info.wg_nb[0]);
+		offset[0] = core->mem_info.wg_dim[0] * (i % core->mem_info.wg_nb[0]);
 		offset[1] = glob_dim[1] * (size_t)(i / core->mem_info.wg_nb[0]);
 		ret = clEnqueueNDRangeKernel(core->ocl.queue, core->ocl.kernel, 2,
 				offset, glob_dim, core->mem_info.wg_dim, 0, NULL, NULL);

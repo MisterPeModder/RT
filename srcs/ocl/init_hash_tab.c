@@ -6,15 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 05:08:10 by jhache            #+#    #+#             */
-/*   Updated: 2018/08/23 05:12:59 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:32:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "ocl_data.h"
-
-/*
-*/
 
 cl_int					init_hash_tab(t_ocl *ocl, t_rt *core)
 {

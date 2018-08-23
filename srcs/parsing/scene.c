@@ -6,7 +6,7 @@
 /*   By: yguaye <yguaye@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 22:48:38 by yguaye            #+#    #+#             */
-/*   Updated: 2018/08/20 15:20:05 by jhache           ###   ########.fr       */
+/*   Updated: 2018/08/23 06:51:19 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,11 @@
 #include <libft_base/stringft.h>
 #include "rt.h"
 
-static int			scene_objs(t_scene *scene, const t_json_array *data)
+static int			scene_objs_parse(t_scene *scene, const t_json_array *data)
 {
 	size_t			i;
 	t_json_value	*tmp;
 
-	scene->objs_num = data->values_num;
-	scene->triangles_num = 0;
-	scene->mesh_triangles = NULL;
-	if (!(scene->objs = malloc(sizeof(t_object) * scene->objs_num)))
-		return (0);
 	i = 0;
 	while (i < scene->objs_num)
 	{
@@ -35,17 +30,27 @@ static int			scene_objs(t_scene *scene, const t_json_array *data)
 			ft_putstr_fd("Invalid format for object #", STDERR_FILENO);
 			ft_putnbr_fd((int)i + 1, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
-			free(scene->objs);
-			scene->objs = NULL;
+			ft_memdel((void **)&scene->objs);
 			return (0);
 		}
 		++i;
 	}
+	return (1);
+}
+
+static int			scene_objs(t_scene *scene, const t_json_array *data)
+{
+	scene->objs_num = data->values_num;
+	scene->triangles_num = 0;
+	scene->mesh_triangles = NULL;
+	if (!(scene->objs = malloc(sizeof(t_object) * scene->objs_num)))
+		return (0);
+	if (!(scene_objs_parse(scene, data)))
+		return (0);
 	if (scene->triangles_num == 0)
 	{
 		scene->triangles_num = 1;
-		scene->mesh_triangles = (t_mesh_triangle*)ft_memalloc(
-				sizeof(t_mesh_triangle));
+		scene->mesh_triangles = ft_memalloc(sizeof(t_mesh_triangle));
 	}
 	return (1);
 }
