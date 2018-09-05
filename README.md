@@ -54,3 +54,8 @@ Here is the list of the keys to interact with the program during its execution:
 * (numeric pad) + or - for changing the number of ray bounces,
 * P for saving a screenshot in ppm format,
 * ESC to quit the program.
+
+---
+### Screenshots
+![screenshot 1](./screenshots/screenshot1.png)
+![screenshot 2](./screenshots/screenshot2.png)
