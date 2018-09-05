@@ -100,18 +100,18 @@ A Mesh is a collection of vertices, edges and faces that describe the shape of a
  * an **edge** is a segment connecting 2 vertices.
  * a **face** is a flat surface enclosed by edges (it can also be called "polygons").
 
-In a YARP scene file, in order to describe a mesh, you do not need to define any edge. All you need to do is define an object with the "mesh" type, and add the following special attribute:
+In a scene file, in order to describe a mesh, you do not need to define any edge. All you need to do is define an object with the "mesh" type, and add the following special attribute:
  * a "vertices" attribute, defined by one array of several arrays composed of 3D point.
  * a "faces" attribute, defined by one array of several arrays composed of 3 or more integer values. These values are indices of the vertices array.
 
 ---
 ### The Portals:
 
-Portals are a Unique YARP-implemented property of an object. Any primary ray touching a portal object will be teleported to the output_pos position.
+Portals are a Unique RT-implemented property of an object. Any primary ray touching a portal object will be teleported to the output_pos position.
 The teleported rays keep the same direction threw the portal.
 
 ---
-### YARP Pro Tips:
+### Pro Tips:
 * Set the fov to 45 to avoid distortion.
 * If you want to see a transparent non-flat object, you should set the depth to a value >= 2, or the ray might stop inside the object.
 * Teleporting a ray with a portal object count as a bounce. You should adapt the depth of the scene accordingly.
